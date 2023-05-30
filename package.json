@@ -1,0 +1,24 @@
+{
+  "name": "SEOKO-client",
+  "version": "0.1.0",
+  "description": "SEOKO-client",
+  "author": "seoko97",
+  "license": "MIT",
+  "packageManager": "yarn@3.5.1",
+  "private": true,
+  "scripts": {
+    "dev": "yarn workspace website dev",
+    "build": "yarn workspace website build",
+    "start": "yarn workspace website start",
+    "lint": "yarn workspace website lint"
+  },
+  "workspaces": [
+    "website",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "eslint": "^8.41.0",
+    "prettier": "^2.8.8",
+    "typescript": "^5.0.4"
+  }
+}
