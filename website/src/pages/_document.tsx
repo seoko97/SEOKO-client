@@ -6,18 +6,20 @@ interface Props {
   styleTag: Array<React.ReactElement<null>>;
 }
 
-function setColorsByTheme() {
+function setBodyDatasetByTheme() {
   const prefersDarkFromMq = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   const persistedPreference = localStorage.getItem("theme");
 
   const colorMode = persistedPreference || (prefersDarkFromMq ? "dark" : "light");
 
+  localStorage.setItem("theme", colorMode);
+
   document.body.dataset.theme = colorMode;
 }
 
 const ScriptTag = () => {
-  const stringifyFn = String(setColorsByTheme);
+  const stringifyFn = String(setBodyDatasetByTheme);
 
   const fnToRunOnClient = `(${stringifyFn})()`;
 
