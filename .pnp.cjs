@@ -20,10 +20,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/eslint-config"\
       },\
       {\
-        "name": "@seoko/types",\
-        "reference": "workspace:packages/types"\
-      },\
-      {\
         "name": "website",\
         "reference": "workspace:website"\
       }\
@@ -32,7 +28,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
       ["@seoko/eslint-config", ["workspace:packages/eslint-config"]],\
-      ["@seoko/types", ["workspace:packages/types"]],\
       ["SEOKO-client", ["workspace:."]],\
       ["website", ["workspace:website"]]\
     ],\
@@ -1722,16 +1717,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:c5d69975921a725f1b12a5f59137f601d717a750775ea62849e17a8fe7243daea84351528da47e6f561299da9649b4b9a69997fea6193bf54a72f56a1d2c8914#npm:18.2.0"],\
-            ["typescript", "patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@seoko/types", [\
-        ["workspace:packages/types", {\
-          "packageLocation": "./packages/types/",\
-          "packageDependencies": [\
-            ["@seoko/types", "workspace:packages/types"],\
             ["typescript", "patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"]\
           ],\
           "linkType": "SOFT"\

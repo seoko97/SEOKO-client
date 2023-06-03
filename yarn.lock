@@ -1145,14 +1145,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@seoko/types@workspace:packages/types":
-  version: 0.0.0-use.local
-  resolution: "@seoko/types@workspace:packages/types"
-  dependencies:
-    typescript: ^5.0.4
-  languageName: unknown
-  linkType: soft
-
 "@sinclair/typebox@npm:^0.25.16":
   version: 0.25.24
   resolution: "@sinclair/typebox@npm:0.25.24"
