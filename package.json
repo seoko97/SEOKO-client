@@ -10,7 +10,8 @@
     "dev": "yarn workspace website dev",
     "build": "yarn workspace website build",
     "start": "yarn workspace website start",
-    "lint": "yarn workspace website lint"
+    "lint": "yarn workspace website lint",
+    "test": "yarn workspace website test"
   },
   "workspaces": [
     "website",
