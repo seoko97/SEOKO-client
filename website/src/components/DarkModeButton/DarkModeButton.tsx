@@ -4,11 +4,12 @@ import styled from "@emotion/styled";
 
 import { getTransitionEffect } from "@/utils/css/getTransitionEffect";
 
+import { TDarkMode } from "@/hooks/useDarkMode";
 import SunIcon from "@/components/icons/SunIcon";
 import MoonIcon from "@/components/icons/MoonIcon";
 
 interface Props {
-  mode?: string;
+  mode?: TDarkMode;
   onClick: () => void;
 }
 
