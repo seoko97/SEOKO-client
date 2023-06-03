@@ -30,4 +30,5 @@ const useDarkMode: TResult = () => {
   return [mode, theme, onChangeTheme];
 };
 
+export type { TDarkMode };
 export default useDarkMode;
