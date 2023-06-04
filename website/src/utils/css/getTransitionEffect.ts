@@ -13,14 +13,14 @@ type TransitionEffect = (
   properties: string[],
   duration: number,
   options?: TransitionTimingFunction,
-) => string;
+) => { transition: string };
 
 const getTransitionEffect: TransitionEffect = (properties, duration, options = "ease") => {
-  const transitionEffect = properties
+  const transition = properties
     .map((property) => `${property} ${duration}ms ${options}`)
     .join(", ");
 
-  return transitionEffect;
+  return { transition };
 };
 
 export { getTransitionEffect };

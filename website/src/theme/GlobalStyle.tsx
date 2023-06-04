@@ -4,6 +4,8 @@ import { Global, css } from "@emotion/react";
 
 import { makeCssVariables } from "@/utils/css/makeCssVariables";
 
+import { getTransitionEffect } from "@/utils/css/getTransitionEffect";
+
 import { darkTheme, lightTheme } from ".";
 
 const GlobalStyle = () => {
@@ -38,6 +40,8 @@ const GlobalStyle = () => {
           line-height: 1.5715;
           user-select: none;
           background-color: var(--background1);
+          color: var(--font_color1);
+          ${getTransitionEffect(["background-color", "color"], 300)}
         }
 
         a {
