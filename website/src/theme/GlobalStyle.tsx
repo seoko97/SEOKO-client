@@ -1,47 +1,38 @@
 import React from "react";
 import reset from "emotion-reset";
-import { Global, css } from "@emotion/react";
+import { Global, css, useTheme } from "@emotion/react";
 
 import { makeCssVariables } from "@/utils/css/makeCssVariables";
-
-import { getTransitionEffect } from "@/utils/css/getTransitionEffect";
 
 import { darkTheme, lightTheme } from ".";
 
 const GlobalStyle = () => {
+  const theme = useTheme();
+
   return (
     <Global
       styles={css`
         ${reset}
+
+        * {
+          box-sizing: border-box;
+        }
 
         html {
           -webkit-text-size-adjust: none;
           -moz-text-size-adjust: none;
           -o-text-size-adjust: none;
         }
-
+        html,
         body,
         #__next {
           height: 100%;
         }
 
-        body[data-theme="light"] {
-          ${makeCssVariables(lightTheme)}
-        }
-
-        body[data-theme="dark"] {
-          ${makeCssVariables(darkTheme)}
-        }
-
         body {
-          height: 100%;
           margin: 0;
           font-size: 16px;
-          line-height: 1.5715;
-          user-select: none;
-          background-color: var(--background1);
-          color: var(--font_color1);
-          ${getTransitionEffect(["background-color", "color"], 300)}
+          background-color: ${theme.background1};
         }
 
         a {
@@ -66,18 +57,34 @@ const GlobalStyle = () => {
         }
 
         ::-webkit-scrollbar {
-          width: 5px;
+          width: 10px;
           height: 10px;
           background-color: inherit;
         }
 
         ::-webkit-scrollbar-thumb {
-          background-color: var(--color-primary);
+          background-color: ${theme.background2};
           border-radius: 5px;
         }
 
-        * {
-          box-sizing: border-box;
+        body[data-theme="light"] {
+          ${makeCssVariables(lightTheme)}
+        }
+
+        body[data-theme="dark"] {
+          ${makeCssVariables(darkTheme)}
+        }
+
+        @media (prefers-color-scheme: light) {
+          body {
+            ${makeCssVariables(lightTheme)}
+          }
+        }
+
+        @media (prefers-color-scheme: dark) {
+          body {
+            ${makeCssVariables(darkTheme)}
+          }
         }
       `}
     />
