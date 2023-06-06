@@ -10,17 +10,25 @@ type TransitionTimingFunction =
   | "inherit";
 
 type TransitionEffect = (
-  properties: string[],
+  properties: string[] | string,
   duration: number,
   options?: TransitionTimingFunction,
 ) => { transition: string };
 
 const getTransitionEffect: TransitionEffect = (properties, duration, options = "ease") => {
-  const transition = properties
-    .map((property) => `${property} ${duration}ms ${options}`)
-    .join(", ");
+  let transition: string;
 
-  return { transition };
+  if (properties instanceof Array) {
+    transition = properties.map((property) => `${property} ${duration}ms ${options}`).join(", ");
+  } else {
+    transition = `${properties} ${duration}ms ${options}`;
+  }
+
+  return {
+    transition,
+    MozTransition: transition,
+    OTransition: transition,
+  };
 };
 
 export { getTransitionEffect };
