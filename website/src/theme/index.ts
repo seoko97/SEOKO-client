@@ -1,16 +1,18 @@
-export const BP = {
+import { getKeyThemeToCssVariables } from "@/utils/css/getKeyThemeToCssVariables";
+
+const BP = {
   HDPC: "1280px",
   PC: "980px",
   TABLET: "768px",
   MOBILE: "480px",
 };
 
-export const BOX_SHADOW = {
+const BOX_SHADOW = {
   box_shadow1: "rgb(0 0 0 / 4%) 0px 4px 16px 0px",
   box_shadow2: "rgb(0 0 0 / 15%) 0px 4px 16px 0px",
 };
 
-export const lightTheme = {
+const lightTheme = {
   BP,
 
   background1: "#F2F5F7",
@@ -37,7 +39,7 @@ export const lightTheme = {
   ...BOX_SHADOW,
 };
 
-export const darkTheme = {
+const darkTheme = {
   BP,
 
   background1: "#212529",
@@ -64,4 +66,15 @@ export const darkTheme = {
   ...BOX_SHADOW,
 };
 
-export type ThemeType = typeof lightTheme;
+const keyByTheme = getKeyThemeToCssVariables(lightTheme);
+
+type ThemeType = typeof lightTheme;
+type ThemeKey = typeof keyByTheme;
+
+const theme = {
+  ...keyByTheme,
+  BP,
+};
+
+export { BP, keyByTheme, theme, lightTheme, darkTheme };
+export type { ThemeType, ThemeKey };
