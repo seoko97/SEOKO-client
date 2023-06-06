@@ -4,22 +4,19 @@ import styled from "@emotion/styled";
 
 import { getTransitionEffect } from "@/utils/css/getTransitionEffect";
 
-import { TDarkMode } from "@/hooks/useDarkMode";
+import useDarkMode from "@/hooks/useDarkMode";
 import SunIcon from "@/components/icons/SunIcon";
 import MoonIcon from "@/components/icons/MoonIcon";
 
-interface Props {
-  mode?: TDarkMode;
-  onClick: () => void;
-}
+const DarkModeButton = () => {
+  const [mode, onChangeTheme] = useDarkMode();
 
-const DarkModeButton = ({ mode, onClick }: Props) => {
   if (!mode) return null;
 
   const Icon = mode === "light" ? SunIcon : MoonIcon;
 
   return (
-    <Container onClick={onClick}>
+    <Container onClick={onChangeTheme}>
       <Icon />
     </Container>
   );
@@ -40,10 +37,9 @@ const Container = styled.div`
   z-index: 50;
   cursor: pointer;
 
-  background-color: var(--background4);
-  box-shadow: var(--box_shadow1);
+  background-color: ${({ theme }) => theme.background4};
+  box-shadow: ${({ theme }) => theme.box_shadow1};
   border-radius: 50%;
-  transition: background-color 0.3s, transform 0.3s;
 
   & > svg {
     width: 24px;
@@ -54,7 +50,7 @@ const Container = styled.div`
 
   &:hover {
     transform: scale(1.1);
-    box-shadow: var(--box_shadow2);
+    box-shadow: ${({ theme }) => theme.box_shadow2};
     & > svg {
       fill: #ffd500;
     }
