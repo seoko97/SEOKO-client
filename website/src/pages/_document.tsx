@@ -1,6 +1,5 @@
 import React from "react";
-import Document, { DocumentContext, Html, Main, NextScript, Head } from "next/document";
-import { extractCritical } from "@emotion/server";
+import Document, { Html, Main, NextScript, Head } from "next/document";
 
 interface Props {
   styleTag: Array<React.ReactElement<null>>;
@@ -18,7 +17,7 @@ function setBodyDatasetByTheme() {
   document.body.dataset.theme = colorMode;
 }
 
-const ScriptTag = () => {
+const ThemeScript = () => {
   const stringifyFn = String(setBodyDatasetByTheme);
 
   const fnToRunOnClient = `(${stringifyFn})()`;
@@ -27,33 +26,15 @@ const ScriptTag = () => {
 };
 
 class MyDocument extends Document<Props> {
-  static async getInitialProps(context: DocumentContext) {
-    const initialProps = await Document.getInitialProps(context);
-    const styles = extractCritical(initialProps.html);
-
-    return {
-      ...initialProps,
-      styles: (
-        <>
-          {initialProps.styles}
-          <style
-            data-emotion-css={styles.ids.join("")}
-            dangerouslySetInnerHTML={{ __html: styles.css }}
-          />
-        </>
-      ),
-    };
-  }
-
   render() {
     return (
       <Html lang="ko">
         <Head />
         <body>
-          <ScriptTag />
           <Main />
-          <NextScript />
           <div id="modal" />
+          <NextScript />
+          <ThemeScript />
         </body>
       </Html>
     );
