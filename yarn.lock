@@ -1190,6 +1190,39 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@seoko/web@workspace:packages/web":
+  version: 0.0.0-use.local
+  resolution: "@seoko/web@workspace:packages/web"
+  dependencies:
+    "@apollo/client": ^3.7.15
+    "@emotion/react": ^11.11.0
+    "@emotion/server": ^11.11.0
+    "@emotion/styled": ^11.11.0
+    "@seoko/eslint-config": "workspace:*"
+    "@testing-library/jest-dom": ^5.16.5
+    "@testing-library/react": ^14.0.0
+    "@testing-library/user-event": ^14.4.3
+    "@types/apollo-upload-client": ^17.0.2
+    "@types/lodash.isequal": ^4.5.6
+    "@types/node": 20.2.5
+    "@types/react": 18.2.7
+    "@types/react-dom": 18.2.4
+    "@types/testing-library__jest-dom": ^5.14.6
+    apollo-upload-client: ^17.0.0
+    deepmerge: ^4.3.1
+    emotion-reset: ^3.0.1
+    eslint: ^8.41.0
+    graphql: ^16.6.0
+    jest: ^29.5.0
+    jest-environment-jsdom: ^29.5.0
+    lodash.isequal: ^4.5.0
+    next: 13.4.4
+    react: 18.2.0
+    react-dom: 18.2.0
+    typescript: 5.0.4
+  languageName: unknown
+  linkType: soft
+
 "@sinclair/typebox@npm:^0.25.16":
   version: 0.25.24
   resolution: "@sinclair/typebox@npm:0.25.24"
@@ -7091,39 +7124,6 @@ __metadata:
   checksum: f05588567a2a76428515333eff87200fae6c83c3948a7482ebb109562971e77ef6dc49749afa58abb993391227c5697b3ecca52018793e0cb4620a48f10bd21b
   languageName: node
   linkType: hard
-
-"website@workspace:website":
-  version: 0.0.0-use.local
-  resolution: "website@workspace:website"
-  dependencies:
-    "@apollo/client": ^3.7.15
-    "@emotion/react": ^11.11.0
-    "@emotion/server": ^11.11.0
-    "@emotion/styled": ^11.11.0
-    "@seoko/eslint-config": "workspace:*"
-    "@testing-library/jest-dom": ^5.16.5
-    "@testing-library/react": ^14.0.0
-    "@testing-library/user-event": ^14.4.3
-    "@types/apollo-upload-client": ^17.0.2
-    "@types/lodash.isequal": ^4.5.6
-    "@types/node": 20.2.5
-    "@types/react": 18.2.7
-    "@types/react-dom": 18.2.4
-    "@types/testing-library__jest-dom": ^5.14.6
-    apollo-upload-client: ^17.0.0
-    deepmerge: ^4.3.1
-    emotion-reset: ^3.0.1
-    eslint: ^8.41.0
-    graphql: ^16.6.0
-    jest: ^29.5.0
-    jest-environment-jsdom: ^29.5.0
-    lodash.isequal: ^4.5.0
-    next: 13.4.4
-    react: 18.2.0
-    react-dom: 18.2.0
-    typescript: 5.0.4
-  languageName: unknown
-  linkType: soft
 
 "whatwg-encoding@npm:^2.0.0":
   version: 2.0.0
