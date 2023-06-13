@@ -3113,30 +3113,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@seoko/components@workspace:packages/components":
-  version: 0.0.0-use.local
-  resolution: "@seoko/components@workspace:packages/components"
-  dependencies:
-    "@seoko/eslint-config": "workspace:*"
-    "@seoko/tsconfig": "workspace:*"
-    "@storybook/addon-essentials": ^7.0.20
-    "@storybook/addon-interactions": ^7.0.20
-    "@storybook/addon-links": ^7.0.20
-    "@storybook/blocks": ^7.0.20
-    "@storybook/react": ^7.0.20
-    "@storybook/react-vite": ^7.0.20
-    "@storybook/testing-library": ^0.0.14-next.2
-    "@types/react": ^17.0.37
-    "@types/react-dom": ^17.0.11
-    prop-types: ^15.8.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    storybook: ^7.0.20
-    typescript: ^4.5.2
-    vite: ^4.3.9
-  languageName: unknown
-  linkType: soft
-
 "@seoko/eslint-config@workspace:*, @seoko/eslint-config@workspace:packages/eslint-config":
   version: 0.0.0-use.local
   resolution: "@seoko/eslint-config@workspace:packages/eslint-config"
@@ -3163,6 +3139,30 @@ __metadata:
 "@seoko/tsconfig@workspace:*, @seoko/tsconfig@workspace:packages/tsconfig":
   version: 0.0.0-use.local
   resolution: "@seoko/tsconfig@workspace:packages/tsconfig"
+  languageName: unknown
+  linkType: soft
+
+"@seoko/ui@workspace:packages/ui":
+  version: 0.0.0-use.local
+  resolution: "@seoko/ui@workspace:packages/ui"
+  dependencies:
+    "@seoko/eslint-config": "workspace:*"
+    "@seoko/tsconfig": "workspace:*"
+    "@storybook/addon-essentials": ^7.0.20
+    "@storybook/addon-interactions": ^7.0.20
+    "@storybook/addon-links": ^7.0.20
+    "@storybook/blocks": ^7.0.20
+    "@storybook/react": ^7.0.20
+    "@storybook/react-vite": ^7.0.20
+    "@storybook/testing-library": ^0.0.14-next.2
+    "@types/react": ^17.0.37
+    "@types/react-dom": ^17.0.11
+    prop-types: ^15.8.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    storybook: ^7.0.20
+    typescript: ^4.5.2
+    vite: ^4.3.9
   languageName: unknown
   linkType: soft
 
