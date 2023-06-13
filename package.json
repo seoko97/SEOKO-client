@@ -7,14 +7,15 @@
   "packageManager": "yarn@3.5.1",
   "private": true,
   "scripts": {
-    "dev": "yarn workspace @seoko/web dev",
-    "build": "yarn workspace @seoko/web build",
-    "start": "yarn workspace @seoko/web start",
-    "lint": "yarn workspace @seoko/web lint",
-    "test": "yarn workspace @seoko/web test"
+    "dev": "yarn workspace @seoko/app dev",
+    "build": "yarn workspace @seoko/app build",
+    "start": "yarn workspace @seoko/app start",
+    "lint": "yarn workspace @seoko/app lint",
+    "test": "yarn workspace @seoko/app test"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "app"
   ],
   "devDependencies": {
     "eslint": "^8.41.0",
