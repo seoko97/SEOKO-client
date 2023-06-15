@@ -3101,6 +3101,7 @@ __metadata:
     "@emotion/styled": ^11.11.0
     "@seoko/eslint-config": "workspace:*"
     "@seoko/tsconfig": "workspace:*"
+    "@seoko/ui": "workspace:*"
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^14.0.0
     "@testing-library/user-event": ^14.4.3
@@ -3154,10 +3155,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@seoko/ui@workspace:packages/ui":
+"@seoko/ui@workspace:*, @seoko/ui@workspace:packages/ui":
   version: 0.0.0-use.local
   resolution: "@seoko/ui@workspace:packages/ui"
   dependencies:
+    "@emotion/react": ^11.11.0
+    "@emotion/styled": ^11.11.0
     "@seoko/eslint-config": "workspace:*"
     "@seoko/tsconfig": "workspace:*"
     "@storybook/addon-essentials": ^7.0.20
@@ -3167,8 +3170,9 @@ __metadata:
     "@storybook/react": ^7.0.20
     "@storybook/react-vite": ^7.0.20
     "@storybook/testing-library": ^0.0.14-next.2
-    "@types/react": ^17.0.37
-    "@types/react-dom": ^17.0.11
+    "@types/react": 18.2.0
+    "@types/react-dom": 18.2.0
+    emotion-reset: ^3.0.1
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -4609,15 +4613,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^17.0.11":
-  version: 17.0.20
-  resolution: "@types/react-dom@npm:17.0.20"
-  dependencies:
-    "@types/react": ^17
-  checksum: 525439fb14a033fc5dbe74711ecc50ec82273a528df9656594066a6219401e975101dafffd15d9a1a57a9442d52ea0c92eaacae09554dde27cd792e773f67467
-  languageName: node
-  linkType: hard
-
 "@types/react-dom@npm:^18.0.0":
   version: 18.2.5
   resolution: "@types/react-dom@npm:18.2.5"
@@ -4646,17 +4641,6 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: db3d92b423150222a666329f7aa3023e3e942044700557b8a7d161530847e621aec9f56c9e7f71761b06dd164c8a7b17ad52355863efe80963dffa5537e8e5fd
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^17, @types/react@npm:^17.0.37":
-  version: 17.0.61
-  resolution: "@types/react@npm:17.0.61"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: 73fa034c3a9f52f71a33f1bf55d12e1571b0df57b5e65cf6b8e9495842de03f3399121e0f496308d6679c1101e783f1614af7ac23c1228982f229819379b1b7f
   languageName: node
   linkType: hard
 
