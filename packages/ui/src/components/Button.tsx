@@ -53,4 +53,5 @@ export const Button = ({
 
 const Btn = styled.button`
   border: 0;
+  background-color: ${({ theme }) => theme.background3};
 `;

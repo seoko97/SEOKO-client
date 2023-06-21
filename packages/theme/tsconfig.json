@@ -1,3 +1,6 @@
 {
-  "extends": "@seoko/tsconfig/base.json"
+  "extends": "@seoko/tsconfig/base.json",
+  "compilerOptions": {
+    "lib": ["esnext"]
+  }
 }

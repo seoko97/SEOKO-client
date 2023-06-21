@@ -1,0 +1,16 @@
+<div id="modal"></div>
+<script>
+  function setBodyDatasetByTheme() {
+    const prefersDarkFromMq = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    const persistedPreference = localStorage.getItem("theme");
+
+    const colorMode = persistedPreference || (prefersDarkFromMq ? "dark" : "light");
+
+    localStorage.setItem("theme", colorMode);
+
+    document.body.dataset.theme = colorMode;
+  }
+
+  setBodyDatasetByTheme();
+</script>

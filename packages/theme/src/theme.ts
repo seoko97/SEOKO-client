@@ -1,4 +1,4 @@
-import { getKeyThemeToCssVariables } from "./getKeyThemeToCssVariables";
+import { getKeyThemeToCssVariables } from "./utils/getKeyThemeToCssVariables";
 
 const BP = {
   HDPC: "1280px",

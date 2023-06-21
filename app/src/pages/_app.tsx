@@ -1,11 +1,11 @@
 import React from "react";
 
 import { AppProps } from "next/app";
+import { GlobalStyle } from "@seoko/ui";
 import { theme } from "@seoko/theme";
 import { ThemeProvider } from "@emotion/react";
 import { ApolloProvider } from "@apollo/client";
 
-import GlobalStyle from "@/theme/GlobalStyle";
 import DarkModeButton from "@/components/DarkModeButton/DarkModeButton";
 
 import AppLayout from "@/components/AppLayout";

@@ -1,9 +1,7 @@
 import React from "react";
 import reset from "emotion-reset";
-import { COLORS, darkTheme, lightTheme } from "@seoko/theme";
+import { COLORS, darkTheme, lightTheme, makeCssVariables } from "@seoko/theme";
 import { Global, css, useTheme } from "@emotion/react";
-
-import { makeCssVariables } from "@/utils/css/makeCssVariables";
 
 const GlobalStyle = () => {
   const theme = useTheme();
@@ -81,4 +79,4 @@ const GlobalStyle = () => {
   );
 };
 
-export default GlobalStyle;
+export { GlobalStyle };

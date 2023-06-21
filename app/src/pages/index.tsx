@@ -1,10 +1,16 @@
 import React from "react";
+import { Button } from "@seoko/ui";
 
 const Home = () => {
   return (
     <div>
       HOME
-      <button>버튼</button>
+      <Button
+        css={{
+          color: "red",
+        }}
+        label="버튼"
+      />
     </div>
   );
 };
