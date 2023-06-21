@@ -38,7 +38,7 @@ const Container = styled.div`
   cursor: pointer;
 
   background-color: ${({ theme }) => theme.background4};
-  box-shadow: ${({ theme }) => theme.box_shadow1};
+  box-shadow: ${({ theme }) => theme.BOX_SHADOW.box_shadow1};
   border-radius: 50%;
 
   & > svg {
@@ -50,7 +50,7 @@ const Container = styled.div`
 
   &:hover {
     transform: scale(1.1);
-    box-shadow: ${({ theme }) => theme.box_shadow2};
+    box-shadow: ${({ theme }) => theme.BOX_SHADOW.box_shadow1};
     & > svg {
       fill: #ffd500;
     }
