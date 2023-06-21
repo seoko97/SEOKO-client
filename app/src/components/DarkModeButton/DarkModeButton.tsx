@@ -22,7 +22,7 @@ const DarkModeButton = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,7 +39,11 @@ const Container = styled.div`
 
   background-color: ${({ theme }) => theme.background4};
   box-shadow: ${({ theme }) => theme.BOX_SHADOW.box_shadow1};
+
+  border: 0;
   border-radius: 50%;
+
+  padding: 0;
 
   & > svg {
     width: 24px;
