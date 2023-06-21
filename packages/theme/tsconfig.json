@@ -1,0 +1,3 @@
+{
+  "extends": "@seoko/tsconfig/base.json"
+}
