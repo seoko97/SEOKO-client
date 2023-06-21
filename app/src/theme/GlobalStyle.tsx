@@ -1,10 +1,9 @@
 import React from "react";
 import reset from "emotion-reset";
+import { COLORS, darkTheme, lightTheme } from "@seoko/theme";
 import { Global, css, useTheme } from "@emotion/react";
 
 import { makeCssVariables } from "@/utils/css/makeCssVariables";
-
-import { darkTheme, lightTheme } from ".";
 
 const GlobalStyle = () => {
   const theme = useTheme();
@@ -30,9 +29,19 @@ const GlobalStyle = () => {
         }
 
         body {
+          ${makeCssVariables(COLORS)}
+
           margin: 0;
           font-size: 16px;
           background-color: ${theme.background1};
+        }
+
+        body[data-theme="light"] {
+          ${makeCssVariables(lightTheme)}
+        }
+
+        body[data-theme="dark"] {
+          ${makeCssVariables(darkTheme)}
         }
 
         a {
@@ -54,25 +63,6 @@ const GlobalStyle = () => {
 
         input:focus-visible {
           outline: 0;
-        }
-
-        ::-webkit-scrollbar {
-          width: 10px;
-          height: 10px;
-          background-color: inherit;
-        }
-
-        ::-webkit-scrollbar-thumb {
-          background-color: ${theme.background2};
-          border-radius: 5px;
-        }
-
-        body[data-theme="light"] {
-          ${makeCssVariables(lightTheme)}
-        }
-
-        body[data-theme="dark"] {
-          ${makeCssVariables(darkTheme)}
         }
 
         @media (prefers-color-scheme: light) {
