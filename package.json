@@ -12,6 +12,7 @@
     "start": "yarn workspace @seoko/app start",
     "lint": "yarn workspace @seoko/app lint",
     "test": "yarn workspace @seoko/app test",
+    "build:ui": "yarn workspace @seoko/ui build:ui",
     "build:theme": "yarn workspace @seoko/theme build"
   },
   "workspaces": [
