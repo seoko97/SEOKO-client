@@ -11,11 +11,11 @@ type TransitionTimingFunction =
 
 type TransitionEffect = (
   properties: string[] | string,
-  duration: number,
+  duration?: number,
   options?: TransitionTimingFunction,
 ) => { transition: string };
 
-const getTransitionEffect: TransitionEffect = (properties, duration, options = "ease") => {
+const getTransitionEffect: TransitionEffect = (properties, duration = 200, options = "ease") => {
   let transition: string;
 
   if (properties instanceof Array) {
