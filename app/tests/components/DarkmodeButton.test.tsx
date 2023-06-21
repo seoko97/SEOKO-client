@@ -1,13 +1,19 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { act, screen } from "@testing-library/react";
 
 import DarkModeButton from "@/components/DarkModeButton/DarkModeButton";
 
 import "@testing-library/jest-dom";
+import { render } from "../utils/theme";
 
 describe("DarkModeButton", () => {
   beforeAll(() => {
     localStorage.setItem("theme", "light");
+  });
+
+  afterAll(() => {
+    localStorage.removeItem("theme");
   });
 
   it("버튼 랜더링 테스트", () => {
@@ -18,14 +24,18 @@ describe("DarkModeButton", () => {
     expect(icon).toBeInTheDocument();
   });
 
-  it("버튼 클릭 테스트", () => {
+  it("버튼 클릭 테스트", async () => {
     const { container: app, rerender } = render(<DarkModeButton />);
+
+    const button = screen.getByRole("button");
 
     let icon = app.querySelector("svg") as unknown as HTMLElement;
 
     expect(icon.id).toContain("sun-icon");
 
-    fireEvent.click(icon);
+    await act(() => {
+      return userEvent.click(button);
+    });
 
     rerender(<DarkModeButton />);
 

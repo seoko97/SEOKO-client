@@ -22,7 +22,7 @@ const DarkModeButton = () => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,8 +38,12 @@ const Container = styled.div`
   cursor: pointer;
 
   background-color: ${({ theme }) => theme.background4};
-  box-shadow: ${({ theme }) => theme.box_shadow1};
+  box-shadow: ${({ theme }) => theme.BOX_SHADOW.box_shadow1};
+
+  border: 0;
   border-radius: 50%;
+
+  padding: 0;
 
   & > svg {
     width: 24px;
@@ -50,7 +54,7 @@ const Container = styled.div`
 
   &:hover {
     transform: scale(1.1);
-    box-shadow: ${({ theme }) => theme.box_shadow2};
+    box-shadow: ${({ theme }) => theme.BOX_SHADOW.box_shadow1};
     & > svg {
       fill: #ffd500;
     }

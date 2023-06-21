@@ -1,10 +1,8 @@
-import { ThemeType } from "@/theme";
-
 interface CssVariables {
   [key: string]: string;
 }
 
-const makeCssVariables = (theme: ThemeType) => {
+const makeCssVariables = <T>(theme: T) => {
   const data = Object.entries(theme);
 
   const cssVariables = data.reduce<CssVariables>((cssVariables, [key, value]) => {
