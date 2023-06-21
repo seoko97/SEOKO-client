@@ -11,7 +11,8 @@
     "build": "yarn workspace @seoko/app build",
     "start": "yarn workspace @seoko/app start",
     "lint": "yarn workspace @seoko/app lint",
-    "test": "yarn workspace @seoko/app test"
+    "test": "yarn workspace @seoko/app test",
+    "build:theme": "yarn workspace @seoko/theme build"
   },
   "workspaces": [
     "packages/*",
