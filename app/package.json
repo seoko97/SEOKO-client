@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@seoko/eslint-config": "workspace:*",
+    "@seoko/theme": "workspace:*",
     "@seoko/tsconfig": "workspace:*",
     "@seoko/ui": "workspace:*",
     "@testing-library/jest-dom": "^5.16.5",
