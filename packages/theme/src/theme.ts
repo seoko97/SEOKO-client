@@ -8,8 +8,8 @@ const BP = {
 } as const;
 
 const BOX_SHADOW = {
-  box_shadow1: "rgb(0 0 0 / 4%) 0px 4px 16px 0px",
-  box_shadow2: "rgb(0 0 0 / 15%) 0px 4px 16px 0px",
+  primary: "rgb(0 0 0 / 4%) 0px 4px 16px 0px",
+  secondary: "rgb(0 0 0 / 15%) 0px 4px 16px 0px",
 } as const;
 
 const COLORS = {
