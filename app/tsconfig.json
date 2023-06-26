@@ -2,7 +2,8 @@
   "extends": "@seoko/tsconfig/next.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "paths": { "@/*": ["./src/*"] }
+    "paths": { "@/*": ["./src/*"] },
+    "jsxImportSource": "@emotion/react"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
