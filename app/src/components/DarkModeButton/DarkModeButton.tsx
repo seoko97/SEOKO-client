@@ -2,6 +2,8 @@ import React from "react";
 
 import styled from "@emotion/styled";
 
+import { css } from "@emotion/react";
+
 import { getTransitionEffect } from "@/utils/css/getTransitionEffect";
 
 import useDarkMode from "@/hooks/useDarkMode";
@@ -17,6 +19,7 @@ const DarkModeButton = () => {
 
   return (
     <Container onClick={onChangeTheme}>
+      <div css={css``} />
       <Icon />
     </Container>
   );
@@ -38,7 +41,7 @@ const Container = styled.button`
   cursor: pointer;
 
   background-color: ${({ theme }) => theme.background4};
-  box-shadow: ${({ theme }) => theme.BOX_SHADOW.box_shadow1};
+  box-shadow: ${({ theme }) => theme.BOX_SHADOW.primary};
 
   border: 0;
   border-radius: 50%;
@@ -54,7 +57,7 @@ const Container = styled.button`
 
   &:hover {
     transform: scale(1.1);
-    box-shadow: ${({ theme }) => theme.BOX_SHADOW.box_shadow1};
+    box-shadow: ${({ theme }) => theme.BOX_SHADOW.primary};
     & > svg {
       fill: #ffd500;
     }

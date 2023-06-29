@@ -12,12 +12,12 @@
     "start": "yarn workspace @seoko/app start",
     "lint": "yarn workspace @seoko/app lint",
     "test": "yarn workspace @seoko/app test",
-    "storybook": "yarn workspace @seoko/ui storybook",
+    "storybook": "yarn workspace @seoko/app storybook",
     "test:watch": "yarn workspace @seoko/app test:watch",
     "test:coverage": "yarn workspace @seoko/app test:coverage",
-    "build:ui": "yarn workspace @seoko/ui build:ui",
+    "build:ui": "yarn workspace @seoko/app build:ui",
     "build:theme": "yarn workspace @seoko/theme build",
-    "build:storybook": "yarn workspace @seoko/ui storybook build"
+    "build:storybook": "yarn workspace @seoko/app storybook build"
   },
   "workspaces": [
     "packages/*",
