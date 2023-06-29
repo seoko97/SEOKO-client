@@ -9,8 +9,9 @@ const Home = () => {
         css={{
           color: "red",
         }}
-        label="버튼"
-      />
+      >
+        버튼
+      </Button>
     </div>
   );
 };
