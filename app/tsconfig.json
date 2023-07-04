@@ -2,10 +2,23 @@
   "extends": "@seoko/tsconfig/next.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "paths": { "@/*": ["./src/*"] },
+    "paths": {
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@ap/*": ["./src/apollo/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@t/*": ["./src/types/*"]
+    },
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/components/ui/molecules/DarkModeButton/index.tsㅌ"
+  ],
   "exclude": ["node_modules"]
 }

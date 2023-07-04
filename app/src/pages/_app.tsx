@@ -4,12 +4,11 @@ import { AppProps } from "next/app";
 import { GlobalStyle } from "@seoko/ui";
 import { theme } from "@seoko/theme";
 import { ThemeProvider } from "@emotion/react";
+
+import AppLayout from "@components/ui/templates/AppLayout";
+import DarkModeButton from "@components/ui/molecules/DarkModeButton/DarkModeButton";
 import { ApolloProvider } from "@apollo/client";
-
-import DarkModeButton from "@/components/DarkModeButton/DarkModeButton";
-
-import AppLayout from "@/components/AppLayout";
-import { useApollo } from "@/apollo/useApollo";
+import { useApollo } from "@ap/useApollo";
 
 const SEOKO = ({ Component, pageProps }: AppProps) => {
   const client = useApollo(pageProps);
