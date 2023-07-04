@@ -5,10 +5,12 @@ import type { StorybookConfig } from "@storybook/nextjs";
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
-    path.dirname(require.resolve(path.join("@storybook/addon-links", "package.json"))),
-    path.dirname(require.resolve(path.join("@storybook/addon-essentials", "package.json"))),
-    path.dirname(require.resolve(path.join("@storybook/addon-onboarding", "package.json"))),
-    path.dirname(require.resolve(path.join("@storybook/addon-interactions", "package.json"))),
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "@storybook/addon-onboarding",
+    "@storybook/addon-interactions",
+    "@storybook/addon-interactions",
+    "storybook-dark-mode",
   ],
   framework: {
     name: path.dirname(
