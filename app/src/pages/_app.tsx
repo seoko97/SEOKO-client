@@ -6,7 +6,7 @@ import { theme } from "@seoko/theme";
 import { ThemeProvider } from "@emotion/react";
 
 import AppLayout from "@components/ui/templates/AppLayout";
-import DarkModeButton from "@components/ui/molecules/DarkModeButton/DarkModeButton";
+import DarkModeButton from "@components/ui/molecules/DarkModeButton";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "@ap/useApollo";
 
