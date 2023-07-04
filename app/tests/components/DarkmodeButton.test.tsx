@@ -2,7 +2,7 @@ import React from "react";
 import userEvent from "@testing-library/user-event";
 import { act, screen } from "@testing-library/react";
 
-import DarkModeButton from "@/components/DarkModeButton/DarkModeButton";
+import DarkModeButton from "@components/ui/molecules/DarkModeButton";
 
 import "@testing-library/jest-dom";
 import { render } from "../utils/theme";
