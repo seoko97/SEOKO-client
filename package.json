@@ -15,7 +15,7 @@
     "storybook": "yarn workspace @seoko/app storybook",
     "test:watch": "yarn workspace @seoko/app test:watch",
     "test:coverage": "yarn workspace @seoko/app test:coverage",
-    "build:ui": "yarn workspace @seoko/app build:ui",
+    "build:ui": "yarn workspace @seoko/ui build:ui",
     "build:theme": "yarn workspace @seoko/theme build",
     "build:storybook": "yarn workspace @seoko/app storybook build"
   },

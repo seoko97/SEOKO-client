@@ -1,6 +1,6 @@
 import React from "react";
 import reset from "emotion-reset";
-import { COLORS, darkTheme, lightTheme, makeCssVariables } from "@seoko/theme";
+import { COLORS, darkTheme, getTransitionEffect, lightTheme, makeCssVariables } from "@seoko/theme";
 import { Global, css, useTheme } from "@emotion/react";
 
 const GlobalStyle = () => {
@@ -28,6 +28,7 @@ const GlobalStyle = () => {
 
         body {
           ${makeCssVariables(COLORS)}
+          ${getTransitionEffect("background-color")}
 
           margin: 0;
           font-size: 16px;
