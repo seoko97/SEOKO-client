@@ -3,14 +3,14 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@ap/*": ["./src/apollo/*"],
       "@utils/*": ["./src/utils/*"],
-      "@t/*": ["./src/types/*"]
+      "@t/*": ["./src/types/*"],
+      "@/*": ["./src/*"]
     },
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "jsxImportSource": "@emotion/react"
   },
   "include": [

@@ -9,7 +9,6 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
-    "@storybook/addon-interactions",
     "storybook-dark-mode",
   ],
   framework: {
@@ -20,6 +19,21 @@ const config: StorybookConfig = {
   },
   docs: {
     autodocs: "tag",
+  },
+  webpackFinal(config) {
+    if (config.resolve) {
+      config.resolve.modules = [...(config.resolve.modules || []), path.resolve(__dirname, "..")];
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "@components": path.resolve(__dirname, "../src/components"),
+        "@hooks": path.resolve(__dirname, "../src/hooks"),
+        "@utils": path.resolve(__dirname, "../src/utils"),
+        "@t": path.resolve(__dirname, "../src/types"),
+        "@": path.resolve(__dirname, "../src"),
+      };
+    }
+
+    return config;
   },
 };
 export default config;
