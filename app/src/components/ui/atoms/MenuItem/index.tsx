@@ -16,10 +16,8 @@ const MenuItem: TComponent = ({ children, href, ...rest }) => {
 const Li = styled.li`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
 
   font-size: 0.9em;
-  padding: 0.7rem 0.5rem;
   color: ${({ theme }) => theme.font_color1};
 
   &:hover {
@@ -28,6 +26,11 @@ const Li = styled.li`
   }
 
   cursor: pointer;
+
+  & > a {
+    width: 100%;
+    padding: 0.7rem 0.5rem;
+  }
 
   ${getTransitionEffect(["background-color", "color"])}
 `;
