@@ -1,8 +1,9 @@
 import React from "react";
 
+import styled from "@emotion/styled";
+
 import { getTransitionEffect } from "@utils/css/getTransitionEffect";
 import useDarkMode from "@hooks/useDarkMode";
-import styled from "@emotion/styled";
 
 import SunIcon from "@components/icons/SunIcon";
 import MoonIcon from "@components/icons/MoonIcon";
