@@ -1,13 +1,16 @@
 import React, { PropsWithChildren } from "react";
+import { getTransitionEffect } from "@seoko/theme";
 import styled from "@emotion/styled";
 
-import { getTransitionEffect } from "@/utils/css/getTransitionEffect";
+interface IProps {
+  className?: string;
+}
 
-const AppLayout: React.FC<PropsWithChildren> = ({ children }) => {
-  return <Container>{children}</Container>;
+const AppLayout: React.FC<PropsWithChildren<IProps>> = ({ children, className }) => {
+  return <Container className={className}>{children}</Container>;
 };
 
-const Container = styled.div`
+const Container = styled.main`
   position: relative;
 
   width: 100%;

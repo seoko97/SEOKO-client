@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { getTransitionEffect } from "@seoko/theme";
 import styled from "@emotion/styled";
 
+import Nav from "@components/ui/organisms/Header/Nav";
+import Logo from "@components/ui/atoms/Logo";
 import RowFrame from "@/components/ui/templates/RowFrame";
 
-import Logo from "./Logo";
-
-const Header = () => {
+const Header: React.FC = () => {
   const [isFixed, setIsFixed] = useState(false);
 
   useEffect(() => {
@@ -29,18 +30,23 @@ const Header = () => {
     <Container {...containerProps}>
       <RowFrame>
         <Logo />
+        <Nav />
       </RowFrame>
     </Container>
   );
 };
 
 const Container = styled.header`
-  width: 100%;
   position: sticky;
-  top: -32px;
-  padding-top: 32px;
+  top: -2rem;
+
   z-index: 100;
-  transition: box-shadow 0.15s, backdrop-filter 0.3s, background-color 0.3s;
+
+  width: 100%;
+  padding-top: 2rem;
+
+  backdrop-filter: blur(3px);
+  background-color: ${({ theme }) => theme.background3};
 
   ${RowFrame} {
     display: flex;
@@ -49,8 +55,11 @@ const Container = styled.header`
     height: 72px;
   }
 
-  backdrop-filter: blur(3px);
-  background-color: ${({ theme }) => theme.background3};
+  &.fixed {
+    box-shadow: rgb(0 0 0 / 8%) 0px 0px 8px;
+  }
+
+  ${getTransitionEffect(["box-shadow", "background-color"])}
 `;
 
 export default Header;
