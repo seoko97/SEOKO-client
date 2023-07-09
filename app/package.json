@@ -33,6 +33,7 @@
     "@babel/preset-react": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
     "@emotion/babel-plugin": "^11.11.0",
+    "@emotion/babel-preset-css-prop": "^11.11.0",
     "@seoko/eslint-config": "workspace:*",
     "@seoko/theme": "workspace:*",
     "@seoko/tsconfig": "workspace:*",
