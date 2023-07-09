@@ -19,7 +19,13 @@ const GlobalStyle = () => {
           -webkit-text-size-adjust: none;
           -moz-text-size-adjust: none;
           -o-text-size-adjust: none;
+
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
         }
+
         html,
         body,
         #__next {

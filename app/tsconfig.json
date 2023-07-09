@@ -2,8 +2,15 @@
   "extends": "@seoko/tsconfig/next.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "paths": { "@/*": ["./src/*"] },
-    "jsx": "react-jsx",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@ap/*": ["./src/apollo/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@t/*": ["./src/types/*"],
+      "@/*": ["./src/*"]
+    },
+    "jsx": "preserve",
     "jsxImportSource": "@emotion/react"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

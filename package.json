@@ -17,7 +17,7 @@
     "test:coverage": "yarn workspace @seoko/app test:coverage",
     "build:ui": "yarn workspace @seoko/ui build:ui",
     "build:theme": "yarn workspace @seoko/theme build",
-    "build:storybook": "yarn workspace @seoko/app storybook build"
+    "build:storybook": "yarn workspace @seoko/app build-storybook"
   },
   "workspaces": [
     "packages/*",
