@@ -19,7 +19,7 @@ export const Default: Story = {
   args: {
     username: "John Doe",
     signOut: () => {
-      console.log("@@");
+      return;
     },
   },
 };
