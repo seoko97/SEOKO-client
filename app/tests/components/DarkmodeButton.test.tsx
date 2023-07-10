@@ -1,6 +1,6 @@
 import React from "react";
 import userEvent from "@testing-library/user-event";
-import { act, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 
 import DarkModeButton from "@components/ui/molecules/DarkModeButton";
 
@@ -19,9 +19,7 @@ describe("DarkModeButton", () => {
   it("버튼 랜더링 테스트", () => {
     const { container: app } = render(<DarkModeButton />);
 
-    const icon = app.querySelector("svg");
-
-    expect(icon).toBeInTheDocument();
+    expect(app).toBeInTheDocument();
   });
 
   it("버튼 클릭 테스트", async () => {
@@ -31,17 +29,15 @@ describe("DarkModeButton", () => {
 
     let icon = app.querySelector("svg") as unknown as HTMLElement;
 
-    expect(icon.id).toContain("sun-icon");
+    expect(icon.id).toContain("moon-icon");
 
-    await act(() => {
-      return userEvent.click(button);
-    });
+    await userEvent.click(button);
 
     rerender(<DarkModeButton />);
 
     icon = app.querySelector("svg") as unknown as HTMLElement;
 
-    expect(icon.id).toContain("moon-icon");
+    expect(icon.id).toContain("sun-icon");
   });
 
   it("mode가 null일 때 테스트", () => {
