@@ -12,7 +12,22 @@ const useDarkMode: TResult = () => {
 
     const theme = localStorage.getItem("theme") as TDarkMode;
 
-    setMode(theme);
+    if (theme) setMode(theme);
+
+    const storageListener = (e: StorageEvent) => {
+      if (e.key !== "theme") return;
+
+      const theme = e.newValue as TDarkMode;
+
+      bodyRef.current.dataset.theme = theme;
+      setMode(theme);
+    };
+
+    window.addEventListener("storage", storageListener);
+
+    return () => {
+      window.removeEventListener("storage", storageListener);
+    };
   }, []);
 
   const onChangeTheme = useCallback(() => {
@@ -21,9 +36,7 @@ const useDarkMode: TResult = () => {
     const theme = mode === "light" ? "dark" : "light";
 
     bodyRef.current.dataset.theme = theme;
-
     localStorage.setItem("theme", theme);
-
     setMode(theme);
   }, [mode]);
 
