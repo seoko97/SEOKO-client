@@ -21,7 +21,7 @@ const Menu: React.FC<IProps> = ({ username }) => {
     button: (
       <AvatarWrapper>
         <Avatar />
-        <span>지석호</span>
+        <span>{username}</span>
       </AvatarWrapper>
     ),
     menu: <UserMenu {...userMenuProps} />,

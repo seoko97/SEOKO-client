@@ -7,4 +7,12 @@ module.exports = {
     "react/no-unknown-property": ["error", { ignore: ["css"] }],
     "@typescript-eslint/no-unused-vars": "warn",
   },
+  overrides: [
+    {
+      files: ["jest.setup.js"],
+      rules: {
+        "no-undef": "off",
+      },
+    },
+  ],
 };

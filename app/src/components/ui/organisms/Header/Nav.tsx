@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 
 import UserMenu from "@components/ui/molecules/Menu/User";
 import PageMenu from "@components/ui/molecules/Menu/Page";
+import DarkModeButton from "@components/ui/molecules/DarkModeButton";
 
 const Nav = () => {
   const username = null;
@@ -14,6 +15,7 @@ const Nav = () => {
 
   return (
     <Container>
+      <DarkModeButton />
       {username && <UserMenu {...menuProps} />}
       <PageMenu {...menuProps} />
     </Container>

@@ -27,7 +27,8 @@ const Li = styled.li`
 
   cursor: pointer;
 
-  & > a {
+  & > a,
+  &:not(:has(a)) {
     width: 100%;
     padding: 0.7rem 0.5rem;
   }

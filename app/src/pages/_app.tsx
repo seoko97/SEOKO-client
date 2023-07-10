@@ -10,7 +10,6 @@ import { ApolloProvider } from "@apollo/client";
 
 import AppLayout from "@components/ui/templates/AppLayout";
 import Header from "@components/ui/organisms/Header";
-import DarkModeButton from "@components/ui/molecules/DarkModeButton";
 import { useApollo } from "@ap/useApollo";
 
 const notoSansKr = Noto_Sans_KR({
@@ -28,7 +27,6 @@ const SEOKO = ({ Component, pageProps }: AppProps) => {
         <AppLayout className={notoSansKr.className}>
           <Header />
           <Component {...pageProps} />
-          <DarkModeButton />
         </AppLayout>
       </ThemeProvider>
     </ApolloProvider>
