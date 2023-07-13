@@ -5,7 +5,7 @@ const nextConfig = {
     emotion: true,
   },
   output: "standalone",
-  transpilePackages: ["@seoko/ui", "@seoko/theme"],
+  transpilePackages: ["@seoko/theme"],
 };
 
 module.exports = nextConfig;

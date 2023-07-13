@@ -35,7 +35,6 @@
     "@seoko/eslint-config": "workspace:*",
     "@seoko/theme": "workspace:*",
     "@seoko/tsconfig": "workspace:*",
-    "@seoko/ui": "workspace:*",
     "@storybook/addon-essentials": "^7.1.0-alpha.41",
     "@storybook/addon-interactions": "^7.1.0-alpha.41",
     "@storybook/addon-links": "^7.1.0-alpha.41",
