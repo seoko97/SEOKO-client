@@ -5,7 +5,6 @@
     "paths": {
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@ap/*": ["./src/apollo/*"],
       "@utils/*": ["./src/utils/*"],
       "@t/*": ["./src/types/*"],
       "@/*": ["./src/*"]
