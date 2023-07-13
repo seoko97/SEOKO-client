@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import type { Preview } from "@storybook/react";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "@seoko/theme";
-import { GlobalStyle } from "@seoko/ui";
+import { GlobalStyle } from "../src/styles/GlobalStyle";
 
 import { useDarkMode } from "storybook-dark-mode";
 

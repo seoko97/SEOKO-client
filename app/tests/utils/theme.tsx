@@ -1,8 +1,10 @@
 import React, { PropsWithChildren } from "react";
 import { RenderOptions, render } from "@testing-library/react";
-import { GlobalStyle } from "@seoko/ui";
+
 import { theme } from "@seoko/theme";
 import { ThemeProvider } from "@emotion/react";
+
+import { GlobalStyle } from "../../src/styles/GlobalStyle";
 
 const Wrapper: React.FC<PropsWithChildren> = ({ children }) => {
   return (

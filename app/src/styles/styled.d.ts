@@ -1,4 +1,5 @@
 import "@emotion/react";
+
 import { ThemeType } from "@seoko/theme";
 
 declare module "@emotion/react" {
