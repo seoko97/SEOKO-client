@@ -6,11 +6,8 @@ import { GlobalStyle } from "@seoko/ui";
 import { theme } from "@seoko/theme";
 import { ThemeProvider } from "@emotion/react";
 
-import { ApolloProvider } from "@apollo/client";
-
 import AppLayout from "@components/ui/templates/AppLayout";
 import Header from "@components/ui/organisms/Header";
-import { useApollo } from "@ap/useApollo";
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ["latin"],
@@ -18,18 +15,14 @@ const notoSansKr = Noto_Sans_KR({
 });
 
 const SEOKO = ({ Component, pageProps }: AppProps) => {
-  const client = useApollo(pageProps);
-
   return (
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <AppLayout className={notoSansKr.className}>
-          <Header />
-          <Component {...pageProps} />
-        </AppLayout>
-      </ThemeProvider>
-    </ApolloProvider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <AppLayout className={notoSansKr.className}>
+        <Header />
+        <Component {...pageProps} />
+      </AppLayout>
+    </ThemeProvider>
   );
 };
 
