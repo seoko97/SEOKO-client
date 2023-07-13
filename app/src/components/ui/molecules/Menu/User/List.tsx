@@ -4,7 +4,7 @@ import { Container } from "@components/ui/molecules/Menu/styles";
 import MenuItem from "@components/ui/atoms/MenuItem";
 
 interface IProps {
-  username: string;
+  username: string | null;
   signOut: () => void;
 }
 
