@@ -2,7 +2,7 @@ interface CssVariables {
   [key: string]: string;
 }
 
-const makeCssVariables = <T>(theme: T) => {
+const makeCssVariables = <T extends object>(theme: T) => {
   const data = Object.entries(theme);
 
   const cssVariables = data.reduce<CssVariables>((cssVariables, [key, value]) => {
