@@ -15,7 +15,7 @@ const useDarkMode: TResult = () => {
     if (theme) setMode(theme);
 
     const storageListener = (e: StorageEvent) => {
-      if (e.key !== "theme") return;
+      if (e.key !== "theme" || !bodyRef.current) return;
 
       const theme = e.newValue as TDarkMode;
 
