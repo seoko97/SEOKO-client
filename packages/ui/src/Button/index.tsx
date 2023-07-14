@@ -71,4 +71,4 @@ const Container = styled.button<Pick<IProps, "primary" | "size">>`
   border-radius: 0.4rem;
 `;
 
-export { Button };
+export default Button;

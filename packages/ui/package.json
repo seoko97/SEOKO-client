@@ -7,20 +7,17 @@
     "package.json"
   ],
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     }
   },
   "scripts": {
     "lint": "eslint \"**/*.ts*\"",
-    "storybook": "storybook dev -p 6006",
-    "build:ui": "tsup",
-    "build:storybook": "storybook build"
+    "build:ui": "tsc"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -35,8 +32,6 @@
     "@seoko/tsconfig": "workspace:*",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",
-    "tsup": "^6.7.0",
-    "typescript": "^5.0.4",
-    "vite": "^4.3.9"
+    "typescript": "^5.0.4"
   }
 }

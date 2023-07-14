@@ -2,6 +2,7 @@
   "extends": "@seoko/tsconfig/react.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] },
@@ -9,5 +10,5 @@
     "jsxImportSource": "@emotion/react"
   },
   "include": ["."],
-  "exclude": ["dist", "build", "node_modules"]
+  "exclude": ["dist", "node_modules"]
 }
