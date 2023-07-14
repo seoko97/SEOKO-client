@@ -3402,6 +3402,7 @@ __metadata:
     "@seoko/eslint-config": "workspace:*"
     "@seoko/theme": "workspace:*"
     "@seoko/tsconfig": "workspace:*"
+    "@seoko/ui": "workspace:*"
     "@storybook/addon-essentials": ^7.1.0-alpha.41
     "@storybook/addon-interactions": ^7.1.0-alpha.41
     "@storybook/addon-links": ^7.1.0-alpha.41
@@ -3475,7 +3476,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@seoko/ui@workspace:packages/ui":
+"@seoko/ui@workspace:*, @seoko/ui@workspace:packages/ui":
   version: 0.0.0-use.local
   resolution: "@seoko/ui@workspace:packages/ui"
   dependencies:
@@ -3489,9 +3490,7 @@ __metadata:
     emotion-reset: ^3.0.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    tsup: ^6.7.0
     typescript: ^5.0.4
-    vite: ^4.3.9
   languageName: unknown
   linkType: soft
 
@@ -6284,6 +6283,11 @@ __metadata:
     eslint: ^8.41.0
     prettier: ^2.8.8
     typescript: ^5.0.4
+  peerDependencies:
+    "@emotion/react": 11.x
+    "@emotion/styled": 11.x
+    react: 18.x
+    react-dom: 18.x
   languageName: unknown
   linkType: soft
 
@@ -16435,7 +16439,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:*, vite@npm:^4.3.9":
+"vite@npm:*":
   version: 4.3.9
   resolution: "vite@npm:4.3.9"
   dependencies:
