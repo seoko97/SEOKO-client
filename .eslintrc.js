@@ -13,14 +13,15 @@ module.exports = {
   ],
   plugins: ["prettier", "@typescript-eslint", "import"],
   rules: {
+    "react/react-in-jsx-scope": "off",
     "@next/next/no-html-link-for-pages": "off",
     "import/order": [
       "error",
       {
         groups: [["builtin", "external"], "internal", ["parent", "sibling"], "index"],
         pathGroups: [
-          { pattern: "{react,react/*}", group: "builtin", position: "after" },
-          { pattern: "{next,next/*}", group: "builtin", position: "after" },
+          { pattern: "{react,react/*}", group: "internal", position: "before" },
+          { pattern: "{next,next/*}", group: "internal", position: "before" },
         ],
         alphabetize: { order: "desc", caseInsensitive: true },
         "newlines-between": "always-and-inside-groups",
