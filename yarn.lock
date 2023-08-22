@@ -13,9 +13,9 @@ __metadata:
   linkType: hard
 
 "@adobe/css-tools@npm:^4.0.1":
-  version: 4.3.0
-  resolution: "@adobe/css-tools@npm:4.3.0"
-  checksum: 63c9702a91bfda13767fcb3107056ed19463e9a4dcb3b5918d64c8eb7e609357c59b1355c0226765b60323adbb0abd88564acfa1e2b20067219c3ad23576c0b3
+  version: 4.3.1
+  resolution: "@adobe/css-tools@npm:4.3.1"
+  checksum: ad43456379ff391132aff687ece190cb23ea69395e23c9b96690eeabe2468da89a4aaf266e4f8b6eaab53db3d1064107ce0f63c3a974e864f4a04affc768da3f
   languageName: node
   linkType: hard
 
@@ -4195,9 +4195,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "@testing-library/jest-dom@npm:6.0.0"
+"@testing-library/jest-dom@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "@testing-library/jest-dom@npm:6.0.1"
   dependencies:
     "@adobe/css-tools": ^4.0.1
     "@babel/runtime": ^7.9.2
@@ -4221,7 +4221,7 @@ __metadata:
       optional: true
     vitest:
       optional: true
-  checksum: 9b978e993f084553f8e39215b08f6e09e84a4c78e578db35d361bb4259aed84418f1b17ce52f23ead4d81cc7cad5ae5b18a6596d6d531a6d2252be66409e7167
+  checksum: b5c35e2a79d646753f0305bf7f461c5d6fb873016527a78606a20a5fcc7e55a2f5e9eb394d376c47739cee566af133c6f53d8f49681d623db1cf6f236c5971df
   languageName: node
   linkType: hard
 
@@ -4479,7 +4479,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*":
+"@types/jest@npm:*, @types/jest@npm:^29.5.3":
   version: 29.5.3
   resolution: "@types/jest@npm:29.5.3"
   dependencies:
@@ -5121,9 +5121,10 @@ __metadata:
     "@storybook/testing-library": ^0.2.0
     "@tanstack/react-query": ^4.29.19
     "@tanstack/react-query-devtools": ^4.29.19
-    "@testing-library/jest-dom": ^6.0.0
+    "@testing-library/jest-dom": ^6.0.1
     "@testing-library/react": ^14.0.0
     "@testing-library/user-event": ^14.4.3
+    "@types/jest": ^29.5.3
     "@types/node": 20.5.0
     "@types/react": 18.2.20
     "@types/react-dom": 18.2.7
