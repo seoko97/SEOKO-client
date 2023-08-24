@@ -35,7 +35,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
     const fnToRunOnClient = `(${stringifyFn})()`;
 
-    return <script dangerouslySetInnerHTML={{ __html: fnToRunOnClient }} async />;
+    return <script dangerouslySetInnerHTML={{ __html: fnToRunOnClient }} />;
   }
 
   return (

@@ -2,7 +2,7 @@ import React from "react";
 
 import PageMenu from "@components/ui/Menu/Page/List";
 import BaseMenu from "@components/ui/Menu";
-import MenuIcon from "@/icons/MenuIcon";
+import { MenuIcon } from "@components/icons";
 
 interface IProps {
   username: string | null;

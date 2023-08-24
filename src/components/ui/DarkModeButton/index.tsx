@@ -4,8 +4,7 @@ import React from "react";
 
 import useDarkMode from "@hooks/useDarkMode";
 
-import SunIcon from "@/icons/SunIcon";
-import MoonIcon from "@/icons/MoonIcon";
+import { SunIcon, MoonIcon } from "@components/icons";
 
 const DarkModeButton = () => {
   const [mode, onChangeTheme] = useDarkMode();
