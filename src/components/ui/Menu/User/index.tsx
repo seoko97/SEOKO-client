@@ -16,10 +16,10 @@ const Menu: React.FC<IProps> = ({ username }) => {
 
   const baseMenuProps = {
     button: (
-      <div className="flex cursor-pointer items-center justify-center gap-x-2 text-primary transition-[color] hover:text-effect1 [&.is-active]:text-effect1">
+      <button className="flex cursor-pointer items-center justify-center gap-x-2 text-primary transition-[color] hover:text-effect1 [&.is-active]:text-effect1">
         <Avatar />
         <span className="sm:hidden">{username}</span>
-      </div>
+      </button>
     ),
     menu: <UserMenu {...userMenuProps} />,
   };

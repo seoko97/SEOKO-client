@@ -15,7 +15,7 @@ const Menu: React.FC<IProps> = ({ username }) => {
 
   const baseMenuProps = {
     button: (
-      <button className="group flex cursor-pointer border-none bg-transparent p-0 ">
+      <button className="group flex cursor-pointer border-none bg-transparent p-0">
         <MenuIcon className="fill-[theme(textColor.primary)] transition-[fill] group-hover:fill-[theme(textColor.effect1)] group-[.is-active]:fill-[theme(textColor.effect1)]" />
       </button>
     ),
