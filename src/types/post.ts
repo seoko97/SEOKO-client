@@ -6,6 +6,7 @@ interface IPost extends IBaseResponse {
   thumbnail?: string;
   series: any;
   tags: any[];
+  isLiked: boolean;
   likeCount: number;
   viewCount: number;
 }
