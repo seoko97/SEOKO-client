@@ -21,7 +21,7 @@ interface IUpdatePostInput extends Pick<IPost, "title" | "content" | "thumbnail"
   addTags?: string[];
 }
 
-interface IGetPostInput {
+interface IGetPostsInput {
   series?: string;
   skip?: number;
   limit?: number;
@@ -29,4 +29,12 @@ interface IGetPostInput {
   text?: string;
 }
 
-export type { IPost, ICreatePostInput, IUpdatePostInput, IGetPostInput };
+interface IGetPost {
+  post: IPost;
+  sibling: {
+    prev: IPost | null;
+    next: IPost | null;
+  };
+}
+
+export type { IPost, ICreatePostInput, IUpdatePostInput, IGetPostsInput, IGetPost };
