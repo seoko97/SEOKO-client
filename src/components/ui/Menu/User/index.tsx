@@ -1,18 +1,16 @@
 import React from "react";
 
+import { useSignOutMutation } from "@hooks/query/user";
 import UserMenu from "@components/ui/Menu/User/List";
 import BaseMenu from "@components/ui/Menu";
 import Avatar from "@components/ui/core/Avatar";
 
 interface IProps {
-  username: string | null;
+  username?: string | null;
 }
 
 const Menu: React.FC<IProps> = ({ username }) => {
-  const userMenuProps = {
-    username,
-    signOut: () => console.log("signOut"),
-  };
+  const { mutate } = useSignOutMutation();
 
   const baseMenuProps = {
     button: (
@@ -21,7 +19,7 @@ const Menu: React.FC<IProps> = ({ username }) => {
         <span className="sm:hidden">{username}</span>
       </button>
     ),
-    menu: <UserMenu {...userMenuProps} />,
+    menu: <UserMenu username={username} signOut={mutate} />,
   };
 
   return <BaseMenu {...baseMenuProps} />;
