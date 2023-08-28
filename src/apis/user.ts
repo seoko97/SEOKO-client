@@ -4,7 +4,7 @@ import api from "@/apis";
 const getUser = async () => {
   const res = await api.get<IUser>("/users");
 
-  return res.data.username;
+  return res.data;
 };
 
 const signin = async (data: ISignInInput) => {
