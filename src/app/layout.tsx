@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 
 import { Noto_Sans_KR } from "next/font/google";
 
+import Providers from "@components/ui/Providers";
 import Header from "@components/ui/Header";
+import Footer from "@components/ui/Footer";
 
 import "@styles/globals.css";
-import Footer from "@components/ui/Footer";
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ["latin"],
@@ -43,9 +44,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className={notoSansKR.className} suppressHydrationWarning={true}>
         <ThemeScript />
         <div className="relative min-h-screen w-full bg-primary pb-36 transition-[background-color]">
-          <Header />
-          {children}
-          <Footer />
+          <Providers>
+            <Header />
+            {children}
+            <Footer />
+          </Providers>
         </div>
       </body>
     </html>

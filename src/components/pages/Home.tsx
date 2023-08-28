@@ -3,12 +3,7 @@ import React from "react";
 import { USER_DETAIL, USER_LINKS } from "@utils/constant/user";
 import Avatar from "@components/ui/core/Avatar";
 
-const Home = () => {
-  const iconProps = {
-    className:
-      "h-6 w-6 fill-[theme(textColor.secondary)] transition-[fill] hover:fill-[theme(textColor.effect1)]",
-  };
-
+const Home = async () => {
   return (
     <main className="frame flex flex-col items-center justify-center">
       <section className="3-16 flex w-[700px] items-center justify-center gap-7 px-0 py-16 text-primary md:w-full md:flex-col md:gap-4 md:px-0 md:pb-12 md:pt-8">
@@ -19,7 +14,7 @@ const Home = () => {
           <div className="flex w-full items-center gap-5">
             {USER_LINKS.map(({ name, link, Icon }) => (
               <a key={name} href={link} target="_blank" rel="noopener noreferrer" aria-label={name}>
-                <Icon {...iconProps} />
+                <Icon className="h-6 w-6 fill-[theme(textColor.secondary)] transition-[fill] hover:fill-[theme(textColor.effect1)]" />
               </a>
             ))}
           </div>

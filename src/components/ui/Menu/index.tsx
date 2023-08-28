@@ -2,7 +2,6 @@ import React, { ReactNode, useRef, ReactElement } from "react";
 
 import useDetectOutsideClick from "@hooks/useDetectOutsideClick";
 import useAnimation from "@hooks/useAnimation";
-import Wrapper from "@components/ui/Menu/Wrapper";
 
 interface IProps {
   button: ReactElement;
@@ -25,7 +24,9 @@ const BaseMenu = ({ button, menu }: IProps) => {
   };
 
   const wrapperProps = {
-    className: showMenu || triggerAnimation ? "animate-show" : "animate-hide",
+    className: `${
+      showMenu || triggerAnimation ? "animate-show" : "animate-hide"
+    } absolute top-[60px] right-0 lg:right-4`,
     onAnimationEnd: handleTransitionEnd,
   };
 
@@ -36,7 +37,7 @@ const BaseMenu = ({ button, menu }: IProps) => {
   return (
     <div {...containerProps}>
       {button}
-      {renderMenu && <Wrapper {...wrapperProps}>{menu}</Wrapper>}
+      {renderMenu && <div {...wrapperProps}>{menu}</div>}
     </div>
   );
 };
