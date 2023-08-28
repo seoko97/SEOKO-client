@@ -2,8 +2,14 @@ import React from "react";
 
 import { USER_DETAIL, USER_LINKS } from "@utils/constant/user";
 import Avatar from "@components/ui/core/Avatar";
+import Hydrate from "@components/query/hydrate/Home";
+import { IGetPostsInput } from "@/types";
 
-const Home = async () => {
+interface IProps {
+  searchParams: IGetPostsInput;
+}
+
+const Home = async ({ searchParams }: IProps) => {
   return (
     <main className="frame flex flex-col items-center justify-center">
       <section className="3-16 flex w-[700px] items-center justify-center gap-7 px-0 py-16 text-primary md:w-full md:flex-col md:gap-4 md:px-0 md:pb-12 md:pt-8">
@@ -20,7 +26,9 @@ const Home = async () => {
           </div>
         </div>
       </section>
-      <section className="h-screen"></section>
+      <Hydrate params={searchParams}>
+        <section className="h-screen"></section>
+      </Hydrate>
     </main>
   );
 };
