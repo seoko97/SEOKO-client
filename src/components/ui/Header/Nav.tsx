@@ -2,17 +2,17 @@ import React, { useEffect, useRef } from "react";
 
 import { usePathname } from "next/navigation";
 
-import { useQuery } from "@tanstack/react-query";
+import { useGetUserQuery } from "@hooks/query/user";
 import UserMenu from "@components/ui/Menu/User";
 import PageMenu from "@components/ui/Menu/Page";
 import DarkModeButton from "@components/ui/DarkModeButton";
-import { getUser } from "@/apis/user";
 
 const Nav = () => {
   const pathname = usePathname();
   const pathnameRef = useRef(pathname);
 
-  const { data: username, refetch } = useQuery({ queryKey: ["user"], queryFn: getUser });
+  const { data, refetch } = useGetUserQuery();
+  const username = data?.username;
 
   useEffect(() => {
     if (pathnameRef.current === pathname) return;
