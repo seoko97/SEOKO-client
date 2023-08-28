@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 
 import { Noto_Sans_KR } from "next/font/google";
 
-import Providers from "@components/ui/Providers";
 import Header from "@components/ui/Header";
 import Footer from "@components/ui/Footer";
+import Providers from "@components/query/Providers";
 
 import "@styles/globals.css";
 
