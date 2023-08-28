@@ -9,17 +9,13 @@ interface IProps {
 }
 
 const Menu: React.FC<IProps> = ({ username }) => {
-  const pageMenuProps = {
-    isSign: Boolean(username),
-  };
-
   const baseMenuProps = {
     button: (
       <button className="group flex cursor-pointer border-none bg-transparent p-0">
         <MenuIcon className="fill-[theme(textColor.primary)] transition-[fill] group-hover:fill-[theme(textColor.effect1)] group-[.is-active]:fill-[theme(textColor.effect1)]" />
       </button>
     ),
-    menu: <PageMenu {...pageMenuProps} />,
+    menu: <PageMenu isSign={Boolean(username)} />,
   };
 
   return <BaseMenu {...baseMenuProps} />;
