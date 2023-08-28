@@ -5,7 +5,7 @@ import BaseMenu from "@components/ui/Menu";
 import { MenuIcon } from "@components/icons";
 
 interface IProps {
-  username: string | null;
+  username?: string | null;
 }
 
 const Menu: React.FC<IProps> = ({ username }) => {
