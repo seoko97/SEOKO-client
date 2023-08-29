@@ -6,9 +6,9 @@ body,
 body[data-theme="light"] {
   --primary: #86caf4;
 
-  --background1: #f2f5f7;
+  --background1: 242 245 247;
   --background2: #fafafa;
-  --background3: #f2f5f780;
+  --background3: #e5e7eb;
   --background4: #23374d;
 
   --text1: #212529;
@@ -27,9 +27,9 @@ body[data-theme="light"] {
 body[data-theme="dark"] {
   --primary: #c58ff7;
 
-  --background1: #212529;
+  --background1: 33 37 41;
   --background2: #343a40;
-  --background3: #21252980;
+  --background3: #373d42;
   --background4: #444444;
 
   --text1: #f8f9fa;

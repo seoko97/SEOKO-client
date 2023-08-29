@@ -15,7 +15,7 @@ const config: Config = {
     },
     extend: {
       backgroundColor: {
-        primary: "var(--background1)",
+        primary: "rgb(var(--background1) / <alpha-value>)",
         secondary: "var(--background2)",
         tertiary: "var(--background3)",
         quaternary: "var(--background4)",
