@@ -1,6 +1,7 @@
 import React from "react";
 
 import { USER_DETAIL, USER_LINKS } from "@utils/constant/user";
+import HomeContent from "@components/ui/HomeContent";
 import Avatar from "@components/ui/core/Avatar";
 import Hydrate from "@components/query/hydrate/Home";
 import { IGetPostsInput } from "@/types";
@@ -27,7 +28,7 @@ const Home = async ({ searchParams }: IProps) => {
         </div>
       </section>
       <Hydrate params={searchParams}>
-        <section className="h-screen"></section>
+        <HomeContent params={searchParams} />
       </Hydrate>
     </main>
   );
