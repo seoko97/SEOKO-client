@@ -45,6 +45,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:20.5.0"],\
             ["@types/react", "npm:18.2.20"],\
             ["@types/react-dom", "npm:18.2.7"],\
+            ["@types/remove-markdown", "npm:0.3.1"],\
             ["@types/testing-library__jest-dom", "npm:5.14.9"],\
             ["@typescript-eslint/eslint-plugin", "virtual:9c7047468496e05802eeb01e515c0c69a52c9aa8c0a9f3ad163ffb318ba201d1dc106ea6a37e5438d1ae405e6b21f3e2a9f63d6192dbb93932689562f3eee977#npm:6.3.0"],\
             ["@typescript-eslint/parser", "virtual:9c7047468496e05802eeb01e515c0c69a52c9aa8c0a9f3ad163ffb318ba201d1dc106ea6a37e5438d1ae405e6b21f3e2a9f63d6192dbb93932689562f3eee977#npm:6.3.0"],\
@@ -67,6 +68,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier-plugin-tailwindcss", "virtual:9c7047468496e05802eeb01e515c0c69a52c9aa8c0a9f3ad163ffb318ba201d1dc106ea6a37e5438d1ae405e6b21f3e2a9f63d6192dbb93932689562f3eee977#npm:0.4.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:9c7047468496e05802eeb01e515c0c69a52c9aa8c0a9f3ad163ffb318ba201d1dc106ea6a37e5438d1ae405e6b21f3e2a9f63d6192dbb93932689562f3eee977#npm:18.2.0"],\
+            ["remove-markdown", "npm:0.5.0"],\
             ["sharp", "npm:0.32.5"],\
             ["storybook", "npm:7.2.3"],\
             ["tailwindcss", "npm:3.3.3"],\
@@ -7015,6 +7017,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/remove-markdown", [\
+        ["npm:0.3.1", {\
+          "packageLocation": "./.yarn/cache/@types-remove-markdown-npm-0.3.1-5f73aba750-a673aafa3a.zip/node_modules/@types/remove-markdown/",\
+          "packageDependencies": [\
+            ["@types/remove-markdown", "npm:0.3.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/scheduler", [\
         ["npm:0.16.3", {\
           "packageLocation": "./.yarn/cache/@types-scheduler-npm-0.16.3-887bfc0086-2b0aec39c2.zip/node_modules/@types/scheduler/",\
@@ -7668,6 +7679,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:20.5.0"],\
             ["@types/react", "npm:18.2.20"],\
             ["@types/react-dom", "npm:18.2.7"],\
+            ["@types/remove-markdown", "npm:0.3.1"],\
             ["@types/testing-library__jest-dom", "npm:5.14.9"],\
             ["@typescript-eslint/eslint-plugin", "virtual:9c7047468496e05802eeb01e515c0c69a52c9aa8c0a9f3ad163ffb318ba201d1dc106ea6a37e5438d1ae405e6b21f3e2a9f63d6192dbb93932689562f3eee977#npm:6.3.0"],\
             ["@typescript-eslint/parser", "virtual:9c7047468496e05802eeb01e515c0c69a52c9aa8c0a9f3ad163ffb318ba201d1dc106ea6a37e5438d1ae405e6b21f3e2a9f63d6192dbb93932689562f3eee977#npm:6.3.0"],\
@@ -7690,6 +7702,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier-plugin-tailwindcss", "virtual:9c7047468496e05802eeb01e515c0c69a52c9aa8c0a9f3ad163ffb318ba201d1dc106ea6a37e5438d1ae405e6b21f3e2a9f63d6192dbb93932689562f3eee977#npm:0.4.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:9c7047468496e05802eeb01e515c0c69a52c9aa8c0a9f3ad163ffb318ba201d1dc106ea6a37e5438d1ae405e6b21f3e2a9f63d6192dbb93932689562f3eee977#npm:18.2.0"],\
+            ["remove-markdown", "npm:0.5.0"],\
             ["sharp", "npm:0.32.5"],\
             ["storybook", "npm:7.2.3"],\
             ["tailwindcss", "npm:3.3.3"],\
@@ -17281,6 +17294,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/remove-accents-npm-0.4.2-7cb341092a-84a6988555.zip/node_modules/remove-accents/",\
           "packageDependencies": [\
             ["remove-accents", "npm:0.4.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["remove-markdown", [\
+        ["npm:0.5.0", {\
+          "packageLocation": "./.yarn/cache/remove-markdown-npm-0.5.0-3bbb0943cb-c3c9051e7e.zip/node_modules/remove-markdown/",\
+          "packageDependencies": [\
+            ["remove-markdown", "npm:0.5.0"]\
           ],\
           "linkType": "HARD"\
         }]\
