@@ -7,6 +7,7 @@ import Footer from "@components/ui/Footer";
 import Providers from "@components/query/Providers";
 
 import "@styles/globals.css";
+import Hydrate from "@components/query/hydrate/User";
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ["latin"],
@@ -45,7 +46,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <ThemeScript />
         <div className="relative min-h-screen w-full bg-primary pb-36 transition-[background-color]">
           <Providers>
-            <Header />
+            <Hydrate>
+              <Header />
+            </Hydrate>
             {children}
             <Footer />
           </Providers>
