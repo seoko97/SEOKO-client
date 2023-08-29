@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
 import { ICreatePostInput, IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
 import {
   createPost,
@@ -14,13 +14,13 @@ const useGetPostQuery = (nid: number) => {
   return useQuery({ queryKey: ["post", nid], queryFn: () => getPost(nid) });
 };
 
-const useGetPostsQuery = (params: IGetPostsInput) => {
-  // 텍스트 입력을 통해 많은 메모리를 사용하는 것을 방지하기 위해
-  const { series = "", tag = "", skip = 0, limit = 10 } = params;
+const useGetPostsQuery = (params: IGetPostsInput = {}) => {
+  const { series = "", tag = "" } = params;
 
-  return useQuery({
-    queryKey: ["posts", { series, skip, limit, tag }],
-    queryFn: () => getPosts(params),
+  return useInfiniteQuery({
+    queryKey: ["posts", { series, tag }],
+    queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
+    getNextPageParam: (_, allPage) => allPage.flat().length,
   });
 };
 
