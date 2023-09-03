@@ -15,12 +15,11 @@ const useGetPostQuery = (nid: number) => {
 };
 
 const useGetPostsQuery = (params: IGetPostsInput = {}) => {
-  const { series = "", tag = "" } = params;
-
   return useInfiniteQuery({
-    queryKey: ["posts", { series, tag }],
+    queryKey: ["posts", params],
     queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
     getNextPageParam: (_, allPage) => allPage.flat().length,
+    keepPreviousData: true,
   });
 };
 
