@@ -20,6 +20,7 @@
     "next": "13.4.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "remove-markdown": "^0.5.0",
     "sharp": "^0.32.5"
   },
   "devDependencies": {
@@ -39,6 +40,7 @@
     "@types/node": "20.5.0",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
+    "@types/remove-markdown": "^0.3.1",
     "@types/testing-library__jest-dom": "^5.14.9",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",

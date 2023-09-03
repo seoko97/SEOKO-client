@@ -1,3 +1,4 @@
+import { fontFamily } from "tailwindcss/defaultTheme";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -13,9 +14,12 @@ const config: Config = {
       lg: { max: "980px" },
       xl: { max: "1280px" },
     },
+    fontFamily: {
+      sans: ["Pretendard", ...fontFamily.sans],
+    },
     extend: {
       backgroundColor: {
-        primary: "var(--background1)",
+        primary: "rgb(var(--background1) / <alpha-value>)",
         secondary: "var(--background2)",
         tertiary: "var(--background3)",
         quaternary: "var(--background4)",

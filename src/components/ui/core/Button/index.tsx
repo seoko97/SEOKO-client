@@ -25,7 +25,7 @@ const Button: React.FC<TProps> = ({
   buttonType = "default",
   ...props
 }) => {
-  const { className, ...rest } = props;
+  const { className = "", ...rest } = props;
 
   const buttonProps = {
     ...rest,

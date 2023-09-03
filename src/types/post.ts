@@ -3,7 +3,7 @@ import { IBaseResponse } from "@/types/base";
 interface IPost extends IBaseResponse {
   title: string;
   content: string;
-  thumbnail?: string;
+  thumbnail: string;
   series: any;
   tags: any[];
   isLiked: boolean;

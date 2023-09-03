@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
 
-import { Noto_Sans_KR } from "next/font/google";
-
-import Providers from "@components/ui/Providers";
 import Header from "@components/ui/Header";
 import Footer from "@components/ui/Footer";
+import Providers from "@components/query/Providers";
 
 import "@styles/globals.css";
-
-const notoSansKR = Noto_Sans_KR({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-});
+import Hydrate from "@components/query/hydrate/User";
 
 export const metadata: Metadata = {
   title: "SEOKO",
@@ -41,11 +35,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="ko">
-      <body className={notoSansKR.className} suppressHydrationWarning={true}>
+      <body suppressHydrationWarning={true}>
         <ThemeScript />
         <div className="relative min-h-screen w-full bg-primary pb-36 transition-[background-color]">
           <Providers>
-            <Header />
+            <Hydrate>
+              <Header />
+            </Hydrate>
             {children}
             <Footer />
           </Providers>

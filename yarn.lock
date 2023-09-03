@@ -4635,6 +4635,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/remove-markdown@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@types/remove-markdown@npm:0.3.1"
+  checksum: a673aafa3a3722d959b4ad1d4e95b33f04f037a8bb95a82e843d6005b12b51f9b1bfd5954cd5c8707fbbb2f1d8865f7e632f02f99389ab83d0dcfd2cb1920dbb
+  languageName: node
+  linkType: hard
+
 "@types/scheduler@npm:*":
   version: 0.16.3
   resolution: "@types/scheduler@npm:0.16.3"
@@ -5128,6 +5135,7 @@ __metadata:
     "@types/node": 20.5.0
     "@types/react": 18.2.20
     "@types/react-dom": 18.2.7
+    "@types/remove-markdown": ^0.3.1
     "@types/testing-library__jest-dom": ^5.14.9
     "@typescript-eslint/eslint-plugin": ^6.3.0
     "@typescript-eslint/parser": ^6.3.0
@@ -5150,6 +5158,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.4.0
     react: 18.2.0
     react-dom: 18.2.0
+    remove-markdown: ^0.5.0
     sharp: ^0.32.5
     storybook: ^7.1.0-alpha.41
     tailwindcss: 3.3.3
@@ -13177,6 +13186,13 @@ __metadata:
   version: 0.4.2
   resolution: "remove-accents@npm:0.4.2"
   checksum: 84a6988555dea24115e2d1954db99509588d43fe55a1590f0b5894802776f7b488b3151c37ceb9e4f4b646f26b80b7325dcea2fae58bc3865df146e1fa606711
+  languageName: node
+  linkType: hard
+
+"remove-markdown@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "remove-markdown@npm:0.5.0"
+  checksum: c3c9051e7e7d7c5560e7d70a5093704d868fa57d244eb89533fe7bf960bce68e7901197616c6b296cb22f47af6c15a6bce693467f35709fe399379ea1125e536
   languageName: node
   linkType: hard
 
