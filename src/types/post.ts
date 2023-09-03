@@ -28,6 +28,7 @@ interface IGetPostsInput {
   limit?: number;
   tag?: string;
   text?: string;
+  sort?: number;
 }
 
 interface IGetPost {
