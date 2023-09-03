@@ -31,6 +31,7 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-unused-vars": "off",
     "@typescript-eslint/no-empty-interface": ["error", { allowSingleExtends: false }],
+    "@typescript-eslint/no-explicit-any": "warn",
     "react/prop-types": "off",
     "react/display-name": "off",
     "react/no-unknown-property": ["error", { ignore: ["css"] }],
