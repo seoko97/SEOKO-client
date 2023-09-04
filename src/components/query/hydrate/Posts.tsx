@@ -10,12 +10,11 @@ interface IProps {
   params: IGetPostsInput;
 }
 
-const HomeHydrate = async ({ children, params = {} }: IProps) => {
+const PostsHydrate = async ({ children, params = {} }: IProps) => {
   const queryClient = getQueryClient();
-  const { series = "", tag = "" } = params;
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["posts", { series, tag }],
+    queryKey: ["posts", params],
     queryFn: () => getPosts(params),
   });
   const dehydratedState = dehydrate(queryClient);
@@ -23,4 +22,4 @@ const HomeHydrate = async ({ children, params = {} }: IProps) => {
   return <Hydrate state={dehydratedState}>{children}</Hydrate>;
 };
 
-export default HomeHydrate;
+export default PostsHydrate;
