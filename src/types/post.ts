@@ -39,4 +39,16 @@ interface IGetPost {
   };
 }
 
-export type { IPost, ICreatePostInput, IUpdatePostInput, IGetPostsInput, IGetPost };
+interface IGetSiblingPost {
+  prev: IPost | null;
+  next: IPost | null;
+}
+
+export type {
+  IPost,
+  ICreatePostInput,
+  IUpdatePostInput,
+  IGetPostsInput,
+  IGetPost,
+  IGetSiblingPost,
+};
