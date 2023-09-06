@@ -1,4 +1,4 @@
-import { ICreatePostInput, IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
+import { ICreatePostInput, IGetPost, IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
 import api from "@/apis";
 
 const getPosts = async (params: IGetPostsInput = {}) => {
@@ -9,6 +9,12 @@ const getPosts = async (params: IGetPostsInput = {}) => {
 
 const getPost = async (nid: number) => {
   const res = await api.get<IPost>(`/posts/${nid}`);
+
+  return res.data;
+};
+
+const getSiblingPost = async (nid: number) => {
+  const res = await api.get<IGetPost>(`/posts/${nid}/sibling`);
 
   return res.data;
 };
@@ -43,4 +49,13 @@ const unlikePost = async (_id: string) => {
   return res.data;
 };
 
-export { getPosts, getPost, createPost, updatePost, deletePost, likePost, unlikePost };
+export {
+  getPosts,
+  getPost,
+  getSiblingPost,
+  createPost,
+  updatePost,
+  deletePost,
+  likePost,
+  unlikePost,
+};
