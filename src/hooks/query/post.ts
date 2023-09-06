@@ -1,5 +1,7 @@
+import { useCallback } from "react";
+
 import { useMutation, useQuery, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
-import { ICreatePostInput, IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
+import { IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
 import {
   createPost,
   deletePost,
@@ -15,19 +17,35 @@ const useGetPostQuery = (nid: number) => {
 };
 
 const useGetPostsQuery = (params: IGetPostsInput = {}) => {
-  return useInfiniteQuery({
+  const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: ["posts", params],
     queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
     getNextPageParam: (_, allPage) => allPage.flat().length,
     keepPreviousData: true,
   });
+
+  const posts = data?.pages?.flat() ?? [];
+
+  const fetchMore = useCallback(() => {
+    const limit = params.limit ?? 10;
+
+    if (posts.length % limit !== 0) return;
+
+    fetchNextPage();
+  }, [params.limit, posts.length, fetchNextPage]);
+
+  return [posts, fetchMore] as const;
+};
+
+const useGetSiblingPostQuery = (nid: number) => {
+  return useQuery({ queryKey: ["post", nid, "sibling"], queryFn: () => getPost(nid) });
 };
 
 const useCreatePostMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: ICreatePostInput) => createPost(data),
+    mutationFn: createPost,
     onSuccess: () => {
       queryClient.invalidateQueries(["posts"]);
     },
@@ -91,6 +109,7 @@ const useUnlikePostMutation = (_id: string) => {
 export {
   useGetPostQuery,
   useGetPostsQuery,
+  useGetSiblingPostQuery,
   useCreatePostMutation,
   useUpdatePostMutation,
   useDeletePostMutation,

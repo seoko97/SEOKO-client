@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 
-import useGetPosts from "@hooks/useGetPosts";
+import { useGetPostsQuery } from "@hooks/query/post";
 import PostList from "@components/ui/PostList";
 import ContentHeader from "@components/ui/HomeContent/ContentHeader";
 import { IGetPostsInput } from "@/types";
@@ -14,7 +14,7 @@ interface IProps {
 const HomeContent = ({ params }: IProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [posts, fetchMorePosts] = useGetPosts({ ...params });
+  const [posts, fetchMorePosts] = useGetPostsQuery(params);
 
   const postListProps = {
     ref,
