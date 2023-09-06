@@ -4,8 +4,9 @@ import Header from "@components/ui/Header";
 import Footer from "@components/ui/Footer";
 import Providers from "@components/query/Providers";
 
+import Hydrate from "@components/pages/common/Hydrate";
+
 import "@styles/globals.css";
-import Hydrate from "@components/query/hydrate/User";
 
 export const metadata: Metadata = {
   title: "SEOKO",
@@ -41,9 +42,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <Providers>
             <Hydrate>
               <Header />
+              {children}
+              <Footer />
             </Hydrate>
-            {children}
-            <Footer />
           </Providers>
         </div>
       </body>
