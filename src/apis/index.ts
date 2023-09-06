@@ -1,4 +1,5 @@
 import axios, { AxiosHeaders, AxiosRequestConfig } from "axios";
+import { AUTH_ERROR } from "@utils/constant/user";
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL;
 const isServer = typeof window === "undefined";
@@ -38,7 +39,7 @@ api.interceptors.response.use(
     const status = error.response.status;
     const message = error.response.data.message;
 
-    if (status === 401 && message === "인증 시간이 만료되었습니다." && !originalRequest._retry) {
+    if (status === 401 && message === AUTH_ERROR.EXPIRED_TOKEN && !originalRequest._retry) {
       originalRequest._retry = true;
 
       const config: AxiosRequestConfig = {
