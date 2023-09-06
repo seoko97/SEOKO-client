@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+"use client";
 
-import { usePathname } from "next/navigation";
+import React from "react";
 
 import { useGetUserQuery } from "@hooks/query/user";
 import UserMenu from "@components/ui/Menu/User";
@@ -8,18 +8,7 @@ import PageMenu from "@components/ui/Menu/Page";
 import DarkModeButton from "@components/ui/DarkModeButton";
 
 const Nav = () => {
-  const pathname = usePathname();
-  const pathnameRef = useRef(pathname);
-
-  const { data, refetch } = useGetUserQuery();
-  const username = data?.username;
-
-  useEffect(() => {
-    if (pathnameRef.current === pathname) return;
-
-    pathnameRef.current = pathname;
-    refetch();
-  }, [pathname, refetch]);
+  const { data: username } = useGetUserQuery();
 
   const menuProps = { username };
 
