@@ -5,14 +5,19 @@ import { IUser } from "@/types";
 import { getUser, signOut, signin } from "@/apis/user";
 
 const useGetUserQuery = () => {
-  return useQuery({ queryKey: ["user"], queryFn: getUser });
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+    select: (data) => data.username,
+  });
 };
 
 const useSigninMutation = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  return useMutation(signin, {
+  return useMutation({
+    mutationFn: signin,
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data);
       router.push("/");
