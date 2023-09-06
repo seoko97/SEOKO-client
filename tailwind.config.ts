@@ -1,3 +1,4 @@
+import plugin from "tailwindcss/plugin";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import type { Config } from "tailwindcss";
 
@@ -11,11 +12,17 @@ const config: Config = {
     screens: {
       sm: { max: "480px" },
       md: { max: "768px" },
-      lg: { max: "980px" },
+      lg: { max: "1024px" },
       xl: { max: "1280px" },
     },
     fontFamily: {
       sans: ["Pretendard", ...fontFamily.sans],
+    },
+    textShadow: {
+      sm: "0 1px 2px var(--tw-shadow-color)",
+      DEFAULT: "0 2px 4px var(--tw-shadow-color)",
+      lg: "0 8px 16px var(--tw-shadow-color)",
+      none: "none",
     },
     extend: {
       backgroundColor: {
@@ -58,7 +65,18 @@ const config: Config = {
     },
   },
   darkMode: ["class", '[data-theme="dark"]'],
-  plugins: [],
+  plugins: [
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          "text-shadow": (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme("textShadow") },
+      );
+    }),
+  ],
 };
 
 export default config;
