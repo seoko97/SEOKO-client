@@ -14,7 +14,6 @@ const Hydrate = async ({ children }: IProps) => {
   await queryClient.prefetchQuery({
     queryKey: ["user"],
     queryFn: getUser,
-    initialData: { username: null },
   });
 
   const dehydratedState = dehydrate(queryClient);
