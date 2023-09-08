@@ -13,7 +13,7 @@ const config: Config = {
       sm: { max: "480px" },
       md: { max: "768px" },
       lg: { max: "1024px" },
-      xl: { max: "1280px" },
+      xl: { max: "1440px" },
     },
     fontFamily: {
       sans: ["Pretendard", ...fontFamily.sans],
