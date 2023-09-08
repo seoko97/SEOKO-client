@@ -1,6 +1,7 @@
 import React from "react";
 
 import PostHeader from "@components/ui/Post/PostHeader";
+import PostFooter from "@components/ui/Post/PostFooter";
 import PostContent from "@components/ui/Post/PostContent";
 import Hydrate from "@components/pages/Post/Hydrate";
 
@@ -18,6 +19,7 @@ const Post = ({ params }: IProps) => {
       <Hydrate nid={nid}>
         <PostHeader nid={nid} />
         <PostContent nid={nid} />
+        <PostFooter nid={nid} />
       </Hydrate>
     </section>
   );
