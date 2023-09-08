@@ -14,12 +14,12 @@ const SigninForm = () => {
 
   const [input, onChangeValue] = useInput({ userId: "", password: "" });
 
-  const { data } = useGetUserQuery();
+  const { data: username } = useGetUserQuery();
   const { mutate } = useSigninMutation();
 
   useEffect(() => {
-    if (data?.username) router.push("/");
-  }, [data, router]);
+    if (username) router.push("/");
+  }, [router, username]);
 
   const onSubmit: React.FormEventHandler = useCallback(
     (e) => {
