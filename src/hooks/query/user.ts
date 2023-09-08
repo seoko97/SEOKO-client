@@ -9,6 +9,7 @@ const useGetUserQuery = () => {
     queryKey: ["user"],
     queryFn: getUser,
     select: (data) => data.username,
+    initialData: { username: "" },
   });
 };
 
@@ -31,7 +32,7 @@ const useSignOutMutation = () => {
   return useMutation({
     mutationFn: signOut,
     onSuccess: () => {
-      queryClient.setQueryData<IUser | null>(["user"], null);
+      queryClient.setQueryData<IUser | null>(["user"], { username: "" });
     },
   });
 };
