@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Hydrate, dehydrate } from "@tanstack/react-query";
+import { Hydrate as RqHydrate, dehydrate } from "@tanstack/react-query";
 import { IGetPostsInput } from "@/types";
 import getQueryClient from "@/query/getQueryClient";
 import { getPosts } from "@/apis/post";
@@ -10,7 +10,7 @@ interface IProps {
   params: IGetPostsInput;
 }
 
-const PostsHydrate = async ({ children, params = {} }: IProps) => {
+const Hydrate = async ({ children, params = {} }: IProps) => {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchInfiniteQuery({
@@ -19,7 +19,7 @@ const PostsHydrate = async ({ children, params = {} }: IProps) => {
   });
   const dehydratedState = dehydrate(queryClient);
 
-  return <Hydrate state={dehydratedState}>{children}</Hydrate>;
+  return <RqHydrate state={dehydratedState}>{children}</RqHydrate>;
 };
 
-export default PostsHydrate;
+export default Hydrate;

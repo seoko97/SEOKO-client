@@ -5,4 +5,10 @@ interface IBaseResponse {
   updatedAt: string;
 }
 
-export type { IBaseResponse };
+interface IToc {
+  id: string;
+  text: string;
+  level: number;
+}
+
+export type { IBaseResponse, IToc };

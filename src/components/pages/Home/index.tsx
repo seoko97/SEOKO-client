@@ -3,7 +3,7 @@ import React from "react";
 import { USER_DETAIL, USER_LINKS } from "@utils/constant/user";
 import HomeContent from "@components/ui/HomeContent";
 import Avatar from "@components/ui/core/Avatar";
-import Hydrate from "@components/query/hydrate/Posts";
+import Hydrate from "@components/pages/Home/Hydrate";
 import { IGetPostsInput } from "@/types";
 
 interface IProps {

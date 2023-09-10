@@ -1,10 +1,13 @@
+import { useCallback } from "react";
+
 import { useMutation, useQuery, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
-import { ICreatePostInput, IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
+import { IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
 import {
   createPost,
   deletePost,
   getPost,
   getPosts,
+  getSiblingPost,
   likePost,
   unlikePost,
   updatePost,
@@ -15,75 +18,109 @@ const useGetPostQuery = (nid: number) => {
 };
 
 const useGetPostsQuery = (params: IGetPostsInput = {}) => {
-  return useInfiniteQuery({
+  const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: ["posts", params],
     queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
     getNextPageParam: (_, allPage) => allPage.flat().length,
     keepPreviousData: true,
   });
+
+  const posts = data?.pages?.flat() ?? [];
+
+  const fetchMore = useCallback(() => {
+    const limit = params.limit ?? 10;
+
+    if (posts.length % limit !== 0) return;
+
+    fetchNextPage();
+  }, [params.limit, posts.length, fetchNextPage]);
+
+  return [posts, fetchMore] as const;
+};
+
+const useGetSiblingPostQuery = (nid: number) => {
+  return useQuery({ queryKey: ["post", nid, "sibling"], queryFn: () => getSiblingPost(nid) });
 };
 
 const useCreatePostMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: ICreatePostInput) => createPost(data),
+    mutationFn: createPost,
     onSuccess: () => {
       queryClient.invalidateQueries(["posts"]);
     },
   });
 };
 
-const useUpdatePostMutation = (_id: string) => {
+const useUpdatePostMutation = (nid: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: IUpdatePostInput) => updatePost(_id, data),
-    onSuccess: ({ nid }) => {
+    mutationFn: (data: IUpdatePostInput) => updatePost(nid, data),
+    onSuccess: () => {
       queryClient.invalidateQueries(["post", nid]);
       queryClient.invalidateQueries(["posts"]);
     },
   });
 };
 
-const useDeletePostMutation = (_id: string) => {
+const useDeletePostMutation = (nid: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => deletePost(_id),
-    onSuccess: (nid) => {
+    mutationFn: () => deletePost(nid),
+    onSuccess: () => {
       queryClient.removeQueries(["post", nid]);
       queryClient.invalidateQueries(["posts"]);
     },
   });
 };
 
-const useLikePostMutation = (_id: string) => {
+const useLikePostMutation = (nid: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => likePost(_id),
-    onSuccess: (nid) => {
-      queryClient.setQueryData<IPost>(["post", nid], (prev) => {
+    mutationFn: () => likePost(nid),
+    onMutate: () => {
+      queryClient.cancelQueries(["post", nid]);
+
+      const prev = queryClient.getQueryData<IPost>(["post", nid]);
+
+      queryClient.setQueryData<IPost | undefined>(["post", nid], (prev) => {
         if (!prev) return prev;
 
         return { ...prev, isLiked: true, likeCount: prev.likeCount + 1 };
       });
+
+      return prev;
+    },
+    onError: (err, _, prev) => {
+      queryClient.setQueryData<IPost | undefined>(["post", nid], prev);
     },
   });
 };
 
-const useUnlikePostMutation = (_id: string) => {
+const useUnlikePostMutation = (nid: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => unlikePost(_id),
-    onSuccess: (nid) => {
-      queryClient.setQueryData<IPost>(["post", nid], (prev) => {
+    mutationFn: () => unlikePost(nid),
+    onMutate: () => {
+      queryClient.cancelQueries(["post", nid]);
+
+      const prev = queryClient.getQueryData<IPost>(["post", nid]);
+
+      queryClient.setQueryData<IPost | undefined>(["post", nid], (prev) => {
         if (!prev) return prev;
 
         return { ...prev, isLiked: false, likeCount: prev.likeCount - 1 };
       });
+
+      return prev;
+    },
+    onError: (err, _, prev) => {
+      queryClient.setQueryData<IPost | undefined>(["post", nid], prev);
     },
   });
 };
@@ -91,6 +128,7 @@ const useUnlikePostMutation = (_id: string) => {
 export {
   useGetPostQuery,
   useGetPostsQuery,
+  useGetSiblingPostQuery,
   useCreatePostMutation,
   useUpdatePostMutation,
   useDeletePostMutation,

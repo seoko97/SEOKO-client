@@ -31,12 +31,9 @@ interface IGetPostsInput {
   sort?: number;
 }
 
-interface IGetPost {
-  post: IPost;
-  sibling: {
-    prev: IPost | null;
-    next: IPost | null;
-  };
+interface IGetSiblingPost {
+  prev: IPost | null;
+  next: IPost | null;
 }
 
-export type { IPost, ICreatePostInput, IUpdatePostInput, IGetPostsInput, IGetPost };
+export type { IPost, ICreatePostInput, IUpdatePostInput, IGetPostsInput, IGetSiblingPost };
