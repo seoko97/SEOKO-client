@@ -13,8 +13,16 @@ import {
   updatePost,
 } from "@/apis/post";
 
-const useGetPostQuery = (nid: number) => {
-  return useQuery({ queryKey: ["post", nid], queryFn: () => getPost(nid) });
+const useGetPostQuery = (nid: number | null) => {
+  return useQuery({
+    queryKey: ["post", nid],
+    queryFn: () => {
+      if (nid === null) return;
+
+      return getPost(nid);
+    },
+    enabled: nid !== null,
+  });
 };
 
 const useGetPostsQuery = (params: IGetPostsInput = {}) => {
