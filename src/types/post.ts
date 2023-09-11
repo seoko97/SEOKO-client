@@ -17,6 +17,7 @@ interface ICreatePostInput extends Pick<IPost, "title" | "content" | "thumbnail"
 }
 
 interface IUpdatePostInput extends Pick<IPost, "title" | "content" | "thumbnail"> {
+  _id?: string;
   series?: string;
   deleteTags?: string[];
   addTags?: string[];
