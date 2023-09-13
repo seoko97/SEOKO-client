@@ -11,7 +11,7 @@ const PROJECT_INPUT: TProjectInputOmitThumbnail = {
   github: "",
   content: "",
   start: "",
-  end: "",
+  end: null,
 };
 
 const useWriteProject = (project?: TProject) => {
@@ -20,11 +20,15 @@ const useWriteProject = (project?: TProject) => {
   const projectDataRef = useRef<TProjectInputOmitThumbnail>(defaultInput);
 
   const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const name = e.target.name as keyof Pick<TProjectInputOmitThumbnail, "title">;
+    const name = e.target.name as keyof TProjectInputOmitThumbnail;
 
     if (projectDataRef.current[name] === undefined) return;
 
-    projectDataRef.current[name] = e.target.value;
+    if (name === "end") {
+      projectDataRef.current[name] = e.target.value || null;
+    } else {
+      projectDataRef.current[name] = e.target.value;
+    }
   };
 
   const onChangeContent = (value: string) => {
