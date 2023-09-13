@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^4.29.19",
+    "@uiw/react-md-editor": "^3.23.5",
     "axios": "^1.4.0",
     "markdown-to-jsx": "^7.3.2",
     "next": "13.4.13",

@@ -7,7 +7,7 @@ import { useGetPostQuery } from "@hooks/query/post";
 import Toc from "@components/ui/Post/PostContent/Toc";
 import Like from "@components/ui/Post/PostContent/Like";
 import overrides from "@components/ui/Markdown/overrides";
-import Markdown from "@components/ui/Markdown";
+import { Viewer } from "@components/ui/Markdown";
 
 interface IProps {
   nid: number;
@@ -26,10 +26,10 @@ const PostContent = ({ nid }: IProps) => {
 
   return (
     <div className="relative my-6 flex w-full justify-center xl:flex-col-reverse xl:items-center">
-      <div className="sticky top-24 flex h-fit flex-1 justify-end">
+      <div className="sticky top-24 flex h-fit flex-1 justify-end xl:my-8">
         <Like nid={nid} isLiked={isLiked} />
       </div>
-      <Markdown content={markdown} isMarked={true} />
+      <Viewer content={markdown} isMarked={true} />
       <div className="sticky top-24 h-fit flex-1 xl:hidden">
         <Toc markdown={markdown} />
       </div>

@@ -11,4 +11,6 @@ interface IToc {
   level: number;
 }
 
-export type { IBaseResponse, IToc };
+type TImageType = "post" | "project" | "skill" | "series";
+
+export type { IBaseResponse, IToc, TImageType };

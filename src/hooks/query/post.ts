@@ -1,7 +1,9 @@
 import { useCallback } from "react";
 
+import { useRouter } from "next/navigation";
+
 import { useMutation, useQuery, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
-import { IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
+import { ICreatePostInput, IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
 import {
   createPost,
   deletePost,
@@ -13,8 +15,16 @@ import {
   updatePost,
 } from "@/apis/post";
 
-const useGetPostQuery = (nid: number) => {
-  return useQuery({ queryKey: ["post", nid], queryFn: () => getPost(nid) });
+const useGetPostQuery = (nid: number | null) => {
+  return useQuery({
+    queryKey: ["post", nid],
+    queryFn: () => {
+      if (nid === null) return;
+
+      return getPost(nid);
+    },
+    enabled: nid !== null,
+  });
 };
 
 const useGetPostsQuery = (params: IGetPostsInput = {}) => {
@@ -43,17 +53,20 @@ const useGetSiblingPostQuery = (nid: number) => {
 };
 
 const useCreatePostMutation = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: createPost,
     onSuccess: () => {
       queryClient.invalidateQueries(["posts"]);
+      router.push("/");
     },
   });
 };
 
 const useUpdatePostMutation = (nid: number) => {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -61,6 +74,7 @@ const useUpdatePostMutation = (nid: number) => {
     onSuccess: () => {
       queryClient.invalidateQueries(["post", nid]);
       queryClient.invalidateQueries(["posts"]);
+      router.push(`/post/${nid}`);
     },
   });
 };
@@ -125,10 +139,26 @@ const useUnlikePostMutation = (nid: number) => {
   });
 };
 
+const usePostMutation = (nid: number | null = null) => {
+  const { mutate: create } = useCreatePostMutation();
+  const { mutate: update } = useUpdatePostMutation(nid ?? 0);
+
+  const onMutation = async <T extends ICreatePostInput>(input: T) => {
+    if (nid === null) {
+      create(input);
+    } else {
+      update(input);
+    }
+  };
+
+  return onMutation;
+};
+
 export {
   useGetPostQuery,
   useGetPostsQuery,
   useGetSiblingPostQuery,
+  usePostMutation,
   useCreatePostMutation,
   useUpdatePostMutation,
   useDeletePostMutation,

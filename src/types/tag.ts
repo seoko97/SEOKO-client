@@ -1,9 +1,8 @@
+import { IBaseResponse } from "@/types/base";
 import { IPost } from "@/types";
 
-interface ITag {
-  _id: string;
+interface ITag extends IBaseResponse {
   name: string;
-  nid: number;
   posts: IPost[];
 }
 
