@@ -9,8 +9,14 @@ interface IProps {
   type: TImageType;
 }
 
+const useUploadImageMutation = (type: TImageType) => {
+  return useMutation({
+    mutationFn: (file: FormData) => uploadImage(type, file),
+  });
+};
+
 const useUploadImage = ({ type, defaultImg }: IProps) => {
-  const [coverImg, setCoverImg] = useState<string>(defaultImg || "/main.jpg");
+  const [image, setImage] = useState<string>(defaultImg || "/main.jpg");
 
   const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -25,7 +31,7 @@ const useUploadImage = ({ type, defaultImg }: IProps) => {
   };
 
   const clearImage = () => {
-    setCoverImg("/main.jpg");
+    setImage("/main.jpg");
   };
 
   const { mutate } = useMutation({
@@ -33,11 +39,11 @@ const useUploadImage = ({ type, defaultImg }: IProps) => {
     onSuccess: (data) => {
       if (!data) return;
 
-      setCoverImg(data);
+      setImage(data);
     },
   });
 
-  return { coverImg, changeImage: mutate, clearImage };
+  return { image, changeImage: mutate, clearImage };
 };
 
-export { useUploadImage };
+export { useUploadImage, useUploadImageMutation };
