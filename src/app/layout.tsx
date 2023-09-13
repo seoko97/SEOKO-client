@@ -47,6 +47,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             </Hydrate>
           </Providers>
         </div>
+        <div id="modal" />
       </body>
     </html>
   );
