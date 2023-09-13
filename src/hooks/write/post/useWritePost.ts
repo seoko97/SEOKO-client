@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useRef, useState } from "react";
 
 import { IPost, IUpdatePostInput } from "@/types";
 
@@ -6,6 +6,7 @@ type TPostInput = Omit<IUpdatePostInput, "thumbnail">;
 
 const POST_INPUT: TPostInput = {
   _id: undefined,
+  series: "",
   title: "",
   content: "",
 };
@@ -17,31 +18,34 @@ const getPostInput = (post: IPost | undefined): TPostInput => {
     _id: post._id,
     title: post.title,
     content: post.content,
+    series: post.series?.name ?? "",
   };
 };
 
 const useWritePost = (post: IPost | undefined) => {
   const postDataRef = useRef<TPostInput>(getPostInput(post));
+  const dum = useState(0);
 
-  const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      const name = e.target.name as keyof Pick<TPostInput, "title">;
+  const forceUpdate = () => dum[1]((state) => state + 1);
 
-      if (postDataRef.current[name] === undefined) return;
+  const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const name = e.target.name as keyof Pick<TPostInput, "title">;
 
-      postDataRef.current[name] = e.target.value;
-    },
-    [postDataRef],
-  );
+    if (postDataRef.current[name] === undefined) return;
 
-  const onChangeContent = useCallback(
-    (value: string) => {
-      postDataRef.current.content = value;
-    },
-    [postDataRef],
-  );
+    postDataRef.current[name] = e.target.value;
+  };
 
-  return [postDataRef, onChangeValue, onChangeContent] as const;
+  const onChangeSeries = (series: string) => {
+    postDataRef.current.series = series;
+    forceUpdate();
+  };
+
+  const onChangeContent = (value: string) => {
+    postDataRef.current.content = value;
+  };
+
+  return [postDataRef.current, onChangeValue, onChangeSeries, onChangeContent] as const;
 };
 
 export { useWritePost };
