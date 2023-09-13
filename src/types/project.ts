@@ -1,6 +1,6 @@
 import { IBaseResponse } from "@/types/base";
 
-interface IProject extends IBaseResponse {
+interface IProjectInput {
   title: string;
   description: string;
   content: string;
@@ -10,4 +10,6 @@ interface IProject extends IBaseResponse {
   end: string;
 }
 
-export type { IProject };
+type TProject = IProjectInput & IBaseResponse;
+
+export type { IProjectInput, TProject };
