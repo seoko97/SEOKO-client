@@ -9,10 +9,10 @@ interface IProps {
   content: string | JSX.Element;
 }
 
-const Markdown = ({ content, isMarked = false }: IProps) => {
+const Viewer = ({ content, isMarked = false }: IProps) => {
   const markdown = isMarked ? content : compiler(content as string, { wrapper: null, overrides });
 
   return <div className="markdown w-[theme(screens.md.max)] md:w-full">{markdown}</div>;
 };
 
-export default memo(Markdown, (prev, next) => prev.content === next.content);
+export default memo(Viewer, (prev, next) => prev.content === next.content);
