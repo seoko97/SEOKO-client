@@ -1,24 +1,27 @@
 import { IBaseResponse } from "@/types/base";
+import { ISeries, ITag } from "@/types";
 
 interface IPost extends IBaseResponse {
   title: string;
   content: string;
   thumbnail: string;
-  series: any;
-  tags: any[];
+  series: ISeries | null;
+  tags: ITag[];
   isLiked: boolean;
   likeCount: number;
   viewCount: number;
 }
 
-interface ICreatePostInput extends Pick<IPost, "title" | "content" | "thumbnail"> {
+interface BasePostInput extends Pick<IPost, "title" | "content" | "thumbnail"> {
+  _id?: string;
   series?: string;
+}
+
+interface ICreatePostInput extends BasePostInput {
   tags?: string[];
 }
 
-interface IUpdatePostInput extends Pick<IPost, "title" | "content" | "thumbnail"> {
-  _id?: string;
-  series?: string;
+interface IUpdatePostInput extends BasePostInput {
   deleteTags?: string[];
   addTags?: string[];
 }
@@ -37,4 +40,11 @@ interface IGetSiblingPost {
   next: IPost | null;
 }
 
-export type { IPost, ICreatePostInput, IUpdatePostInput, IGetPostsInput, IGetSiblingPost };
+export type {
+  IPost,
+  BasePostInput,
+  ICreatePostInput,
+  IUpdatePostInput,
+  IGetPostsInput,
+  IGetSiblingPost,
+};
