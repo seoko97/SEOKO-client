@@ -6,7 +6,7 @@ type TPostInput = Omit<IUpdatePostInput, "thumbnail">;
 
 const POST_INPUT: TPostInput = {
   _id: undefined,
-  series: "",
+  series: undefined,
   title: "",
   content: "",
 };
@@ -18,7 +18,7 @@ const getPostInput = (post: IPost | undefined): TPostInput => {
     _id: post._id,
     title: post.title,
     content: post.content,
-    series: post.series?.name ?? "",
+    series: post.series?.name,
   };
 };
 
@@ -36,7 +36,7 @@ const useWritePost = (post: IPost | undefined) => {
     postDataRef.current[name] = e.target.value;
   };
 
-  const onChangeSeries = (series: string) => {
+  const onChangeSeries = (series?: string) => {
     postDataRef.current.series = series;
     forceUpdate();
   };

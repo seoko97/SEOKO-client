@@ -61,7 +61,7 @@ const Post = ({ nid }: IProps) => {
           series={postInput.series}
           thumbnailRef={thumbnailRef}
           openSeriesModal={() => setOpenSeries(true)}
-          clearSeries={() => onChangeSeries("")}
+          clearSeries={() => onChangeSeries(undefined)}
           tagHandler={tagHandler}
           onClickTag={onClickTag}
           onChangeValue={onChangeValue}
