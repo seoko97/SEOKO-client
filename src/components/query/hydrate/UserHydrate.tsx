@@ -1,7 +1,7 @@
 import React from "react";
 
+import getQueryClient from "@utils/query/getQueryClient";
 import { Hydrate as RqHydrate, dehydrate } from "@tanstack/react-query";
-import getQueryClient from "@/query/getQueryClient";
 import { getUser } from "@/apis/user";
 
 interface IProps {

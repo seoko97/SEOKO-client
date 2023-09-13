@@ -7,10 +7,6 @@ import MDEditor, {
   bold,
   hr,
   italic,
-  divider,
-  codeEdit,
-  codeLive,
-  codePreview,
 } from "@uiw/react-md-editor";
 import { useUploadImageMutation } from "@hooks/query/image";
 import { ImageIcon } from "@components/icons";
@@ -26,7 +22,7 @@ const IMAGE_COMMAND: ICommand = {
   name: "image",
   keyCommand: "image",
   buttonProps: { "aria-label": "Insert image" },
-  icon: <ImageIcon width={30} height={30} className="fill-white" />,
+  icon: <ImageIcon width={12} height={12} className="fill-white" />,
 };
 
 const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
@@ -84,7 +80,7 @@ const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
         onChange={onChange}
         height={600}
         visibleDragbar={false}
-        commands={[bold, hr, italic, divider, codeEdit, codeLive, codePreview, image]}
+        commands={[bold, hr, italic, image]}
       />
     </div>
   );

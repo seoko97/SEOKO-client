@@ -29,7 +29,7 @@ const useWritePost = (post: IPost | undefined) => {
   const forceUpdate = () => dum[1]((state) => state + 1);
 
   const onChangeValue: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const name = e.target.name as keyof Pick<TPostInput, "title">;
+    const name = e.target.name as keyof Pick<TPostInput, "title" | "content" | "series">;
 
     if (postDataRef.current[name] === undefined) return;
 

@@ -2,8 +2,8 @@ import React from "react";
 
 import { notFound } from "next/navigation";
 
+import getQueryClient from "@utils/query/getQueryClient";
 import { Hydrate as RqHydrate, dehydrate } from "@tanstack/react-query";
-import getQueryClient from "@/query/getQueryClient";
 import { getPost, getSiblingPost } from "@/apis/post";
 
 interface IProps {

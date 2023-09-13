@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import getQueryClient from "@utils/query/getQueryClient";
 import { Hydrate as RqHydrate, dehydrate } from "@tanstack/react-query";
-import { getPost } from "@/apis/post";
+import { getProject } from "@/apis/project";
 
 interface IProps {
   children: React.ReactNode;
@@ -17,8 +17,8 @@ const Hydrate = async ({ children, nid }: IProps) => {
   if (nid !== null) {
     try {
       await queryClient.fetchQuery({
-        queryKey: ["post", nid],
-        queryFn: () => getPost(nid),
+        queryKey: ["project", nid],
+        queryFn: () => getProject(nid),
       });
     } catch (error) {
       return notFound();

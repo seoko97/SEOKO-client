@@ -4,7 +4,7 @@ import Header from "@components/ui/Header";
 import Footer from "@components/ui/Footer";
 import Providers from "@components/query/Providers";
 
-import Hydrate from "@components/pages/common/Hydrate";
+import Hydrate from "@components/query/hydrate/UserHydrate";
 
 import "@styles/globals.css";
 

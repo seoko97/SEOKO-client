@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 
+import { STALE_TIME } from "@utils/query/getQueryClient";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { STALE_TIME } from "@/query/getQueryClient";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const [client] = useState(
