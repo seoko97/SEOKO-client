@@ -1,9 +1,1 @@
-const Project = () => {
-  return (
-    <div>
-      <h1>Project</h1>
-    </div>
-  );
-};
-
-export default Project;
+export { default } from "@components/pages/Project";
