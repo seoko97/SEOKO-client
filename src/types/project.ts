@@ -7,6 +7,7 @@ interface IProjectInput {
   content: string;
   thumbnail: string;
   github: string;
+  page: string | null;
   start: string;
   end: string | null;
 }
