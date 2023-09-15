@@ -1,11 +1,11 @@
 import React from "react";
 
-import SigninForm from "@components/ui/SigninForm";
+import SigninClient from "@components/pages/Signin/page.client";
 
 const Signin = () => {
   return (
     <div className="frame flex h-[calc(100vh-16rem)] items-center justify-center text-primary">
-      <SigninForm />
+      <SigninClient />
     </div>
   );
 };
