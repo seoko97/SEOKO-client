@@ -36,12 +36,10 @@ const Project = ({ nid }: IProps) => {
 
     if (!confirmProject) return;
 
-    console.log(input);
-
     mutate({ ...input, thumbnail: image });
   };
 
-  const { title, description, content, github, start, end } = input;
+  const { title, description, content, github, start, end, page } = input;
 
   return (
     <section className="frame relative mx-auto my-0 flex flex-col items-center gap-8 py-8">
@@ -52,6 +50,7 @@ const Project = ({ nid }: IProps) => {
         github={github}
         start={start}
         end={end}
+        page={page}
         thumbnailRef={thumbnailRef}
         onChangeValue={onChangeValue}
         onChangeThumbnail={changeImage}

@@ -12,10 +12,19 @@ const PROJECT_INPUT: TProjectInputOmitThumbnail = {
   content: "",
   start: "",
   end: null,
+  page: null,
+};
+
+const getProjectInput = (project?: TProject): TProjectInputOmitThumbnail => {
+  if (!project) return PROJECT_INPUT;
+
+  const { title, description, github, content, start, end, page } = project;
+
+  return { title, description, github, content, start, end, page };
 };
 
 const useWriteProject = (project?: TProject) => {
-  const defaultInput = project ?? PROJECT_INPUT;
+  const defaultInput = getProjectInput(project);
 
   const projectDataRef = useRef<TProjectInputOmitThumbnail>(defaultInput);
 
@@ -24,7 +33,7 @@ const useWriteProject = (project?: TProject) => {
 
     if (projectDataRef.current[name] === undefined) return;
 
-    if (name === "end") {
+    if (name === "end" || name === "page") {
       projectDataRef.current[name] = e.target.value || null;
     } else {
       projectDataRef.current[name] = e.target.value;

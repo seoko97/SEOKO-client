@@ -23,6 +23,7 @@ const Header = (props: IProps) => {
     github,
     start,
     end,
+    page,
     thumbnailRef,
     onChangeValue,
     onChangeThumbnail,
@@ -52,6 +53,13 @@ const Header = (props: IProps) => {
         defaultValue={github}
         onChange={onChangeValue}
         placeholder="깃허브 주소를 입력하세요"
+      />
+      <input
+        name="page"
+        className={TEXT_INPUT_CLASS_NAME}
+        defaultValue={page ?? ""}
+        onChange={onChangeValue}
+        placeholder="배포 주소를 입력하세요"
       />
       <div className="text-primary transition-[color]">
         <span>프로젝트 시작 날짜 : </span>
