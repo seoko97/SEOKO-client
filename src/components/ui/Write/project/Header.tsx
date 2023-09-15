@@ -55,7 +55,7 @@ const Header = (props: IProps) => {
         placeholder="깃허브 주소를 입력하세요"
       />
       <input
-        name="github"
+        name="page"
         className={TEXT_INPUT_CLASS_NAME}
         defaultValue={page ?? ""}
         onChange={onChangeValue}
