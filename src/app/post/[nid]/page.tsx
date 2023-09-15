@@ -1,1 +1,1 @@
-export { default } from "@components/pages/Post";
+export { default } from "@components/pages/Post/[nid]";

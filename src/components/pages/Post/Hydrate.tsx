@@ -1,36 +1,22 @@
 import React from "react";
 
-import { notFound } from "next/navigation";
-
 import getQueryClient from "@utils/query/getQueryClient";
 import { Hydrate as RqHydrate, dehydrate } from "@tanstack/react-query";
-import { getPost, getSiblingPost } from "@/apis/post";
+import { IGetPostsInput } from "@/types";
+import { getPosts } from "@/apis/post";
 
 interface IProps {
   children: React.ReactNode;
-  nid: number;
+  params: IGetPostsInput;
 }
 
-const Hydrate = async ({ children, nid }: IProps) => {
+const Hydrate = async ({ children, params = {} }: IProps) => {
   const queryClient = getQueryClient();
 
-  if (isNaN(nid)) return notFound();
-
-  try {
-    await Promise.all([
-      queryClient.fetchQuery({
-        queryKey: ["post", nid],
-        queryFn: () => getPost(nid),
-      }),
-      queryClient.prefetchQuery({
-        queryKey: ["post", nid, "sibling"],
-        queryFn: () => getSiblingPost(nid),
-      }),
-    ]);
-  } catch (error) {
-    return notFound();
-  }
-
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ["posts", params],
+    queryFn: () => getPosts(params),
+  });
   const dehydratedState = dehydrate(queryClient);
 
   return <RqHydrate state={dehydratedState}>{children}</RqHydrate>;
