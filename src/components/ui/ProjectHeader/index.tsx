@@ -47,7 +47,7 @@ const ProjectHeader = ({ project }: IProps) => {
       <div className="flex items-center justify-center gap-4">
         {page && (
           <a target="_blank" href={page} rel="noreferrer">
-            <LinkIcon className="fill-[theme(textColor.secondary)] transition-[fill] hover:fill-[theme(textColor.effect1)]" />
+            <LinkIcon className="stroke-[theme(textColor.secondary)] transition-[stroke] hover:stroke-[theme(textColor.effect1)]" />
           </a>
         )}
         <a target="_blank" href={github} rel="noreferrer">
