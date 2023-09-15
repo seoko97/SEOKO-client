@@ -20,7 +20,7 @@ const Hydrate = async ({ children }: IProps) => {
 
   return (
     <RqHydrate state={dehydratedState}>
-      <div className="px-0 py-4">
+      <div className="w-full px-0 py-4">
         <h1 className="mb-1 text-4xl font-bold text-primary transition-[color]">
           PROJECT
           <span className="ml-4 align-top text-sm font-normal">{projects.length} projects</span>
