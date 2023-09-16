@@ -19,14 +19,16 @@ const Series = () => {
         <Link key={series._id} href={`/series/${series.nid}`}>
           <div
             key={series._id}
-            className="flex cursor-pointer flex-col items-center justify-start gap-3 text-primary transition-[color]"
+            className="group flex cursor-pointer flex-col items-center justify-start gap-3"
           >
             <div className="w-full flex-1 rounded-b-md rounded-t-md">
               <Image src={series.thumbnail ?? "/main.jpg"} alt={series.name} priority />
             </div>
             <div className="flex w-full flex-col gap-2">
-              <h3 className="truncate text-base font-semibold">{series.name}</h3>
-              <div className="truncate text-sm text-primary text-slate-500">
+              <h3 className="truncate font-semibold text-primary transition-[color] group-hover:text-effect1">
+                {series.name}
+              </h3>
+              <div className="truncate text-sm text-slate-500 dark:text-slate-400">
                 <span className="text-primary transition-[color]">
                   {series.postCount}개의 포스트
                 </span>
