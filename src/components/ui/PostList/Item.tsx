@@ -20,6 +20,7 @@ const PostItem = ({ post }: IProps) => {
   const parsedContent = removeMd(content).substring(0, 120);
 
   const onClickTag = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
 
     const target = e.target as HTMLDivElement;

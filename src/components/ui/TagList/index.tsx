@@ -11,7 +11,7 @@ interface IProps {
 
 const TagList = ({ className = "", tags, onClick }: IProps) => {
   return (
-    <div className={`flex w-full flex-row flex-wrap items-center gap-x-1 gap-y-2 ${className}`}>
+    <div className={`flex w-full flex-row flex-wrap items-center gap-2 ${className}`}>
       {tags.map((tag) => (
         <Tag key={tag._id} onClick={onClick}>
           {tag.name}
