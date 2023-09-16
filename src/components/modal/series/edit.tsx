@@ -51,12 +51,13 @@ const EditSeries = ({ series, onClose }: IProps) => {
         onSubmit={onSubmit}
         className="z-[60] flex h-fit max-h-[600px] w-[600px] flex-col gap-4 rounded-md bg-tertiary px-5 py-7 shadow-md transition-[background-color] md:w-full"
       >
-        <div className="flex w-full items-center gap-2">
+        <div className="flex w-full flex-col gap-4">
           <h3 className="text-lg font-semibold text-primary">시리즈 이름</h3>
           <Input
             name="name"
             defaultValue={name}
             placeholder="시리즈 이름을 입력하세요"
+            className="w-auto flex-1"
             onChange={onChangeInput}
           />
         </div>
