@@ -21,7 +21,7 @@ const Hydrate = async ({ children }: IProps) => {
   return (
     <RqHydrate state={dehydratedState}>
       <div className="w-[theme(screens.md.max)] px-0 py-4 sm:mb-4 md:w-full">
-        <h1 className="mb-1 text-4xl font-bold text-primary transition-[color]">
+        <h1 className="mb-2 text-4xl font-bold text-primary transition-[color]">
           SERIES
           <span className="ml-4 align-top text-sm font-normal">{series.length} series</span>
         </h1>

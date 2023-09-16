@@ -14,7 +14,7 @@ const code = ({ children, className = "", ...props }: IProps) => {
   return language ? (
     <SyntaxHighlighter
       language={language}
-      showLineNumbers={true}
+      showLineNumbers={language !== "txt"}
       startingLineNumber={1}
       codeTagProps={{
         className:

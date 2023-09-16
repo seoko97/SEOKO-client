@@ -38,13 +38,13 @@ const SeriesList = (props: IProps) => {
         className="z-[60] flex h-fit max-h-[600px] w-[600px] flex-col gap-4 rounded-md bg-tertiary px-5 py-7 shadow-md transition-[background-color] md:w-full"
       >
         <Input value={selectedSeries} onChange={onChangeValue} />
-        <ul className="flex flex-col">
+        <ul className="flex flex-col text-primary transition-colors">
           {series?.length === 0 && <h3>시리즈가 없습니다.</h3>}
           {series?.map((item) => (
             <li
               key={item._id + String(Math.random())}
               onClick={() => setSeries(item.name)}
-              className={`border-primary/50 flex-1 cursor-pointer border-t px-1 py-2 text-primary transition-colors first:border-none hover:text-effect1 ${
+              className={`border-primary/50 flex-1 cursor-pointer border-t px-1 py-2 first:border-none hover:text-effect1 ${
                 defaultSeries === item.name && "text-green-500"
               }}`}
             >
@@ -52,7 +52,6 @@ const SeriesList = (props: IProps) => {
             </li>
           ))}
         </ul>
-        {/* 버튼 */}
         <div className="flex gap-4 [&>button]:flex-1">
           <Button type="button" buttonType="danger" onClick={onClose}>
             취소

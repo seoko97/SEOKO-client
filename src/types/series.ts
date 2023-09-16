@@ -1,9 +1,14 @@
 import { IBaseResponse } from "@/types/base";
+import { IPost } from "@/types";
 
-interface ISeries extends IBaseResponse {
+interface IUpdateSeriesInput {
   name: string;
   thumbnail?: string;
+}
+
+interface ISeries extends IBaseResponse, IUpdateSeriesInput {
+  posts: IPost[];
   postCount: number;
 }
 
-export type { ISeries };
+export type { ISeries, IUpdateSeriesInput };

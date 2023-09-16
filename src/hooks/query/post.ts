@@ -81,10 +81,12 @@ const useUpdatePostMutation = (nid: number) => {
 
 const useDeletePostMutation = (nid: number) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: () => deletePost(nid),
     onSuccess: () => {
+      router.push("/");
       queryClient.removeQueries(["post", nid]);
       queryClient.invalidateQueries(["posts"]);
     },
@@ -112,6 +114,9 @@ const useLikePostMutation = (nid: number) => {
     onError: (err, _, prev) => {
       queryClient.setQueryData<IPost | undefined>(["post", nid], prev);
     },
+    onSettled: () => {
+      queryClient.invalidateQueries(["post", nid]);
+    },
   });
 };
 
@@ -135,6 +140,9 @@ const useUnlikePostMutation = (nid: number) => {
     },
     onError: (err, _, prev) => {
       queryClient.setQueryData<IPost | undefined>(["post", nid], prev);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["post", nid]);
     },
   });
 };
