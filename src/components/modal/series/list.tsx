@@ -52,7 +52,6 @@ const SeriesList = (props: IProps) => {
             </li>
           ))}
         </ul>
-        {/* 버튼 */}
         <div className="flex gap-4 [&>button]:flex-1">
           <Button type="button" buttonType="danger" onClick={onClose}>
             취소
