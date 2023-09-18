@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect, useRef } from "react";
 
 import { usePathname } from "next/navigation";
@@ -6,12 +6,18 @@ import { usePathname } from "next/navigation";
 import useLocalStorage from "@hooks/useLocalStorage";
 
 const Giscus = () => {
+  const [mounted, setMounted] = useState(false);
+
   const pathname = usePathname();
   const [theme] = useLocalStorage<string>("theme");
 
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (mounted) return;
+
+    setMounted(true);
+
     if (!ref.current || !theme) return;
 
     if (ref.current.firstChild) ref.current.removeChild(ref.current.firstChild);
@@ -38,6 +44,21 @@ const Giscus = () => {
 
     ref.current.appendChild(scriptElem);
   }, [pathname, theme]);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    const iframe = document.querySelector<HTMLIFrameElement>("iframe.giscus-frame");
+
+    if (!iframe) return;
+
+    const dataTheme = theme === "dark" ? "preferred_color_scheme" : "light";
+
+    iframe.contentWindow?.postMessage(
+      { giscus: { setConfig: { theme: dataTheme } } },
+      "https://giscus.app",
+    );
+  }, [theme]);
 
   return <div className="w-full" ref={ref} />;
 };
