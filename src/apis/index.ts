@@ -36,8 +36,8 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    const status = error.response.status;
-    const message = error.response.data.message;
+    const status = error?.response?.status;
+    const message = error?.response?.data?.message;
 
     if (status === 401 && message === AUTH_ERROR.EXPIRED_TOKEN && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -73,7 +73,7 @@ api.interceptors.response.use(
       }
     }
 
-    return Promise.reject(error);
+    return Promise.reject(new Error(message ?? error));
   },
 );
 

@@ -124,6 +124,16 @@ const ICONS = {
       />
     </svg>
   ),
+  BookmarkIcon: (
+    <svg width="32" height="48" fill="currentColor" viewBox="0 0 32 48">
+      <path d="M32 0H0v48h.163l16-16L32 47.836V0z"></path>
+    </svg>
+  ),
+  TriangleIcon: (
+    <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7 10l5 5 5-5z"></path>
+    </svg>
+  ),
 };
 
 export const {
@@ -143,6 +153,8 @@ export const {
   SunIcon,
   ViewIcon,
   LikeIcon,
+  BookmarkIcon,
+  TriangleIcon,
 } = Object.entries(ICONS).reduce(
   (result, [key, IconComponent]) => ({
     ...result,

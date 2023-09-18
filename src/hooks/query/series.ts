@@ -11,10 +11,15 @@ const useGetSeriesQueries = () => {
   });
 };
 
-const useGetSeriesQuery = (nid: number) => {
+const useGetSeriesQuery = (nid: number | null = null) => {
   return useQuery({
     queryKey: ["series", nid],
-    queryFn: () => getSeries(nid),
+    queryFn: () => {
+      if (!nid) return null;
+
+      return getSeries(nid);
+    },
+    enabled: nid !== null,
   });
 };
 
