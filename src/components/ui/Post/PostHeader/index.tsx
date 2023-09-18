@@ -51,7 +51,7 @@ const PostHeader = ({ nid }: IProps) => {
   return (
     <div className="mb-2 mt-4 flex w-[theme(screens.md.max)] flex-col items-center justify-center gap-5 break-all md:w-full">
       <Image src={thumbnail} alt="post-thumbnail" priority />
-      <h1 className="text-xl font-bold text-primary transition-[color]">{title}</h1>
+      <h1 className="text-center text-xl font-bold text-primary transition-[color]">{title}</h1>
       {tags.length > 0 && <TagList className="justify-center" tags={tags} onClick={onClickTag} />}
       <PostSubInfo viewCount={viewCount} likeCount={likeCount} createdAt={createdAt} />
       {series && <PostSeriesInfo selectedPostNid={nid} series={series} />}
