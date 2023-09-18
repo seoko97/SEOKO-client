@@ -23,7 +23,7 @@ const Like = ({ nid, isLiked }: IProps) => {
   return (
     <div
       onClick={onClick}
-      className="mr-12 cursor-pointer rounded-[50%] bg-gray-50 p-2 shadow-md transition-[transform,background-color,box-shadow] hover:-translate-y-1 hover:transform hover:shadow-lg dark:bg-slate-700 xl:mr-0"
+      className="mr-12 cursor-pointer rounded-[50%] bg-gray-50 p-2 shadow-md transition-[transform,background-color,box-shadow] hover:-translate-y-1 hover:transform hover:shadow-lg dark:bg-slate-700 lg:mr-0"
     >
       <LikeIcon className={`relative ${fill} top-[1px] h-10 w-10`}>
         <defs>

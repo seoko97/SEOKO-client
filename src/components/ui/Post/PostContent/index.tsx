@@ -25,12 +25,12 @@ const PostContent = ({ nid }: IProps) => {
   const { isLiked } = data;
 
   return (
-    <div className="relative my-6 flex w-full justify-center xl:flex-col-reverse xl:items-center">
-      <div className="sticky top-24 flex h-fit flex-1 justify-end xl:my-8">
+    <div className="relative my-6 flex w-full justify-center lg:flex-col-reverse lg:items-center">
+      <div className="sticky top-24 flex h-fit flex-1 justify-end overflow-hidden lg:my-8">
         <Like nid={nid} isLiked={isLiked} />
       </div>
       <Viewer content={markdown} isMarked={true} />
-      <div className="sticky top-24 h-fit flex-1 xl:hidden">
+      <div className="sticky top-24 h-fit flex-1 overflow-hidden lg:hidden">
         <Toc markdown={markdown} />
       </div>
     </div>
