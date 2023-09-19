@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useEffect, useRef } from "react";
 
 import { usePathname } from "next/navigation";
@@ -13,14 +13,8 @@ const Giscus = () => {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (mounted) return;
-
-    setMounted(true);
-
+  const loadGiscus = useCallback(() => {
     if (!ref.current || !theme) return;
-
-    if (ref.current.firstChild) ref.current.removeChild(ref.current.firstChild);
 
     const dataTheme = theme === "dark" ? "preferred_color_scheme" : "light";
 
@@ -42,7 +36,32 @@ const Giscus = () => {
     scriptElem.setAttribute("data-theme", dataTheme);
     scriptElem.setAttribute("data-lang", "ko");
 
-    ref.current.appendChild(scriptElem);
+    ref.current?.appendChild(scriptElem);
+  }, [theme, ref.current]);
+
+  useEffect(() => {
+    if (mounted) return;
+
+    if (!ref.current || !theme) return;
+
+    if (ref.current.firstChild) ref.current.removeChild(ref.current.firstChild);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+
+        observer.unobserve(entry.target);
+        setMounted(true);
+        loadGiscus();
+      },
+      { threshold: 0.5 },
+    );
+
+    observer.observe(ref.current);
+
+    return () => {
+      observer.disconnect();
+    };
   }, [pathname, theme]);
 
   useEffect(() => {
