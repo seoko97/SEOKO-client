@@ -11,7 +11,7 @@ interface IProps {
 
 const PostFooter = ({ nid }: IProps) => {
   return (
-    <div className="mx-auto mb-7 mt-0 flex w-[theme(screens.md.max)] flex-col gap-6 md:w-full ">
+    <div className="mx-auto mb-7 mt-0 flex w-full max-w-[theme(screens.md.max)] flex-col gap-6 ">
       <SiblingPost nid={nid} />
       <Giscus />
     </div>

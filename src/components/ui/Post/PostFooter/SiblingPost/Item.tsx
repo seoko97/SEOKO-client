@@ -23,7 +23,7 @@ const SiblingItem = ({ post, type }: IProps) => {
   const linkClassName = `group flex w-full cursor-pointer flex-col gap-3 rounded-md bg-secondary p-4 shadow-md transition-[background-color] ${
     type === "next" ? "items-end" : "items-start"
   }`;
-  const headingClassName = `w-full truncate text-lg font-bold text-primary transition-[color] group-hover:text-effect1 ${
+  const headingClassName = `w-full max-w-[340px] truncate text-lg font-bold text-primary transition-[color] md:max-w-fit group-hover:text-effect1 ${
     type === "next" ? "text-right" : "text-left"
   }`;
 

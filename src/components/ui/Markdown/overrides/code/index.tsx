@@ -1,6 +1,11 @@
+"use client";
+
 import React from "react";
 
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import oneDark from "react-syntax-highlighter/dist/esm/styles/prism/one-dark";
+
+import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/prism-light";
+
 import typescript from "react-syntax-highlighter/dist/esm/languages/prism/typescript";
 import jsx from "react-syntax-highlighter/dist/esm/languages/prism/tsx";
 import tsx from "react-syntax-highlighter/dist/esm/languages/prism/jsx";
@@ -8,8 +13,6 @@ import json from "react-syntax-highlighter/dist/esm/languages/prism/json";
 import javascript from "react-syntax-highlighter/dist/esm/languages/prism/javascript";
 import css from "react-syntax-highlighter/dist/esm/languages/prism/css";
 import bash from "react-syntax-highlighter/dist/esm/languages/prism/bash";
-
-import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 
 SyntaxHighlighter.registerLanguage("javascript", javascript);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
