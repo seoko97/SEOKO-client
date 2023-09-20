@@ -6,9 +6,9 @@ import { useWriteTag } from "@hooks/write/post/useWriteTag";
 import { useWritePost } from "@hooks/write/post/useWritePost";
 import { useGetPostQuery, usePostMutation } from "@hooks/query/post";
 import { useUploadImage } from "@hooks/query/image";
-import PostHeader from "@components/ui/Write/post/Header";
-import WriteFooter from "@components/ui/Write/Footer";
 import { Editor } from "@components/ui/Markdown";
+import PostHeader from "@components/ui/client/write/post/Header";
+import WriteFooter from "@components/ui/client/write/Footer";
 import SeriesList from "@components/modal/series/list";
 
 interface IProps {

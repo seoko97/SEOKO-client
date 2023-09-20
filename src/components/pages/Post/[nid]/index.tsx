@@ -1,7 +1,7 @@
 import React from "react";
 
-import PostHeader from "@components/ui/PostClient/PostHeader";
-import PostFooter from "@components/ui/PostClient/PostFooter";
+import PostHeader from "@components/ui/client/post/PostHeader";
+import PostFooter from "@components/ui/client/post/PostFooter";
 import PostContent from "@components/ui/client/post/PostContent";
 import Hydrate from "@components/pages/Post/[nid]/Hydrate";
 

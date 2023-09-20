@@ -6,8 +6,8 @@ import Link from "next/link";
 import removeMd from "remove-markdown";
 
 import TagList from "@components/ui/TagList";
-import PostSubInfo from "@components/ui/Post/PostHeader/PostSubInfo";
 import Image from "@components/ui/core/Image";
+import PostSubInfo from "@components/ui/client/post/PostHeader/PostSubInfo";
 import { IPost } from "@/types";
 
 interface IProps {
