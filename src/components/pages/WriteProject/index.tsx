@@ -1,6 +1,7 @@
 import React from "react";
 
-import ProjectClient from "@components/ui/Write/project";
+import ProjectClient from "@components/ui/client/write/project";
+
 import Hydrate from "@components/pages/WriteProject/Hydrate";
 
 interface IProps {

@@ -1,19 +1,26 @@
 import { IBaseResponse } from "@/types/base";
 
-enum SkillType {
+enum ESkillType {
   FRONT_END = "front",
   BACK_END = "back",
   DEV_OPS = "devops",
+  LANGUAGE = "language",
 }
 
 interface ICreateSkill {
   name: string;
-  type: SkillType;
+  type: ESkillType;
+  description: string;
   icon: string;
 }
 
-type TUpdateSkill = Partial<ICreateSkill>;
+interface TUpdateSkill extends Partial<ICreateSkill> {
+  _id: string;
+}
 
 interface ISkill extends ICreateSkill, IBaseResponse {}
 
-export type { ICreateSkill, TUpdateSkill, ISkill };
+type TSkills = Record<ESkillType, ISkill[]>;
+
+export { ESkillType };
+export type { ICreateSkill, TUpdateSkill, ISkill, TSkills };
