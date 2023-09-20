@@ -1,6 +1,6 @@
 import React from "react";
 
-import PostClient from "@components/ui/Write/post";
+import PostClient from "@components/ui/client/write/post";
 import Hydrate from "@components/pages/WritePost/Hydrate";
 
 interface IProps {

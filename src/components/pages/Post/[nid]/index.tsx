@@ -1,8 +1,8 @@
 import React from "react";
 
-import PostHeader from "@components/ui/Post/PostHeader";
-import PostFooter from "@components/ui/Post/PostFooter";
-import PostContent from "@components/ui/Post/PostContent";
+import PostHeader from "@components/ui/PostClient/PostHeader";
+import PostFooter from "@components/ui/PostClient/PostFooter";
+import PostContent from "@components/ui/client/post/PostContent";
 import Hydrate from "@components/pages/Post/[nid]/Hydrate";
 
 interface IProps {

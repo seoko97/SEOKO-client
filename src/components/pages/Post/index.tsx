@@ -1,8 +1,8 @@
 import React from "react";
 
 import { USER_DETAIL, USER_LINKS } from "@utils/constant/user";
-import HomeContent from "@components/ui/HomeContent";
 import Avatar from "@components/ui/core/Avatar";
+import HomeClient from "@components/ui/client/home";
 import Hydrate from "@components/pages/Post/Hydrate";
 import { IGetPostsInput } from "@/types";
 
@@ -28,7 +28,7 @@ const Post = async ({ searchParams }: IProps) => {
         </div>
       </section>
       <Hydrate params={searchParams}>
-        <HomeContent params={searchParams} />
+        <HomeClient params={searchParams} />
       </Hydrate>
     </main>
   );

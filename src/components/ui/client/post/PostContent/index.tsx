@@ -4,8 +4,8 @@ import React, { useMemo } from "react";
 
 import { compiler } from "markdown-to-jsx";
 import { useGetPostQuery } from "@hooks/query/post";
-import Toc from "@components/ui/Post/PostContent/Toc";
-import Like from "@components/ui/Post/PostContent/Like";
+import Toc from "@components/ui/client/post/PostContent/Toc";
+import Like from "@components/ui/client/post/PostContent/Like";
 import overrides from "@components/ui/Markdown/overrides";
 import { Viewer } from "@components/ui/Markdown";
 

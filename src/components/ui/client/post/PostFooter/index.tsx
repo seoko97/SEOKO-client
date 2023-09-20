@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import SiblingPost from "@components/ui/Post/PostFooter/SiblingPost";
-import Giscus from "@components/ui/Post/PostFooter/Giscus";
+import SiblingPost from "@components/ui/PostClient/PostFooter/SiblingPost";
+import Giscus from "@components/ui/PostClient/PostFooter/Giscus";
 
 interface IProps {
   nid: number;
