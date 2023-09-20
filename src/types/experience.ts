@@ -7,8 +7,10 @@ interface ICreateExperience {
   end: string | null;
 }
 
-type TUpdateExperience = Partial<ICreateExperience>;
+interface IUpdateExperience extends Partial<ICreateExperience> {
+  _id: string;
+}
 
 interface IExperience extends ICreateExperience, IBaseResponse {}
 
-export type { ICreateExperience, TUpdateExperience, IExperience };
+export type { ICreateExperience, IUpdateExperience, IExperience };
