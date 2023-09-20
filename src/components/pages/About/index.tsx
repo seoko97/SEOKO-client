@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { ABOUT_INFOS, USER_DETAIL, USER_LINKS } from "@utils/constant/user";
 import Skill from "@components/ui/client/about/Skill";
+import Experience from "@components/ui/client/about/Experience";
 import Hydrate from "@components/pages/About/Hydrate";
 
 const About = () => {
@@ -49,6 +50,7 @@ const About = () => {
       </div>
       <Hydrate>
         <Skill />
+        <Experience />
       </Hydrate>
     </section>
   );
