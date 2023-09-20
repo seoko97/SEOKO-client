@@ -72,15 +72,9 @@
   }
 
   body {
-    margin: 0;
-    font-size: 16px;
-    line-height: 1.4;
-
-    background-color: var(--background1);
-
     overflow: overlay;
 
-    @apply transition-[background-color];
+    @apply m-0 bg-primary text-base transition-[background-color];
   }
 
   a {
@@ -104,13 +98,6 @@
     user-select: none;
   }
 
-  html,
-  body {
-    height: 100%;
-
-    @apply bg-primary;
-  }
-
   input,
   textarea,
   button {
@@ -128,6 +115,11 @@
 
   ::-webkit-scrollbar {
     @apply h-2 w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: none;
+    background-color: none;
   }
 
   ::-webkit-scrollbar-thumb {
