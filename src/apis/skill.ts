@@ -1,20 +1,20 @@
-import { ICreateSkill, TUpdateSkill } from "@/types/skill";
+import { ICreateSkill, TSkills, TUpdateSkill } from "@/types/skill";
 import api from "@/apis";
 
 const getSkills = async () => {
-  const { data } = await api.get("/skills");
+  const { data } = await api.get<TSkills>("/skills");
 
   return data;
 };
 
 const createSkill = async (input: ICreateSkill) => {
-  const { data } = await api.post("/skills", input);
+  const { data } = await api.post<TSkills>("/skills", input);
 
   return data;
 };
 
 const updateSkill = async (_id: string, input: TUpdateSkill) => {
-  const { data } = await api.put(`/skills/${_id}`, input);
+  const { data } = await api.put<TSkills>(`/skills/${_id}`, input);
 
   return data;
 };
