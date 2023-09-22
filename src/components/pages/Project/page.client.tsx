@@ -15,9 +15,9 @@ const ProjectClient = () => {
     <div>
       {yearsBtProject.map((year) => (
         <div key={year} className="flex w-full flex-col gap-4 [&:not(:last-child)]:mb-8">
-          <h2 className="last text-2xl font-bold text-primary transition-[color]">
-            {year}
-            <span className="ml-4 align-top text-sm font-normal">
+          <h2 className="last text-2xl font-bold">
+            <span className="text-primary transition-[color]">{year}</span>
+            <span className="ml-4 align-top text-sm font-normal text-slate-500 transition-[color] dark:text-slate-400">
               {filteredProjects[year].length} projects
             </span>
           </h2>
