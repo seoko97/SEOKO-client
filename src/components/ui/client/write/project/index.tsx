@@ -5,9 +5,9 @@ import React, { useRef } from "react";
 import { useWriteProject } from "@hooks/write/project/useWriteProject";
 import { useGetProjectQuery, useProjectMutation } from "@hooks/query/project";
 import { useUploadImage } from "@hooks/query/image";
-import ProjectHeader from "@components/ui/Write/project/Header";
-import WriteFooter from "@components/ui/Write/Footer";
 import { Editor } from "@components/ui/Markdown";
+import ProjectHeader from "@components/ui/client/write/project/Header";
+import WriteFooter from "@components/ui/client/write/Footer";
 
 interface IProps {
   nid: number | null;

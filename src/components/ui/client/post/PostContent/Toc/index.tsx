@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { getToc } from "@utils/getToc";
 import { useTocEvent } from "@hooks/useTocEvent";
 import { useIntersectionObserver } from "@hooks/useIntersectionObserver";
-import TocItem from "@components/ui/Post/PostContent/Toc/item";
+import TocItem from "@components/ui/client/post/PostContent/Toc/item";
 
 interface IProps {
   markdown: React.ReactNode;

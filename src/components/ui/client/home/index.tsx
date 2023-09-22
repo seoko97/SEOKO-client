@@ -4,14 +4,14 @@ import React, { useRef } from "react";
 
 import { useGetPostsQuery } from "@hooks/query/post";
 import PostList from "@components/ui/PostList";
-import ContentHeader from "@components/ui/HomeContent/ContentHeader";
+import ContentHeader from "@components/ui/client/home/HomeHeader";
 import { IGetPostsInput } from "@/types";
 
 interface IProps {
   params: IGetPostsInput;
 }
 
-const HomeContent = ({ params }: IProps) => {
+const HomeClient = ({ params }: IProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [posts, fetchMorePosts] = useGetPostsQuery(params);
@@ -35,4 +35,4 @@ const HomeContent = ({ params }: IProps) => {
   );
 };
 
-export default HomeContent;
+export default HomeClient;

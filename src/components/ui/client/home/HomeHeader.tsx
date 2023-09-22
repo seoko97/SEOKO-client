@@ -6,7 +6,7 @@ import { debounce } from "@utils/debounce";
 import Input from "@components/ui/core/Input";
 import { SearchIcon } from "@components/icons";
 
-const ContentHeader = () => {
+const HomeHeader = () => {
   const router = useRouter();
   const params = useSearchParams();
 
@@ -38,4 +38,4 @@ const ContentHeader = () => {
   );
 };
 
-export default ContentHeader;
+export default HomeHeader;

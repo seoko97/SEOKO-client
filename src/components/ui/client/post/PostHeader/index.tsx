@@ -9,9 +9,9 @@ import { useGetSeriesQuery } from "@hooks/query/series";
 import { useDeletePostMutation, useGetPostQuery } from "@hooks/query/post";
 import TagList from "@components/ui/TagList";
 import PostSeriesInfo from "@components/ui/PostSeriesInfo";
-import PostSubInfo from "@components/ui/Post/PostHeader/PostSubInfo";
 import Navigation from "@components/ui/Navigation";
 import Image from "@components/ui/core/Image";
+import PostSubInfo from "@components/ui/client/post/PostHeader/PostSubInfo";
 
 interface IProps {
   nid: number;
