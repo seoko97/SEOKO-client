@@ -21,7 +21,7 @@ const ProjectList = ({ projects }: IProps) => {
             <div className="flex w-full flex-col gap-2 whitespace-pre-wrap break-all px-2 py-2 text-primary transition-[color,opacity]">
               <h3 className="truncate text-lg font-bold">{project.title}</h3>
               <div className="truncate text-sm">{project.description}</div>
-              <div className="text-xs text-slate-500 dark:text-slate-400">
+              <div className="text-xs text-slate-500 transition-[color] dark:text-slate-400">
                 {project.start} ~ {project.end ?? "진행중"}
               </div>
             </div>
