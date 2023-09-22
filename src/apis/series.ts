@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { ISeries, IUpdateSeriesInput } from "@/types";
 import api from "@/apis";
 
@@ -7,11 +9,11 @@ const getSeriesAll = async () => {
   return data;
 };
 
-const getSeries = async (nid: number) => {
+const getSeries = cache(async (nid: number) => {
   const { data } = await api.get<ISeries>(`/series/${nid}`);
 
   return data;
-};
+});
 
 const updateSeries = async (nid: number, body: IUpdateSeriesInput) => {
   const { data } = await api.put<ISeries>(`/series/${nid}`, body);
