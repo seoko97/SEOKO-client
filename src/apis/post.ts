@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import {
   ICreatePostInput,
   IGetPostsInput,
@@ -13,11 +15,11 @@ const getPosts = async (params: IGetPostsInput = {}) => {
   return res.data;
 };
 
-const getPost = async (nid: number) => {
+const getPost = cache(async (nid: number) => {
   const res = await api.get<IPost>(`/posts/${nid}`);
 
   return res.data;
-};
+});
 
 const getSiblingPost = async (nid: number) => {
   const res = await api.get<IGetSiblingPost>(`/posts/${nid}/sibling`);

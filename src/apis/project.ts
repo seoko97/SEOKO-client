@@ -1,11 +1,13 @@
+import { cache } from "react";
+
 import { IProjectInput, TProject } from "@/types";
 import api from "@/apis";
 
-const getProject = async (nid: number) => {
+const getProject = cache(async (nid: number) => {
   const { data } = await api.get<TProject>(`/projects/${nid}`);
 
   return data;
-};
+});
 
 const getProjects = async () => {
   const { data } = await api.get<TProject[]>(`/projects`);
