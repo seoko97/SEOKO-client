@@ -2,16 +2,19 @@
 
 import React, { useRef } from "react";
 
+import dynamic from "next/dynamic";
+
 import { useWriteProject } from "@hooks/write/project/useWriteProject";
 import { useGetProjectQuery, useProjectMutation } from "@hooks/query/project";
 import { useUploadImage } from "@hooks/query/image";
-import { Editor } from "@components/ui/Markdown";
 import ProjectHeader from "@components/ui/client/write/project/Header";
 import WriteFooter from "@components/ui/client/write/Footer";
 
 interface IProps {
   nid: number | null;
 }
+
+const Editor = dynamic(() => import("@components/ui/Markdown/editor"), { ssr: true });
 
 const Project = ({ nid }: IProps) => {
   const { data: project } = useGetProjectQuery(nid);

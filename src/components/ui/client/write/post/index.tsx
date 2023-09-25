@@ -2,11 +2,12 @@
 
 import React, { useRef, useState } from "react";
 
+import dynamic from "next/dynamic";
+
 import { useWriteTag } from "@hooks/write/post/useWriteTag";
 import { useWritePost } from "@hooks/write/post/useWritePost";
 import { useGetPostQuery, usePostMutation } from "@hooks/query/post";
 import { useUploadImage } from "@hooks/query/image";
-import { Editor } from "@components/ui/Markdown";
 import PostHeader from "@components/ui/client/write/post/Header";
 import WriteFooter from "@components/ui/client/write/Footer";
 import SeriesList from "@components/modal/series/list";
@@ -14,6 +15,8 @@ import SeriesList from "@components/modal/series/list";
 interface IProps {
   nid: number | null;
 }
+
+const Editor = dynamic(() => import("@components/ui/Markdown/editor"), { ssr: true });
 
 const Post = ({ nid }: IProps) => {
   const { data: post } = useGetPostQuery(nid);
