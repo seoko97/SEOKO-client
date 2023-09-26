@@ -5,7 +5,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build-frontend:
+  build:
     name: Build and Push Project
     runs-on: ubuntu-latest
     steps:
@@ -30,22 +30,22 @@ jobs:
       - name: Login to Docker Registry
         uses: docker/login-action@v2
         with:
-          registry: ${{secrets.FRONT_DOCKER_REGISTRY_URL}}
+          registry: ${{secrets.DOCKER_REGISTRY_URL}}
           username: ${{secrets.DOCKER_REGISTRY_ACCESS_KEY}}
           password: ${{secrets.DOCKER_REGISTRY_SECRET_KEY}}
 
       - name: Docker build & push to push
-        run: docker buildx build -t ${{secrets.FRONT_DOCKER_REGISTRY_URL}}/${{secrets.FRONT_DOCKER_IMAGE_NAME}}:${{ github.sha }} -t ${{secrets.FRONT_DOCKER_REGISTRY_URL}}/${{secrets.FRONT_DOCKER_IMAGE_NAME}}:latest --push .
+        run: docker buildx build -t ${{secrets.DOCKER_REGISTRY_URL}}/${{secrets.FRONT_DOCKER_IMAGE_NAME}}:${{ github.sha }} -t ${{secrets.DOCKER_REGISTRY_URL}}/${{secrets.FRONT_DOCKER_IMAGE_NAME}}:latest --push .
 
   deploy:
-    needs: build-frontend
+    needs: build
     name: Deploy
-    runs-on: [seoko]
+    runs-on: [seoko-client]
     steps:
       - name: Login to Docker Registry
         uses: docker/login-action@v2
         with:
-          registry: ${{secrets.FRONT_DOCKER_REGISTRY_URL}}
+          registry: ${{secrets.DOCKER_REGISTRY_URL}}
           username: ${{secrets.DOCKER_REGISTRY_ACCESS_KEY}}
           password: ${{secrets.DOCKER_REGISTRY_SECRET_KEY}}
 
@@ -55,5 +55,5 @@ jobs:
           then
               docker rm -f $(docker ps -f "name=front" -q)
           fi
-          docker pull ${{secrets.FRONT_DOCKER_REGISTRY_URL}}/${{secrets.FRONT_DOCKER_IMAGE_NAME}}:${{ github.sha }}
-          docker run -dit -p 3000:3000 --name front ${{secrets.FRONT_DOCKER_REGISTRY_URL}}/${{secrets.FRONT_DOCKER_IMAGE_NAME}}:${{ github.sha }}
+          docker pull ${{secrets.DOCKER_REGISTRY_URL}}/${{secrets.FRONT_DOCKER_IMAGE_NAME}}:${{ github.sha }}
+          docker run -dit -p 3000:3000 --name front ${{secrets.DOCKER_REGISTRY_URL}}/${{secrets.FRONT_DOCKER_IMAGE_NAME}}:${{ github.sha }}
