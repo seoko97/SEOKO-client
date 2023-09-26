@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
+import { GOOGLE_SITE_VERIFICATION } from "@utils/constant/env";
 import Header from "@components/ui/Header";
 import Footer from "@components/ui/Footer";
 import Providers from "@components/query/Providers";
@@ -8,6 +9,7 @@ import Providers from "@components/query/Providers";
 import Hydrate from "@components/query/hydrate/UserHydrate";
 
 import "@styles/globals.css";
+import Analytics from "@components/Analytics";
 
 export const dynamic = "force-dynamic";
 
@@ -92,7 +94,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="ko">
+      <head>
+        <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+      </head>
       <body suppressHydrationWarning={true}>
+        <Analytics />
         <ThemeScript />
         <div className="relative min-h-screen w-full bg-primary pb-36 transition-[background-color]">
           <Providers>
