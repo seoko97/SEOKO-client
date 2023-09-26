@@ -24,7 +24,7 @@ const Header: React.FC = () => {
   const containerProps = {
     className: `${
       isFixed ? "shadow-sm" : ""
-    } sticky -top-8 z-50 w-full bg-tertiary pt-8 backdrop-blur-sm transition-[background-color,box-shadow]`,
+    } sticky -top-8 z-50 w-full bg-primary/50  pt-8 backdrop-blur-sm transition-[background-color,box-shadow]`,
   };
 
   const innerProps = {
@@ -32,12 +32,12 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div {...containerProps}>
+    <header {...containerProps}>
       <div {...innerProps}>
         <Logo />
         <Nav />
       </div>
-    </div>
+    </header>
   );
 };
 

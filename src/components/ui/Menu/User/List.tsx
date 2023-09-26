@@ -3,7 +3,7 @@ import React from "react";
 import MenuItem from "@components/ui/core/MenuItem";
 
 interface IProps {
-  username: string | null;
+  username?: string | null;
   signOut: () => void;
 }
 

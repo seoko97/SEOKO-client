@@ -1,9 +1,1 @@
-"use client";
-
-import React from "react";
-
-const Home = () => {
-  return <main></main>;
-};
-
-export default Home;
+export { default } from "@components/pages/Post";

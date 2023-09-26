@@ -14,7 +14,6 @@ const Avatar: React.FC<IProps> = (props) => {
 
   const containerProps = {
     onClick,
-    className: "flex overflow-hidden rounded-full cursor-pointer",
   };
 
   const imageProps = {
@@ -23,7 +22,7 @@ const Avatar: React.FC<IProps> = (props) => {
     src,
     quality: 100,
     alt: "avatar",
-    className: "object-cover",
+    className: "object-cover rounded-[50%]",
   };
 
   return (

@@ -14,7 +14,17 @@ module.exports = {
   plugins: ["prettier", "@typescript-eslint", "import"],
   rules: {
     "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/no-unknown-property": ["error", { ignore: ["css"] }],
     "@next/next/no-html-link-for-pages": "off",
+    "import/default": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-empty-interface": ["error", { allowSingleExtends: false }],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": [1, { args: "after-used", argsIgnorePattern: "^_" }],
     "import/order": [
       "error",
       {
@@ -27,14 +37,6 @@ module.exports = {
         "newlines-between": "always-and-inside-groups",
       },
     ],
-    "import/default": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "no-unused-vars": [1, { args: "after-used", argsIgnorePattern: "^_" }],
-    "@typescript-eslint/no-empty-interface": ["error", { allowSingleExtends: false }],
-    "react/prop-types": "off",
-    "react/display-name": "off",
-    "react/no-unknown-property": ["error", { ignore: ["css"] }],
-    "@typescript-eslint/no-unused-vars": "warn",
   },
   env: {
     browser: true,
