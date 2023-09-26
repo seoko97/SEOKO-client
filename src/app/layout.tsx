@@ -7,9 +7,9 @@ import Footer from "@components/ui/Footer";
 import Providers from "@components/query/Providers";
 
 import Hydrate from "@components/query/hydrate/UserHydrate";
+import Analytics from "@components/Analytics";
 
 import "@styles/globals.css";
-import Analytics from "@components/Analytics";
 
 export const dynamic = "force-dynamic";
 
