@@ -5,7 +5,7 @@ import { siteMetadata } from "@utils/constant/metadata";
 
 export const generateMetadata = (): Metadata => {
   const { openGraph, ...rest } = generateDefaultMetadata({
-    title: `${siteMetadata.title} - About}`,
+    title: "About",
     description: siteMetadata.description,
     url: `${siteMetadata.siteUrl}/about`,
   });
