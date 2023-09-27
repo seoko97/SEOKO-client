@@ -16,7 +16,7 @@ const useUploadImageMutation = (type: TImageType) => {
 };
 
 const useUploadImage = ({ type, defaultImg }: IProps) => {
-  const [image, setImage] = useState<string>(defaultImg || "/main.jpg");
+  const [image, setImage] = useState<string>(defaultImg || "/SEOKO.png");
 
   const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
