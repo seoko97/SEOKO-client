@@ -75,7 +75,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   function setBodyDatasetByTheme() {
     const prefersDarkFromMq = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    const persistedPreference = localStorage.getItem("theme");
+    const theme = localStorage.getItem("theme");
+
+    const persistedPreference = theme === "undefined" ? null : theme;
 
     const colorMode = persistedPreference || (prefersDarkFromMq ? "dark" : "light");
 
