@@ -1,7 +1,5 @@
 import React from "react";
 
-import NextLink from "next/link";
-
 import Button from "@components/ui/core/Button";
 
 const NotFound = () => {
@@ -11,11 +9,11 @@ const NotFound = () => {
       <h2 className="text-2xl font-semibold text-primary transition-[color]">
         페이지를 찾을 수 없습니다 😭
       </h2>
-      <NextLink href="/">
+      <a href="/">
         <Button className="border-none !bg-[theme(textColor.main)] text-white">
           홈으로 돌아가기
         </Button>
-      </NextLink>
+      </a>
     </div>
   );
 };

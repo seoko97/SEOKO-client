@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
+import { GOOGLE_SITE_VERIFICATION } from "@utils/constant/env";
 import Header from "@components/ui/Header";
 import Footer from "@components/ui/Footer";
 import Providers from "@components/query/Providers";
 
 import Hydrate from "@components/query/hydrate/UserHydrate";
+import Analytics from "@components/Analytics";
 
 import "@styles/globals.css";
 
@@ -73,7 +75,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   function setBodyDatasetByTheme() {
     const prefersDarkFromMq = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    const persistedPreference = localStorage.getItem("theme");
+    const theme = localStorage.getItem("theme");
+
+    const persistedPreference = theme === "undefined" ? null : theme;
 
     const colorMode = persistedPreference || (prefersDarkFromMq ? "dark" : "light");
 
@@ -92,7 +96,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="ko">
+      <head>
+        <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+      </head>
       <body suppressHydrationWarning={true}>
+        <Analytics />
         <ThemeScript />
         <div className="relative min-h-screen w-full bg-primary pb-36 transition-[background-color]">
           <Providers>
