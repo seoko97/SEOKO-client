@@ -38,7 +38,7 @@ COPY --from=builder /app/.yarnrc.yml ./yarnrc.yml
 
 ENV NODE_ENV production
 ENV PORT 3000
-ENV HOSTNAME localhost
+ENV HOSTNAME 0.0.0.0
 
 EXPOSE 3000
 
