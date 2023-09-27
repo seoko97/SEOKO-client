@@ -86,13 +86,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     document.body.dataset.theme = colorMode;
   }
 
-  function ThemeScript() {
-    const stringifyFn = String(setBodyDatasetByTheme);
+  const stringifyFn = String(setBodyDatasetByTheme);
 
-    const fnToRunOnClient = `(${stringifyFn})()`;
-
-    return <script dangerouslySetInnerHTML={{ __html: fnToRunOnClient }} />;
-  }
+  const fnToRunOnClient = `(${stringifyFn})()`;
 
   return (
     <html lang="ko">
@@ -100,8 +96,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
       </head>
       <body suppressHydrationWarning={true}>
+        <script dangerouslySetInnerHTML={{ __html: fnToRunOnClient }} />
         <Analytics />
-        <ThemeScript />
         <div className="relative min-h-screen w-full bg-primary pb-36 transition-[background-color]">
           <Providers>
             <Hydrate>
