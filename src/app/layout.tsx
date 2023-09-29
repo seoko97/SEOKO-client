@@ -77,13 +77,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
     const theme = localStorage.getItem("theme");
 
-    const persistedPreference = theme === "undefined" ? null : theme;
+    const persistedPreference = theme === "dark" || theme === "light" ? theme : null;
 
     const colorMode = persistedPreference || (prefersDarkFromMq ? "dark" : "light");
 
     localStorage.setItem("theme", colorMode);
-
-    document.body.dataset.theme = colorMode;
   }
 
   const stringifyFn = String(setBodyDatasetByTheme);
@@ -96,7 +94,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
       </head>
       <body suppressHydrationWarning={true}>
-        <script dangerouslySetInnerHTML={{ __html: fnToRunOnClient }} />
+        <script dangerouslySetInnerHTML={{ __html: fnToRunOnClient }} async />
         <Analytics />
         <div className="relative min-h-screen w-full bg-primary pb-36 transition-[background-color]">
           <Providers>
