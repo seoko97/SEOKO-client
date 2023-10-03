@@ -9,13 +9,9 @@ const Analytics = () => {
 
   return (
     <>
-      <NextScript
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-      />
+      <NextScript src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
       <NextScript
         id="google-analytics"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
                     window.dataLayer = window.dataLayer || [];
