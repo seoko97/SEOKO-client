@@ -9,8 +9,7 @@ COPY yarn.lock .
 COPY .yarnrc.yml .
 COPY .pnp.cjs .
 COPY .pnp.loader.mjs .
-COPY .yarn/releases ./.yarn/releases
-COPY .yarn/cache ./.yarn/cache
+COPY .yarn .yarn
 
 RUN yarn install
 
@@ -35,6 +34,7 @@ COPY --from=builder /app/.pnp.cjs ./.pnp.cjs
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/yarn.lock ./yarn.lock
 COPY --from=builder /app/.yarnrc.yml ./yarnrc.yml
+COPY --from=builder /app/.env ./.env
 
 ENV NODE_ENV production
 ENV PORT 3000
