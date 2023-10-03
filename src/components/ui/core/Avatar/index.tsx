@@ -12,22 +12,16 @@ interface IProps {
 const Avatar: React.FC<IProps> = (props) => {
   const { src = "/main.jpg", width = 30, height = 30, onClick } = props;
 
-  const containerProps = {
-    onClick,
-  };
-
-  const imageProps = {
-    width,
-    height,
-    src,
-    quality: 100,
-    alt: "avatar",
-    className: "object-cover rounded-[50%]",
-  };
-
   return (
-    <div {...containerProps}>
-      <Image {...imageProps} />
+    <div onClick={onClick}>
+      <Image
+        width={width}
+        height={height}
+        src={src}
+        quality={100}
+        alt="avatar"
+        className="rounded-[50%] object-cover"
+      />
     </div>
   );
 };
