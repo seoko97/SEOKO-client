@@ -2,12 +2,12 @@
 
 import React, { useRef, useState } from "react";
 
-import { dateTimeParser } from "@utils/dateTimeParser";
 import { useGetUserQuery } from "@hooks/query/user";
 import { useDeleteSeriesMutation, useGetSeriesQuery } from "@hooks/query/series";
 import { useGetPostsQuery } from "@hooks/query/post";
 import PostList from "@components/ui/PostList";
 import Navigation from "@components/ui/Navigation";
+import DateTime from "@components/ui/core/DateTime";
 import EditSeries from "@components/modal/series/edit";
 import { ChevronIcon } from "@components/icons";
 
@@ -55,7 +55,9 @@ const SeriesClient = ({ nid }: IProps) => {
         <div className="ml-1 truncate text-sm text-primary text-slate-500 dark:text-slate-400">
           <span className="text-primary transition-[color]">{postCount}개의 포스트</span>
           <span className="mx-1">·</span>
-          <span>마지막 업데이트 {dateTimeParser(updatedAt)}</span>
+          <span>
+            마지막 업데이트 <DateTime date={updatedAt} />
+          </span>
         </div>
       </div>
       <div className="flex w-full flex-col gap-5">

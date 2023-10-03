@@ -77,12 +77,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
     const theme = localStorage.getItem("theme");
 
-    const persistedPreference = theme === "undefined" ? null : theme;
+    const persistedPreference = theme === "dark" || theme === "light" ? theme : null;
 
     const colorMode = persistedPreference || (prefersDarkFromMq ? "dark" : "light");
 
     localStorage.setItem("theme", colorMode);
-
     document.body.dataset.theme = colorMode;
   }
 
