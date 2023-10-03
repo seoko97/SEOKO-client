@@ -9,7 +9,11 @@ const useDarkMode: TResult = () => {
   const [mode, setMode] = useLocalStorage<TDarkMode | undefined>("theme");
 
   useEffect(() => {
-    setMode(document.body.dataset.theme as TDarkMode);
+    const theme = (document.body.dataset.theme ||
+      localStorage.getItem("theme") ||
+      "light") as TDarkMode;
+
+    setMode(theme);
   }, []);
 
   useEffect(() => {
