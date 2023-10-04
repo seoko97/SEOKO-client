@@ -6,6 +6,7 @@ import oneDark from "react-syntax-highlighter/dist/esm/styles/prism/one-dark";
 
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/prism-light";
 
+import yaml from "react-syntax-highlighter/dist/esm/languages/prism/yaml";
 import typescript from "react-syntax-highlighter/dist/esm/languages/prism/typescript";
 import jsx from "react-syntax-highlighter/dist/esm/languages/prism/tsx";
 import tsx from "react-syntax-highlighter/dist/esm/languages/prism/jsx";
@@ -21,6 +22,7 @@ SyntaxHighlighter.registerLanguage("tsx", tsx);
 SyntaxHighlighter.registerLanguage("bash", bash);
 SyntaxHighlighter.registerLanguage("css", css);
 SyntaxHighlighter.registerLanguage("json", json);
+SyntaxHighlighter.registerLanguage("yaml", yaml);
 
 import InlineCode from "./inlineCode";
 
@@ -29,7 +31,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const code = ({ children, className = "", ...props }: IProps) => {
-  const language = className.replace("lang-", "");
+  const language = className?.replace("lang-", "");
 
   const isText = language === "txt" || language === "text";
   const TXT_CLASS = isText
@@ -43,10 +45,8 @@ const code = ({ children, className = "", ...props }: IProps) => {
       showLineNumbers={!isText}
       showInlineLineNumbers={true}
       style={oneDark}
-      codeTagProps={{
-        className: "text-sm",
-      }}
-      className={`relative w-full rounded-md !p-4 shadow-md !transition-[background-color] ${TXT_CLASS}`}
+      codeTagProps={{ className: "text-sm" }}
+      className={`relative w-full rounded-md !p-4 shadow-md !transition-[background-color] !text-shadow-none ${TXT_CLASS}`}
     >
       {String(children).replace(/\n$/, "")}
     </SyntaxHighlighter>
