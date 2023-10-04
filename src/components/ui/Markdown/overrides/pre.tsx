@@ -5,7 +5,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const pre = ({ children }: IProps) => {
-  const language = children.props.className.replace("lang-", "");
+  const language = children.props.className?.replace("lang-", "");
 
   if (language) {
     return <>{children}</>;
