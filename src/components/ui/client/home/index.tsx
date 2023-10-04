@@ -16,16 +16,10 @@ const HomeClient = ({ params }: IProps) => {
 
   const [posts, fetchMorePosts] = useGetPostsQuery(params);
 
-  const postListProps = {
-    ref,
-    posts,
-    func: fetchMorePosts,
-  };
-
   return (
     <section className="flex w-full flex-col gap-5">
       <ContentHeader />
-      {posts.length > 0 && <PostList {...postListProps} />}
+      {posts.length > 0 && <PostList ref={ref} posts={posts} func={fetchMorePosts} />}
       {posts?.length === 0 && (
         <div className="py-10 text-center text-2xl font-bold text-gray-400 sm:text-xl">
           포스트를 찾을 수 없습니다 🙄

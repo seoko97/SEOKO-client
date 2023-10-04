@@ -4,9 +4,9 @@ import React from "react";
 
 import Link from "next/link";
 
-import { dateTimeParser } from "@utils/dateTimeParser";
 import { useGetSeriesQueries } from "@hooks/query/series";
 import Image from "@components/ui/core/Image";
+import DateTime from "@components/ui/core/DateTime";
 
 const Series = () => {
   const { data: seriesList } = useGetSeriesQueries();
@@ -33,7 +33,9 @@ const Series = () => {
                   {series.postCount}개의 포스트
                 </span>
                 <span className="mx-1">·</span>
-                <span>마지막 업데이트 {dateTimeParser(series.updatedAt)}</span>
+                <span>
+                  마지막 업데이트 <DateTime date={series.updatedAt} />
+                </span>
               </div>
             </div>
           </div>

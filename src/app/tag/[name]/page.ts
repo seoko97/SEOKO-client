@@ -21,8 +21,6 @@ export const generateMetadata = async ({ params }: IProps): Promise<Metadata> =>
   const description = `TAG [${name}]에 대한 포스팅 목록`;
 
   const thumbnail = "/SEOKO.png";
-  const publishedTime = new Date(tag.createdAt).toISOString();
-  const modifiedTime = new Date(tag.updatedAt || tag.createdAt).toISOString();
 
   return {
     title: metadataTitle,
@@ -35,8 +33,6 @@ export const generateMetadata = async ({ params }: IProps): Promise<Metadata> =>
       title: metadataTitle,
       description,
       images: [{ url: thumbnail }],
-      publishedTime,
-      modifiedTime,
     },
   };
 };
