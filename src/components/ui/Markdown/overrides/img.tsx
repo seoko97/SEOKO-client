@@ -21,14 +21,17 @@ const img = (props: ImageProps) => {
   }
 
   return (
-    <NextImage
-      alt={alt ?? "post_image"}
-      loading="lazy"
-      {...rest}
-      width={1000}
-      height={1000}
-      className="mx-auto my-0 h-auto w-auto max-w-full rounded-sm shadow-md"
-    />
+    <>
+      <NextImage
+        alt={alt ?? "post_image"}
+        loading="lazy"
+        {...rest}
+        width={1000}
+        height={1000}
+        className="mx-auto my-0 h-auto w-auto max-w-full rounded-md shadow-sm"
+      />
+      {alt && <p className="mt-2 text-center text-sm text-gray-400">{alt}</p>}
+    </>
   );
 };
 

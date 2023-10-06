@@ -34,9 +34,6 @@ const code = ({ children, className = "", ...props }: IProps) => {
   const language = className?.replace("lang-", "");
 
   const isText = language === "txt" || language === "text";
-  const TXT_CLASS = isText
-    ? "!text-markdown1 !transition-[color,background-color] !bg-markdown"
-    : "";
 
   return language ? (
     <SyntaxHighlighter
@@ -46,7 +43,7 @@ const code = ({ children, className = "", ...props }: IProps) => {
       showInlineLineNumbers={true}
       style={oneDark}
       codeTagProps={{ className: "text-sm" }}
-      className={`relative w-full rounded-md !p-4 shadow-md !transition-[background-color] !text-shadow-none ${TXT_CLASS}`}
+      className="relative w-full rounded-md !p-4 shadow-md !transition-[background-color] !text-shadow-none"
     >
       {String(children).replace(/\n$/, "")}
     </SyntaxHighlighter>
