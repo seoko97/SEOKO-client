@@ -16,7 +16,7 @@ const TocItem = ({ item, isActive, onClick }: IProps) => {
   return (
     <li
       style={{ paddingLeft: `${level * 0.8}rem` }}
-      className={`${className} w-full [&.active>a]:text-primary [&.active]:-translate-x-1`}
+      className={`${className} w-full [&.active>a]:text-effect1`}
     >
       <a
         id={id}
