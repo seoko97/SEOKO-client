@@ -20,7 +20,7 @@ const Avatar: React.FC<IProps> = (props) => {
         src={src}
         quality={100}
         alt="avatar"
-        className="rounded-[50%] object-cover"
+        className="rounded-[50%] bg-slate-400 object-cover"
       />
     </div>
   );
