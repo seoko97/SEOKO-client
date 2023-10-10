@@ -18,7 +18,7 @@ const DarkModeButton = () => {
       onClick={onChangeTheme}
       className="b-0 z-50 flex cursor-pointer items-center justify-center border-0 bg-transparent p-0"
     >
-      <Icon className="h-6 w-6 fill-gray-500 transition-colors hover:fill-yellow-400" />
+      <Icon className="h-6 w-6 fill-gray-500 transition-[fill] hover:fill-yellow-400" />
     </button>
   );
 };
