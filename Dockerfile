@@ -4,16 +4,9 @@ FROM base as builder
 
 WORKDIR /app
 
-COPY package.json .
-COPY yarn.lock .
-COPY .yarnrc.yml .
-COPY .pnp.cjs .
-COPY .pnp.loader.mjs .
-COPY .yarn .yarn
+COPY . .
 
 RUN yarn install
-
-COPY . .
 
 RUN yarn build
 
@@ -29,6 +22,7 @@ COPY --from=builder /app/public ./public
 
 COPY --from=builder /app/.yarn/releases ./.yarn/releases
 COPY --from=builder /app/.yarn/cache ./.yarn/cache
+COPY --from=builder /app/.yarn/unplugged ./.yarn/unplugged
 
 COPY --from=builder /app/.pnp.cjs ./.pnp.cjs
 COPY --from=builder /app/package.json ./package.json
