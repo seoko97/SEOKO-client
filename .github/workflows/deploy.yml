@@ -55,5 +55,6 @@ jobs:
           then
               docker rm -f $(docker ps -f "name=front" -q)
           fi
+          docker image prune -a
           docker pull ${{secrets.DOCKER_REGISTRY_URL}}/${{secrets.FRONT_DOCKER_IMAGE_NAME}}:${{ github.sha }}
           docker run -dit -p 3000:3000 --name front ${{secrets.DOCKER_REGISTRY_URL}}/${{secrets.FRONT_DOCKER_IMAGE_NAME}}:${{ github.sha }}
