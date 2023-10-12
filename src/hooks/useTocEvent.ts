@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 
+import { MARKDOWN_HEADING_SELECTOR } from "@utils/constant/toc";
 import { IToc } from "@/types/base";
 
 const useTocEvent = (toc: IToc[]) => {
   const scroll = (id: string, behavior: ScrollBehavior = "smooth") => {
-    const query = ".markdown > h1,.markdown > h2,.markdown > h3";
-
-    const headingElements = Array.from(document.querySelectorAll(query));
+    const headingElements = Array.from(document.querySelectorAll(MARKDOWN_HEADING_SELECTOR));
 
     if (!headingElements.length) return;
 
