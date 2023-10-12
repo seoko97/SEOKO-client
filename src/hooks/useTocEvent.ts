@@ -4,17 +4,19 @@ import { IToc } from "@/types/base";
 
 const useTocEvent = (toc: IToc[]) => {
   const scroll = (id: string, behavior: ScrollBehavior = "smooth") => {
-    const targetHeading = document.getElementById(id);
+    const query = ".markdown > h1,.markdown > h2,.markdown > h3";
+
+    const headingElements = Array.from(document.querySelectorAll(query));
+
+    if (!headingElements.length) return;
+
+    const targetHeading = headingElements.find((heading) => heading.id === id);
 
     if (!targetHeading) return;
 
     const scrollY = window.scrollY + targetHeading.getBoundingClientRect().top - 80;
 
-    window.scrollTo({
-      top: scrollY,
-      behavior,
-      left: 0,
-    });
+    window.scrollTo({ top: scrollY, behavior, left: 0 });
   };
 
   const scrollToTargetItem: React.MouseEventHandler<HTMLDivElement> = (e) => {
@@ -34,7 +36,7 @@ const useTocEvent = (toc: IToc[]) => {
 
     if (!decodedHash) return;
 
-    const item = toc.find((item) => item.text === decodedHash);
+    const item = toc.find((item) => item.id === decodedHash);
 
     if (!item) return;
 
