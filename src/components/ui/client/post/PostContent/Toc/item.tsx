@@ -1,5 +1,7 @@
 import React, { memo } from "react";
 
+import NextLink from "next/link";
+
 import { IToc } from "@/types/base";
 
 interface IProps {
@@ -18,14 +20,15 @@ const TocItem = ({ item, isActive, onClick }: IProps) => {
       style={{ paddingLeft: `${level * 0.8}rem` }}
       className={`${className} w-full [&.active>a]:text-effect1`}
     >
-      <a
+      <NextLink
         id={id}
-        href={`#${text}`}
+        href={`#${id}`}
+        scroll={false}
         onClick={onClick}
         className="text-slate-400 transition-all hover:text-primary dark:text-slate-400"
       >
         {text}
-      </a>
+      </NextLink>
     </li>
   );
 };

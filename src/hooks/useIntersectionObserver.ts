@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 
+import { MARKDOWN_HEADING_SELECTOR } from "@utils/constant/toc";
+
 interface IHeadingElement {
   [key: string]: IntersectionObserverEntry;
 }
@@ -44,7 +46,7 @@ export const useIntersectionObserver = <T>(
 
     const observer = new IntersectionObserver(callback, { rootMargin: "-72px 0px -90% 0px" });
 
-    const headingElements = Array.from(document.querySelectorAll("h1, h2, h3, h4, h5, h6"));
+    const headingElements = Array.from(document.querySelectorAll(MARKDOWN_HEADING_SELECTOR));
 
     headingElements.forEach((element) => observer.observe(element));
 
