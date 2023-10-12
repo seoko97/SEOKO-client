@@ -1,5 +1,6 @@
 import React from "react";
 
+import { removeSpecialCharacters } from "@utils/getToc";
 import { getChildrenText } from "@utils/getChildrenText";
 
 interface IProps {
@@ -9,7 +10,7 @@ interface IProps {
 
 const Heading = ({ children, tagname }: IProps) => {
   const text = getChildrenText(children);
-  const id = `${tagname}_${text.replace(/\s/g, "_").trim()}`;
+  const id = removeSpecialCharacters(text);
 
   return React.createElement(tagname, { id }, children);
 };
