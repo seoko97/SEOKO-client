@@ -146,12 +146,12 @@
       @apply mt-0;
     }
 
-    & p {
+    & div {
       @apply relative;
     }
 
     & td {
-      @apply border-[1px] border-solid border-gray-500;
+      @apply border border-solid border-gray-300 !transition-[border-color,color] dark:border-gray-700;
     }
 
     & pre {
@@ -187,7 +187,7 @@
     & h4,
     & h5,
     & h6,
-    & p,
+    & div,
     & td,
     & ul,
     & ol {
@@ -196,7 +196,7 @@
       @apply break-all transition-[color];
     }
 
-    & p,
+    & div,
     & ul,
     & ol,
     & table,
@@ -234,6 +234,19 @@
 
     & a {
       @apply text-teal-400 hover:underline;
+    }
+
+    & table {
+      @apply w-full text-primary transition-[color];
+
+      & td {
+        @apply border-x-0;
+      }
+
+      & td,
+      & th {
+        @apply p-2;
+      }
     }
   }
 }

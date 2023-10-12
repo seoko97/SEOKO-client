@@ -40,7 +40,7 @@ const Alert = ({ type = "info", children }: IProps) => {
 
   return (
     <div
-      className={`${style} relative my-12 rounded-md border-l-2 px-5 py-3 transition-colors sm:border-l-4 [&>*:not(svg)]:my-4`}
+      className={`relative my-12 rounded-r-md border-l-2 px-5 py-3 !transition-[background-color,color] sm:border-l-4 [&>*:not(svg)]:my-4 ${style}`}
     >
       <Icon
         className={`${iconStyle} duration-default absolute -left-0.5 top-0 h-8 w-8 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full border border-[theme(backgroundColor.primary)] bg-primary p-0.5 transition-[background-color,border] sm:h-10 sm:w-10`}

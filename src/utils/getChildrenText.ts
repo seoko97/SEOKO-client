@@ -1,6 +1,8 @@
+import removeMd from "remove-markdown";
+
 const getChildrenText = (node: React.ReactElement): string => {
   if (typeof node === "string") {
-    const text = (node as string).replace(/[{}[\]/?.,;:|)*~`!^\-_+<>@#$%&\\=('"]/g, " ");
+    const text = removeMd(node);
     return text;
   }
 
