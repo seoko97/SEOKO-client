@@ -151,7 +151,7 @@
     }
 
     & td {
-      @apply border-[1px] border-solid border-gray-500;
+      @apply border border-solid border-gray-300 !transition-[border-color,color] dark:border-gray-700;
     }
 
     & pre {
