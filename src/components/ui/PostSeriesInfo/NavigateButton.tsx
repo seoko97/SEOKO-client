@@ -28,6 +28,7 @@ const NavigateButton = ({ type, posts, selectedIndex }: IProps) => {
 
   return (
     <button
+      aria-label={type === "prev" ? "prev series post" : "next series post"}
       className="flex h-6 w-6 items-center justify-center rounded-[50%] bg-slate-100 transition-[background-color] disabled:cursor-default disabled:opacity-30 dark:bg-slate-600"
       disabled={!posts[currentIndex]}
       onClick={onClick}
