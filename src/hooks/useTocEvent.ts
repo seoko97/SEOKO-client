@@ -23,7 +23,7 @@ const useTocEvent = (toc: IToc[]) => {
 
     if (!target) return;
 
-    const id = target.id;
+    const id = target.dataset.id;
 
     if (!id) return;
 
