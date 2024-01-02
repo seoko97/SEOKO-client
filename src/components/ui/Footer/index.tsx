@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="frame flex h-full flex-col items-center justify-center gap-5 text-primary">
         <div className="flex items-center justify-center gap-5">
           <Logo />
-          <a href="https://github.com/seoko97" target="_blank" rel="noreferrer">
+          <a href="https://github.com/seoko97" target="_blank" rel="noreferrer" title="github">
             <GithubIcon className="h-7 w-7 fill-[theme(textColor.primary)] transition-[fill] hover:fill-[theme(textColor.effect1)]" />
           </a>
         </div>
