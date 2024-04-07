@@ -12,6 +12,7 @@ const nextConfig = {
     domains: ["image.toast.com"],
     minimumCacheTTL: 86400,
     deviceSizes: [480, 768, 980],
+    imageSizes: [96, 128, 256, 384, 480],
   },
 };
 
