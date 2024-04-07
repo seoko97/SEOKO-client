@@ -30,7 +30,6 @@ const config: Config = {
         secondary: "var(--background2)",
         tertiary: "var(--background3)",
         quaternary: "var(--background4)",
-
         markdown: "var(--markdown-background)",
       },
       textColor: {
@@ -61,6 +60,9 @@ const config: Config = {
       animation: {
         show: "show 150ms 0s 1 ease-in-out forwards",
         hide: "hide 150ms 0s 1 ease-in-out forwards",
+      },
+      aspectRatio: {
+        default: "3/2",
       },
     },
   },

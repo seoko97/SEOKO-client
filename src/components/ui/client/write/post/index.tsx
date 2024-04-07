@@ -11,6 +11,7 @@ import { useUploadImage } from "@hooks/query/image";
 import PostHeader from "@components/ui/client/write/post/Header";
 import WriteFooter from "@components/ui/client/write/Footer";
 import SeriesList from "@components/modal/series/list";
+import { EImageType } from "@/types/base";
 
 interface IProps {
   nid: number | null;
@@ -27,7 +28,7 @@ const Post = ({ nid }: IProps) => {
   const [tags, deletedTags, addedTags, tagHandler, onClickTag] = useWriteTag(post);
   const { image, changeImage, clearImage } = useUploadImage({
     defaultImg: post?.thumbnail,
-    type: "post",
+    type: EImageType.POST,
   });
 
   const thumbnailRef = useRef<HTMLInputElement | null>(null);
@@ -72,7 +73,11 @@ const Post = ({ nid }: IProps) => {
           thumbnailHandler={thumbnailHandler}
           clearThumbnail={clearImage}
         />
-        <Editor type="post" content={postInput.content} onChangeContent={onChangeContent} />
+        <Editor
+          type={EImageType.POST}
+          content={postInput.content}
+          onChangeContent={onChangeContent}
+        />
         <WriteFooter save={addPost} />
       </div>
       {openSeries && (

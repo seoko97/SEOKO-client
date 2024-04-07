@@ -10,10 +10,10 @@ import MDEditor, {
 } from "@uiw/react-md-editor";
 import { useUploadImageMutation } from "@hooks/query/image";
 import { ImageIcon } from "@components/icons";
-import { TImageType } from "@/types/base";
+import { EImageType } from "@/types/base";
 
 interface IProps {
-  type: TImageType;
+  type: EImageType;
   content: string;
   onChangeContent: (value: string) => void;
 }

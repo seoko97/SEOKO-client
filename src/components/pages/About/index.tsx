@@ -1,8 +1,8 @@
 import React from "react";
 
-import Image from "next/image";
-
 import { ABOUT_INFOS, USER_DETAIL, USER_LINKS } from "@utils/constant/user";
+import Image from "@components/ui/core/Image";
+
 import Skill from "@components/ui/client/about/Skill";
 import Project from "@components/ui/client/about/Project";
 import Experience from "@components/ui/client/about/Experience";
@@ -23,7 +23,7 @@ const About = () => {
             alt="main"
             width={200}
             height={200}
-            className="rounded-md md:hidden"
+            className="aspect-square rounded-md md:hidden"
           />
         </div>
         <p className="font-light">{USER_DETAIL.description}</p>

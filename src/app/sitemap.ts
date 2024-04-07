@@ -8,7 +8,11 @@ async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const url = `${API_URL}/posts?${query}`;
 
   try {
-    const res = await fetch(url, { method: "GET", cache: "no-store" });
+    const res = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      next: { revalidate: 86400 },
+    });
 
     const posts = (await res.json()) as IPost[];
 
