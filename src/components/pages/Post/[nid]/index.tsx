@@ -15,7 +15,7 @@ const Post = ({ params }: IProps) => {
   const nid = Number(params.nid);
 
   return (
-    <section className="frame flex w-[theme(screens.xl.max)] flex-col items-center xl:w-full">
+    <section className="frame relative flex w-[theme(screens.xl.max)] flex-col items-center xl:w-full">
       <Hydrate nid={nid}>
         <PostHeader nid={nid} />
         <PostContent nid={nid} />

@@ -5,12 +5,13 @@ import NextImage, { ImageProps } from "next/image";
 const Image = ({ width, height, className = "", ...rest }: ImageProps) => {
   return (
     <NextImage
-      {...rest}
       style={{ objectFit: "cover" }}
-      className={`relative aspect-[150/100] h-auto max-w-full rounded-lg ${className}`}
+      className={`relative h-auto max-w-full ${className}`}
       quality={100}
+      sizes="(max-width: 980px) 100vw, 980px"
       width={rest.fill ? undefined : width ?? 1000}
       height={rest.fill ? undefined : height ?? 1000}
+      {...rest}
     />
   );
 };

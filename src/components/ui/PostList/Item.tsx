@@ -32,7 +32,13 @@ const PostItem = ({ post }: IProps) => {
     <Link href={`/post/${nid}`} className="w-full">
       <div className="group relative flex w-full cursor-pointer items-center justify-center gap-8 rounded-md px-2 py-2 transition-[background-color] hover:bg-tertiary md:flex-col md:gap-0">
         <div className="relative flex w-[250px] flex-col rounded-lg bg-gray-400 transition-[box-shadow] group-hover:shadow-md md:w-full">
-          <Image src={thumbnail} alt={title} placeholder="blur" blurDataURL={thumbnail} />
+          <Image
+            src={thumbnail}
+            alt={title}
+            placeholder="blur"
+            blurDataURL={thumbnail}
+            className="aspect-default rounded-lg"
+          />
         </div>
         <div className="flex flex-1 flex-col justify-around gap-4 break-all text-primary md:min-h-0 md:w-full md:gap-3 md:px-2 md:py-3">
           <h1 className="w-full text-lg font-medium transition-[color] group-hover:text-effect1">

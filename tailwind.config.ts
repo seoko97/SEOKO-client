@@ -61,6 +61,9 @@ const config: Config = {
         show: "show 150ms 0s 1 ease-in-out forwards",
         hide: "hide 150ms 0s 1 ease-in-out forwards",
       },
+      aspectRatio: {
+        default: "3/2",
+      },
     },
   },
   darkMode: ["class", '[data-theme="dark"]'],
