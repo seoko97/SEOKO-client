@@ -30,7 +30,6 @@ const config: Config = {
         secondary: "var(--background2)",
         tertiary: "var(--background3)",
         quaternary: "var(--background4)",
-
         markdown: "var(--markdown-background)",
       },
       textColor: {

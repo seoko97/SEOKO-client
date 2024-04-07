@@ -8,6 +8,7 @@ import Image from "@components/ui/core/Image";
 import Button from "@components/ui/core/Button";
 import ModalLayout from "@components/modal/ModalLayout";
 import { ImageIcon } from "@components/icons";
+import { EImageType } from "@/types/base";
 import { ISeries } from "@/types";
 
 interface IProps {
@@ -25,7 +26,7 @@ const EditSeries = ({ series, onClose }: IProps) => {
 
   const { image, changeImage, clearImage } = useUploadImage({
     defaultImg: thumbnail,
-    type: "series",
+    type: EImageType.SERIES,
   });
 
   const thumbnailHandler = (e: React.MouseEvent) => {

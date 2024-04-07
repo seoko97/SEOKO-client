@@ -9,6 +9,7 @@ import { useGetProjectQuery, useProjectMutation } from "@hooks/query/project";
 import { useUploadImage } from "@hooks/query/image";
 import ProjectHeader from "@components/ui/client/write/project/Header";
 import WriteFooter from "@components/ui/client/write/Footer";
+import { EImageType } from "@/types/base";
 
 interface IProps {
   nid: number | null;
@@ -23,7 +24,7 @@ const Project = ({ nid }: IProps) => {
   const [input, onChangeValue, onChangeContent] = useWriteProject(project);
   const { image, changeImage, clearImage } = useUploadImage({
     defaultImg: project?.thumbnail,
-    type: "project",
+    type: EImageType.PROJECT,
   });
 
   const thumbnailRef = useRef<HTMLInputElement | null>(null);
@@ -60,7 +61,7 @@ const Project = ({ nid }: IProps) => {
         thumbnailHandler={thumbnailHandler}
         clearThumbnail={clearImage}
       />
-      <Editor type="post" content={content} onChangeContent={onChangeContent} />
+      <Editor type={EImageType.PROJECT} content={content} onChangeContent={onChangeContent} />
       <WriteFooter save={addProject} />
     </section>
   );
