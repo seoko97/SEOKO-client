@@ -30,7 +30,7 @@ const img = (props: ImageProps) => {
         {...rest}
         width={1000}
         height={1000}
-        className="mx-auto my-0 h-auto w-auto max-w-full rounded-md shadow-sm"
+        className="mx-auto my-0 h-auto w-auto max-w-full rounded-md shadow-sm sm:w-full"
       />
       {alt && <p className="mt-2 text-center text-sm text-gray-400">{alt}</p>}
     </>
