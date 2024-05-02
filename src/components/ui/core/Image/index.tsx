@@ -8,7 +8,7 @@ const Image = ({ width, height, className = "", ...rest }: ImageProps) => {
       style={{ objectFit: "cover" }}
       className={`relative h-auto max-w-full ${className}`}
       quality={100}
-      sizes="(max-width: 980px) 980px, 768px, 50vw, 33vw"
+      sizes="(max-width: 980px) 100vw, 980px, 50vw"
       width={rest.fill ? undefined : width ?? 1000}
       height={rest.fill ? undefined : height ?? 1000}
       {...rest}
