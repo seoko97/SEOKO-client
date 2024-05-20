@@ -101,7 +101,8 @@ const useLikePostMutation = (nid: number) => {
     onMutate: () => {
       queryClient.cancelQueries(["post", nid]);
 
-      const prev = queryClient.getQueryData<IPost>(["post", nid]);
+      const post = queryClient.getQueryData<IPost>(["post", nid]);
+      const posts = queryClient.getQueryData<IPost[]>(["posts"]);
 
       queryClient.setQueryData<IPost | undefined>(["post", nid], (prev) => {
         if (!prev) return prev;
@@ -109,10 +110,25 @@ const useLikePostMutation = (nid: number) => {
         return { ...prev, isLiked: true, likeCount: prev.likeCount + 1 };
       });
 
-      return prev;
+      queryClient.setQueryData<IPost[] | undefined>(["posts"], (prev) => {
+        if (!prev) return prev;
+
+        return prev.map((post) => {
+          if (post.nid !== nid) return post;
+
+          return { ...post, isLiked: true, likeCount: post.likeCount + 1 };
+        });
+      });
+
+      return { post, posts };
     },
     onError: (err, _, prev) => {
-      queryClient.setQueryData<IPost | undefined>(["post", nid], prev);
+      if (!prev) return;
+
+      const { post, posts } = prev;
+
+      queryClient.setQueryData<IPost | undefined>(["post", nid], post);
+      queryClient.setQueryData<IPost[] | undefined>(["posts"], posts);
     },
     onSettled: () => {
       queryClient.invalidateQueries(["post", nid]);
@@ -128,7 +144,8 @@ const useUnlikePostMutation = (nid: number) => {
     onMutate: () => {
       queryClient.cancelQueries(["post", nid]);
 
-      const prev = queryClient.getQueryData<IPost>(["post", nid]);
+      const post = queryClient.getQueryData<IPost>(["post", nid]);
+      const posts = queryClient.getQueryData<IPost[]>(["posts"]);
 
       queryClient.setQueryData<IPost | undefined>(["post", nid], (prev) => {
         if (!prev) return prev;
@@ -136,10 +153,25 @@ const useUnlikePostMutation = (nid: number) => {
         return { ...prev, isLiked: false, likeCount: prev.likeCount - 1 };
       });
 
-      return prev;
+      queryClient.setQueryData<IPost[] | undefined>(["posts"], (prev) => {
+        if (!prev) return prev;
+
+        return prev.map((post) => {
+          if (post.nid !== nid) return post;
+
+          return { ...post, isLiked: false, likeCount: post.likeCount - 1 };
+        });
+      });
+
+      return { post, posts };
     },
     onError: (err, _, prev) => {
-      queryClient.setQueryData<IPost | undefined>(["post", nid], prev);
+      if (!prev) return;
+
+      const { post, posts } = prev;
+
+      queryClient.setQueryData<IPost | undefined>(["post", nid], post);
+      queryClient.setQueryData<IPost[] | undefined>(["posts"], posts);
     },
     onSettled: () => {
       queryClient.invalidateQueries(["post", nid]);

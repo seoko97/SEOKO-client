@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 
 import { dateTimeParser } from "@utils/dateTimeParser";
 
@@ -10,7 +10,7 @@ interface IProps {
 const DateTime = ({ date, className }: IProps) => {
   const [formattedDate, setFormattedDate] = useState<string | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const formatted = dateTimeParser(date);
 
     setFormattedDate(formatted);

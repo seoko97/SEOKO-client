@@ -21,9 +21,12 @@ const Series = () => {
             key={series._id}
             className="group flex cursor-pointer flex-col items-center justify-start gap-3"
           >
-            <div className="w-full flex-1 rounded-b-md rounded-t-md">
-              <Image src={series.thumbnail ?? "/SEOKO.png"} alt={series.name} priority />
-            </div>
+            <Image
+              src={series.thumbnail ?? "/SEOKO.png"}
+              alt={series.name}
+              priority
+              className="aspect-default w-full flex-1 rounded-b-md rounded-t-md "
+            />
             <div className="flex w-full flex-col gap-2">
               <h3 className="truncate font-semibold text-primary transition-[color] group-hover:text-effect1">
                 {series.name}

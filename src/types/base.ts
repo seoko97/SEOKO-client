@@ -13,4 +13,12 @@ interface IToc {
 
 type TImageType = "post" | "project" | "skill" | "series";
 
+enum EImageType {
+  POST = "post",
+  PROJECT = "project",
+  SKILL = "skill",
+  SERIES = "series",
+}
+
+export { EImageType };
 export type { IBaseResponse, IToc, TImageType };

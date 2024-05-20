@@ -74,7 +74,7 @@
   body {
     overflow: overlay;
 
-    @apply m-0 bg-primary text-base transition-[background-color];
+    @apply m-0 bg-primary text-base;
   }
 
   a {
@@ -119,11 +119,11 @@
 
   ::-webkit-scrollbar-track {
     box-shadow: none;
-    background-color: none;
+    background: none;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: theme(textColor.secondary);
+    background: theme(textColor.secondary);
 
     @apply rounded-lg;
   }

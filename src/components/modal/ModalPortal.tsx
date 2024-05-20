@@ -3,7 +3,7 @@ import { FC, useRef, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface Props {
-  children: React.ReactChild;
+  children: React.ReactNode;
 }
 
 const ModalPortal: FC<Props> = ({ children }) => {

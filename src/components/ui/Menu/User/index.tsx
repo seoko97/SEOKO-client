@@ -14,7 +14,10 @@ const Menu: React.FC<IProps> = ({ username }) => {
 
   const baseMenuProps = {
     button: (
-      <button className="flex cursor-pointer items-center justify-center gap-x-2 text-primary transition-[color] hover:text-effect1 [&.is-active]:text-effect1">
+      <button
+        aria-label="toggle user menu"
+        className="flex cursor-pointer items-center justify-center gap-x-2 text-primary transition-[color] hover:text-effect1 [&.is-active]:text-effect1"
+      >
         <Avatar />
         <span className="sm:hidden">{username}</span>
       </button>

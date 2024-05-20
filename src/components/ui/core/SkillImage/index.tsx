@@ -1,6 +1,8 @@
 import React from "react";
 
-import Image, { ImageProps } from "next/image";
+import { ImageProps } from "next/image";
+
+import Image from "@components/ui/core/Image";
 
 interface IProps extends ImageProps {
   size?: number;

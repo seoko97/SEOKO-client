@@ -80,7 +80,14 @@ const PostHeader = (props: IProps) => {
       <h3 className="text-xl font-semibold text-primary">썸네일</h3>
       <div className="flex items-center gap-4">
         <div className="w-[200px] md:w-full">
-          {thumbnail && <Image src={thumbnail} alt="thumbnail" onClick={clearThumbnail} />}
+          {thumbnail && (
+            <Image
+              src={thumbnail}
+              alt="thumbnail"
+              onClick={clearThumbnail}
+              className="aspect-default rounded-lg"
+            />
+          )}
         </div>
         <span onClick={thumbnailHandler}>
           <ImageIcon className="h-16 w-16 cursor-pointer fill-[theme(textColor.primary)] hover:opacity-50" />

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Image from "next/image";
+import Image from "@components/ui/core/Image";
 
 interface IProps {
   src?: string;
@@ -18,9 +18,8 @@ const Avatar: React.FC<IProps> = (props) => {
         width={width}
         height={height}
         src={src}
-        quality={100}
         alt="avatar"
-        className="rounded-[50%] bg-slate-400 object-cover"
+        className="aspect-square rounded-full bg-slate-400 object-cover"
       />
     </div>
   );

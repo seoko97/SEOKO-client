@@ -21,7 +21,7 @@ const TocItem = ({ item, isActive, onClick }: IProps) => {
       className={`${className} w-full [&.active>a]:text-effect1`}
     >
       <NextLink
-        id={id}
+        data-id={id}
         href={`#${id}`}
         scroll={false}
         onClick={onClick}

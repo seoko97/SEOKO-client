@@ -23,10 +23,23 @@ const getToken = async (tokeName: string) => {
   }
 };
 
+const setForwardedForByServer = async (config: AxiosRequestConfig) => {
+  if (!isServer || !config.headers) return;
+
+  const ips = (await import("next/headers")).headers().get("x-forwarded-for")?.split(", ") ?? [];
+
+  if (ips.length === 0) return;
+
+  config.headers["x-forwarded-for"] = ips[0];
+  config.headers["x-real-ip"] = ips[0];
+};
+
 api.interceptors.request.use(async (config) => {
   const token = await getToken("access-token");
 
   if (token) config.headers.setAuthorization(`Bearer ${token}`);
+
+  await setForwardedForByServer(config);
 
   return config;
 });

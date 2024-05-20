@@ -1,7 +1,7 @@
-import { TImageType } from "@/types/base";
+import { EImageType } from "@/types/base";
 import api from "@/apis";
 
-const uploadImage = async (type: TImageType, formData: FormData) => {
+const uploadImage = async (type: EImageType, formData: FormData) => {
   const { data } = await api.post<string>(`/images/${type}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });

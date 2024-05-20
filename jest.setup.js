@@ -6,22 +6,34 @@ class LocalStorageMock {
   }
 
   getItem(key) {
-    return this.store[key] || null;
+    return this.store[key] ?? null;
   }
 
   setItem(key, value) {
     this.store[key] = String(value);
   }
+
+  clear() {
+    this.store = {};
+  }
+
+  removeItem(key) {
+    delete this.store[key];
+  }
 }
 
-global.localStorage = new LocalStorageMock();
+Object.defineProperty(global, "localStorage", {
+  value: new LocalStorageMock(),
+});
 
 const originalError = console.error;
 
-global.console.error = jest.fn((...args) => {
-  if (typeof args[0] === "string" && args[0].includes("should be wrapped into act")) {
-    return;
-  }
+Object.defineProperty(global.console, "error", {
+  value: (...args) => {
+    if (typeof args[0] === "string" && args[0].includes("should be wrapped into act")) {
+      return;
+    }
 
-  return originalError.call(console, args);
+    originalError.call(console, args);
+  },
 });

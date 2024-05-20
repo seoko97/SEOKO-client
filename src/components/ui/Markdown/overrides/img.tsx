@@ -1,7 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 
-import NextImage, { ImageProps } from "next/image";
+import { ImageProps } from "next/image";
+
+import NextImage from "@components/ui/core/Image";
 
 const IMAGE_BASE_URL = "image.toast.com";
 
@@ -23,12 +25,12 @@ const img = (props: ImageProps) => {
   return (
     <>
       <NextImage
+        priority
         alt={alt ?? "post_image"}
-        loading="lazy"
         {...rest}
         width={1000}
         height={1000}
-        className="mx-auto my-0 h-auto w-auto max-w-full rounded-md shadow-sm"
+        className="mx-auto my-0 h-auto w-auto max-w-full rounded-md shadow-sm sm:w-full"
       />
       {alt && <p className="mt-2 text-center text-sm text-gray-400">{alt}</p>}
     </>

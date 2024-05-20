@@ -1,15 +1,15 @@
 import { useState } from "react";
 
 import { useMutation } from "@tanstack/react-query";
-import { TImageType } from "@/types/base";
+import { EImageType } from "@/types/base";
 import { uploadImage } from "@/apis/image";
 
 interface IProps {
   defaultImg?: string;
-  type: TImageType;
+  type: EImageType;
 }
 
-const useUploadImageMutation = (type: TImageType) => {
+const useUploadImageMutation = (type: EImageType) => {
   return useMutation({
     mutationFn: (file: FormData) => uploadImage(type, file),
   });

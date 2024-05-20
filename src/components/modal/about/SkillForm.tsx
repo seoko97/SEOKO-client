@@ -1,14 +1,14 @@
 import React, { useRef } from "react";
 
-import Image from "next/image";
-
 import { useSkillMutation } from "@hooks/query/skill";
 import { useUploadImage } from "@hooks/query/image";
 import Input from "@components/ui/core/Input";
+import Image from "@components/ui/core/Image";
 import Button from "@components/ui/core/Button";
 import ModalLayout from "@components/modal/ModalLayout";
 import { ImageIcon } from "@components/icons";
 import { ESkillType, ISkill } from "@/types/skill";
+import { EImageType } from "@/types/base";
 
 interface IProps {
   onClose: () => void;
@@ -26,7 +26,7 @@ const SkillForm = ({ onClose, skill }: IProps) => {
 
   const { image, changeImage, clearImage } = useUploadImage({
     defaultImg: skill?.icon ?? "",
-    type: "skill",
+    type: EImageType.SKILL,
   });
 
   const { createOrUpdate, remove } = useSkillMutation(skill?._id);
@@ -109,7 +109,7 @@ const SkillForm = ({ onClose, skill }: IProps) => {
           <div className="flex items-center gap-4">
             {image && (
               <Image
-                className="cursor-pointer"
+                className="aspect-square cursor-pointer"
                 src={image}
                 alt="thumbnail"
                 onClick={clearImage}
