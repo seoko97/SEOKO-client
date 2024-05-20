@@ -16,7 +16,7 @@ describe("Menu", () => {
 
     const list = getAllByRole("listitem");
 
-    expect(list).toHaveLength(3);
+    expect(list).toHaveLength(4);
     expect(list[list.length - 1]).not.toHaveTextContent(/로그인/gi);
   });
 
@@ -25,7 +25,7 @@ describe("Menu", () => {
 
     const list = getAllByRole("listitem");
 
-    expect(list).toHaveLength(4);
+    expect(list).toHaveLength(5);
     expect(list[list.length - 1]).toHaveTextContent(/로그인/gi);
   });
 });
