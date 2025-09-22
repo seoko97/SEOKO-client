@@ -9,7 +9,7 @@ const siteMetadata = {
   locale: "ko-KR",
   language: "ko",
   theme: "system",
-  siteUrl: "https://seoko.me",
+  siteUrl: "https://seoko.blog",
   siteRepo: "https://github.com/seoko97/SEOKO-client",
   siteLogo: "/SEOKO.png",
   fallbackImage: "/images/fallback.webp",
