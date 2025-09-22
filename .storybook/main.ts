@@ -19,13 +19,13 @@ function getAbsolutePathsFromTsConfig(configPath: string) {
     const absolutePath = path.resolve(baseUrl, (relativePaths as Array<any>)[0]);
     acc[alias.replace("/*", "")] = absolutePath.replace("/*", "");
     return acc;
-  }, {});
+  }, {} as Record<string, string>);
 
   return absolutePaths;
 }
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+  stories: ["../__stories__/**/*.mdx", "../__stories__/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
