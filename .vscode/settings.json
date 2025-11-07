@@ -1,0 +1,12 @@
+{
+  "tailwindCSS.experimental.configFile": "./src/styles/globals.css",
+  "tailwindCSS.experimental.classRegex": ["className\\s*=\\s*['\"`]([^'\"`]*)['\"`]"],
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.includeLanguages": {
+    "typescriptreact": "html",
+    "javascriptreact": "html"
+  }
+}
