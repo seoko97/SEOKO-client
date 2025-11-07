@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@source "../components";
+@source "../app";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@custom-variant sm (@media (max-width: 480px));
+@custom-variant md (@media (max-width: 768px));
+@custom-variant lg (@media (max-width: 1024px));
+@custom-variant xl (@media (max-width: 1440px));
+
+@import "./theme.css";
+@import "./base.css";
+@import "./utilities.css";

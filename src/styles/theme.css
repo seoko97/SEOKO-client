@@ -1,0 +1,47 @@
+@theme {
+  --aspect-default: 3/2;
+
+  --text-shadow-sm: 0 1px 2p ₩x rgb(0 0 0 / 0.25);
+  --text-shadow: 0 2px 4px rgb(0 0 0 / 0.25);
+  --text-shadow-lg: 0 8px 16px rgb(0 0 0 / 0.25);
+
+  --primary: #86caf4;
+  --background1: rgb(242 245 247);
+  --background2: #fafafa;
+  --background3: #e5e7eb;
+  --background4: #23374d;
+
+  --text1: #212529;
+  --text2: #2b4f76;
+  --border1: #d7dfe8;
+
+  --markdown-text1: #212529;
+  --markdown-text2: #ec4899;
+  --markdown-background: #e9ecef;
+
+  --effect1: #569aff;
+  --effect2: #dee2e6;
+}
+
+@layer theme {
+  :root {
+    @variant dark {
+      --primary: #c58ff7;
+      --background1: #212529;
+      --background2: #343a40;
+      --background3: #373d42;
+      --background4: #444444;
+
+      --text1: #f8f9fa;
+      --text2: #9ca3af;
+      --border1: #b4bac2;
+
+      --markdown-text1: #f8f9fa;
+      --markdown-text2: #c58ff7;
+      --markdown-background: #2d3236;
+
+      --effect1: #569aff;
+      --effect2: #495057;
+    }
+  }
+}
