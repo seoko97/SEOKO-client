@@ -3,38 +3,39 @@ import { useEffect, useRef } from "react";
 
 import { usePathname } from "next/navigation";
 
+import { GISCUS } from "@utils/constant/env";
 import useLocalStorage from "@hooks/useLocalStorage";
+
+const LIGHT = "light" as const;
 
 const Giscus = () => {
   const [mounted, setMounted] = useState(false);
 
   const pathname = usePathname();
-  const [theme] = useLocalStorage<string>("theme");
+  const theme = useLocalStorage<string>("theme")[0] || LIGHT;
 
   const ref = useRef<HTMLDivElement>(null);
 
   const loadGiscus = useCallback(() => {
     if (!ref.current || !theme) return;
 
-    const dataTheme = theme === "dark" ? "preferred_color_scheme" : "light";
-
     const scriptElem = document.createElement("script");
 
-    scriptElem.src = "https://giscus.app/client.js";
+    scriptElem.src = GISCUS.src;
     scriptElem.async = true;
-    scriptElem.crossOrigin = "anonymous";
+    scriptElem.crossOrigin = GISCUS.crossOrigin;
 
-    scriptElem.setAttribute("data-repo", "seoko97/SEOKO-giscus-test");
-    scriptElem.setAttribute("data-repo-id", "R_kgDOKQq8ZQ");
-    scriptElem.setAttribute("data-category", "Announcements");
-    scriptElem.setAttribute("data-category-id", "DIC_kwDOKQq8Zc4CZJ3K");
-    scriptElem.setAttribute("data-mapping", "pathname");
-    scriptElem.setAttribute("data-strict", "0");
-    scriptElem.setAttribute("data-reactions-enabled", "0");
-    scriptElem.setAttribute("data-emit-metadata", "0");
-    scriptElem.setAttribute("data-input-position", "bottom");
-    scriptElem.setAttribute("data-theme", dataTheme);
-    scriptElem.setAttribute("data-lang", "ko");
+    scriptElem.setAttribute("data-repo", GISCUS.repo);
+    scriptElem.setAttribute("data-repo-id", GISCUS.repoId);
+    scriptElem.setAttribute("data-category", GISCUS.category);
+    scriptElem.setAttribute("data-category-id", GISCUS.categoryId);
+    scriptElem.setAttribute("data-mapping", GISCUS.mapping);
+    scriptElem.setAttribute("data-strict", GISCUS.strict);
+    scriptElem.setAttribute("data-reactions-enabled", GISCUS.reactionsEnabled);
+    scriptElem.setAttribute("data-emit-metadata", GISCUS.emitMetadata);
+    scriptElem.setAttribute("data-input-position", GISCUS.inputPosition);
+    scriptElem.setAttribute("data-theme", theme);
+    scriptElem.setAttribute("data-lang", GISCUS.lang);
 
     ref.current?.appendChild(scriptElem);
   }, [theme, ref.current]);

@@ -3,6 +3,7 @@
 import React, { useMemo } from "react";
 
 import { compiler } from "markdown-to-jsx";
+
 import { useGetPostQuery } from "@hooks/query/post";
 import overrides from "@components/ui/Markdown/overrides";
 import { Viewer } from "@components/ui/Markdown";
@@ -18,7 +19,7 @@ const PostContent = ({ nid }: IProps) => {
   const markdown = useMemo(
     () => compiler(data?.content ?? "", { wrapper: null, overrides }),
     [data?._id],
-  );
+  ) as unknown as JSX.Element;
 
   if (!data) return null;
 
