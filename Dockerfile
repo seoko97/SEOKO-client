@@ -12,15 +12,15 @@ RUN pnpm install --frozen-lockfile
 
 # Stage 2: Builder
 FROM node:24-alpine AS builder
-
  
+RUN corepack enable && corepack prepare pnpm@11 --activate
+
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 RUN pnpm build
-
 
 # Stage 3: Runner
 FROM node:24-alpine AS runner
