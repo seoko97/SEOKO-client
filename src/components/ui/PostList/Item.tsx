@@ -1,9 +1,8 @@
+import removeMd from "remove-markdown";
 import React from "react";
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
-import removeMd from "remove-markdown";
 
 import TagList from "@components/ui/TagList";
 import Image from "@components/ui/core/Image";

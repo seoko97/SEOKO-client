@@ -1,6 +1,6 @@
+import removeMd from "remove-markdown";
 import { Metadata } from "next";
 
-import removeMd from "remove-markdown";
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { getPost } from "@/apis/post";
 

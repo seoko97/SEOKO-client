@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { useMutation } from "@tanstack/react-query";
+
 import { EImageType } from "@/types/base";
 import { uploadImage } from "@/apis/image";
 

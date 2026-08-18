@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 import { useMutation, useQuery, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
+
 import { ICreatePostInput, IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
 import {
   createPost,

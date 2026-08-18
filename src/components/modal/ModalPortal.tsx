@@ -1,6 +1,5 @@
-import { FC, useRef, useEffect, useState } from "react";
-
 import { createPortal } from "react-dom";
+import { FC, useRef, useEffect, useState } from "react";
 
 interface Props {
   children: React.ReactNode;

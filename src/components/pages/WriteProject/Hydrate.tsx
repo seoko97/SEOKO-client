@@ -2,8 +2,9 @@ import React from "react";
 
 import { notFound, redirect } from "next/navigation";
 
-import getQueryClient from "@utils/query/getQueryClient";
 import { Hydrate as RqHydrate, dehydrate } from "@tanstack/react-query";
+
+import getQueryClient from "@utils/query/getQueryClient";
 import { getUser } from "@/apis/user";
 import { getProject } from "@/apis/project";
 
