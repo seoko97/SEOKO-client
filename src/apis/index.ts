@@ -1,4 +1,5 @@
 import axios, { AxiosHeaders, AxiosRequestConfig } from "axios";
+
 import { AUTH_ERROR } from "@utils/constant/user";
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL;
