@@ -9,7 +9,6 @@ module.exports = {
     "plugin:prettier/recommended",
     "prettier/prettier",
     "plugin:react/recommended",
-    "plugin:storybook/recommended",
   ],
   plugins: ["prettier", "@typescript-eslint", "import"],
   rules: {
