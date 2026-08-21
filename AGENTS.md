@@ -20,7 +20,7 @@
 
 ## 프로젝트 구조 및 모듈 구성
 
-- TypeScript 기반 Next.js App Router 클라이언트.
+- TypeScript 기반 Next.js App Router 클라이언트
 
 - **기술 스택**: React 19, Next.js 16, TypeScript 5
 
@@ -60,36 +60,22 @@
 - 관련 없는 변경사항을 PR에 포함하지 않으며, stage는 확인된 파일만 대상
 - PR은 별도 요청이 없는 한 draft로 생성
 
-## 작업 범위
+## 브랜치 한정 작업 지침
 
-### Next.js 업그레이드
+> 이 섹션은 현재 브랜치의 Next.js 16 업그레이드 작업에만 적용한다.
+
+### 작업 범위
 
 - Next.js 15 → 16 업그레이드만 수행
-- Next.js 16 업그레이드에 필요한 관련 의존성
-- 업그레이드 호환성 범위의 최소 코드 수정 허용
-- 대상: deprecated·제거 API, Next.js 설정·빌드 방식·TypeScript 타입·ESLint 설정, 빌드 및 런타임 오류
+- 호환성 확보에 필요한 최소 코드·설정·의존성 변경만 허용
 
-### 리팩토링 제외
+### 제외 범위
 
-- 일반 코드 개선, 구조 변경, 변수명 변경, 상태 관리·API·데이터 fetching·React Query 변경 제외
-- 디자인 패턴 변경, 성능 최적화, 사용하지 않는 코드 삭제, 대규모 스타일 변경 제외
-- 예외: Next.js, React, TypeScript, ESLint 버전 호환성 확보에 필요한 최소 변경
+- 업그레이드와 무관한 리팩터링
+- 디자인·상태 관리·API 구조 변경
+- 무관한 패키지 업데이트
 
-### ESLint·Prettier
+### 완료 기준
 
-- ESLint 최신 버전 및 flat config 마이그레이션
-- 허용 대상: `.eslintrc.*`, `eslint.config.*`, plugin·rule, Next.js ESLint 설정, deprecated rule 대응
-- Prettier 최신 버전 적용 및 기존 formatting convention 유지
-- 포맷 변경: 버전 호환성에 필요한 범위로 한정
-- deprecated된 문법, 파일, rule, plugin, 설정 제거
-
-## 의존성 범위
-
-- Next.js 업그레이드에 필요한 peer dependency만 확인·업데이트
-- 업그레이드와 무관한 패키지 업데이트, 라이브러리 추가·교체·제거, 대규모 dependency 업데이트 제외
-
-## 최종 목표
-
-- Next.js 16 정상 동작
-- 기존 주요 기능 및 프로젝트 구조 유지
-- ESLint·Prettier 최신 버전 적용
+- `pnpm build` 성공
+- `pnpm lint` 성공
