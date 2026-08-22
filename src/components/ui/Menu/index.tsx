@@ -1,10 +1,12 @@
-import React, { ReactNode, useRef, ReactElement } from "react";
+import { useRef, cloneElement } from "react";
+
+import type { ReactElement, ReactNode } from "react";
 
 import useDetectOutsideClick from "@hooks/useDetectOutsideClick";
 import useAnimation from "@hooks/useAnimation";
 
 interface IProps {
-  button: ReactElement;
+  button: ReactElement<React.ComponentProps<"button">>;
   menu: ReactNode;
 }
 
@@ -31,7 +33,7 @@ const BaseMenu = ({ button, menu }: IProps) => {
   };
 
   if (typeof button === "object") {
-    button = React.cloneElement(button as ReactElement, menuButtonProps);
+    button = cloneElement(button, menuButtonProps);
   }
 
   return (

@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 
+import type { JSX } from "react";
+
 import { ImageProps } from "next/image";
 
 import NextImage from "@components/ui/core/Image";

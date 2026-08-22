@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
+
+import type { JSX } from "react";
 
 import { compiler } from "markdown-to-jsx";
 
