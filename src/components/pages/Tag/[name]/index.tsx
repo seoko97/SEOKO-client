@@ -4,13 +4,11 @@ import TagClient from "@components/pages/Tag/[name]/page.client";
 import Hydrate from "@components/pages/Tag/[name]/Hydrate";
 
 interface IProps {
-  params: {
-    name: string;
-  };
+  params: Promise<{ name: string }>;
 }
 
-const Tag = ({ params }: IProps) => {
-  const name = params.name;
+const Tag = async ({ params }: IProps) => {
+  const { name } = await params;
 
   return (
     <section className="frame mb-8 flex flex-col items-center gap-4">

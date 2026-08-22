@@ -16,7 +16,9 @@ const getRegExpByTokenName = (tokeName: string) => {
 
 const getToken = async (tokeName: string) => {
   if (isServer) {
-    return (await import("next/headers")).cookies().get(tokeName)?.value ?? "";
+    const cookies = await import("next/headers").then((module) => module.cookies());
+
+    return cookies.get(tokeName)?.value ?? "";
   } else {
     const matches = document.cookie.match(getRegExpByTokenName(tokeName));
 
@@ -27,7 +29,9 @@ const getToken = async (tokeName: string) => {
 const setForwardedForByServer = async (config: AxiosRequestConfig) => {
   if (!isServer || !config.headers) return;
 
-  const ips = (await import("next/headers")).headers().get("x-forwarded-for")?.split(", ") ?? [];
+  const headers = await import("next/headers").then((module) => module.headers());
+
+  const ips = headers.get("x-forwarded-for")?.split(", ") ?? [];
 
   if (ips.length === 0) return;
 

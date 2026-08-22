@@ -4,18 +4,17 @@ import SeriesClient from "@components/pages/Series/[nid]/page.client";
 import Hydrate from "@components/pages/Series/[nid]/Hydrate";
 
 interface IProps {
-  params: {
-    nid: number;
-  };
+  params: Promise<{ nid: number }>;
 }
 
-const Series = ({ params }: IProps) => {
-  const nid = Number(params.nid);
+const Series = async ({ params }: IProps) => {
+  const { nid } = await params;
+  const nidNumber = Number(nid);
 
   return (
     <section className="frame mb-8 flex flex-col items-center gap-4">
-      <Hydrate nid={nid}>
-        <SeriesClient nid={nid} />
+      <Hydrate nid={nidNumber}>
+        <SeriesClient nid={nidNumber} />
       </Hydrate>
     </section>
   );

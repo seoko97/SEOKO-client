@@ -4,13 +4,11 @@ import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { getProject } from "@/apis/project";
 
 interface IProps {
-  params: {
-    nid: number;
-  };
+  params: Promise<{ nid: number }>;
 }
 
 export const generateMetadata = async ({ params }: IProps): Promise<Metadata> => {
-  const nid = Number(params.nid);
+  const { nid } = await params;
 
   if (isNaN(nid)) return {};
 
