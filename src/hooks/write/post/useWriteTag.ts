@@ -14,6 +14,24 @@ const useWriteTag = (post?: IPost) => {
   const [deletedTags, setDeletedTags] = useState<string[]>([]);
   const [addedTags, setAddedTags] = useState<string[]>([]);
 
+  const addTag = ({ tagName, tags, set }: IWriteTag) => {
+    const isInclude = tags.includes(tagName ?? "");
+
+    if (isInclude) return;
+
+    set([...tags, tagName]);
+  };
+
+  const deleteTag = ({ tagName, tags, set }: IWriteTag) => {
+    const isInclude = tags.includes(tagName ?? "");
+
+    if (!isInclude) return;
+
+    const newTags = tags.filter((tag) => tag !== tagName);
+
+    set(newTags);
+  };
+
   const tagHandler: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       const tagName = e.currentTarget.value;
@@ -45,24 +63,6 @@ const useWriteTag = (post?: IPost) => {
     },
     [tags, deletedTags, addedTags],
   );
-
-  const addTag = ({ tagName, tags, set }: IWriteTag) => {
-    const isInclude = tags.includes(tagName ?? "");
-
-    if (isInclude) return;
-
-    set([...tags, tagName]);
-  };
-
-  const deleteTag = ({ tagName, tags, set }: IWriteTag) => {
-    const isInclude = tags.includes(tagName ?? "");
-
-    if (!isInclude) return;
-
-    const newTags = tags.filter((tag) => tag !== tagName);
-
-    set(newTags);
-  };
 
   const onClickTag: React.MouseEventHandler<HTMLDivElement> = useCallback(
     (e) => {
