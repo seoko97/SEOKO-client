@@ -4,13 +4,13 @@ import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { getTag } from "@/apis/tag";
 
 interface IProps {
-  params: {
-    name: string;
-  };
+  params: Promise<{ name: string }>;
 }
 
 export const generateMetadata = async ({ params }: IProps): Promise<Metadata> => {
-  const tag = await getTag(params.name);
+  const { name: paramsName } = await params;
+
+  const tag = await getTag(paramsName);
 
   if (!tag) return {};
 
