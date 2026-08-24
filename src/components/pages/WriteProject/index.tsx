@@ -5,13 +5,11 @@ import ProjectClient from "@components/ui/client/write/project";
 import Hydrate from "@components/pages/WriteProject/Hydrate";
 
 interface IProps {
-  params?: {
-    nid: number;
-  };
+  params?: Promise<{ nid: number }>;
 }
 
-const WriteProject = ({ params }: IProps) => {
-  const nid = params?.nid === undefined ? null : Number(params.nid);
+const WriteProject = async ({ params }: IProps) => {
+  const nid = (await params)?.nid ?? null;
 
   return (
     <Hydrate nid={nid}>

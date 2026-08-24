@@ -3,7 +3,7 @@ import { useRef, useEffect, useCallback } from "react";
 type IProps = (targetEl: React.RefObject<HTMLDivElement>, fetchCallback: () => void) => void;
 
 const useInfinityScroll: IProps = (targetEl, fetchCallback) => {
-  const observerRef = useRef<IntersectionObserver>();
+  const observerRef = useRef<IntersectionObserver>(null);
 
   const getObserver = useCallback(() => {
     if (!targetEl) return;

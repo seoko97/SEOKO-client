@@ -6,20 +6,20 @@ import PostContent from "@components/ui/client/post/PostContent";
 import Hydrate from "@components/pages/Post/[nid]/Hydrate";
 
 interface IProps {
-  params: {
-    nid: number;
-  };
+  params: Promise<{ nid: number }>;
 }
 
-const Post = ({ params }: IProps) => {
-  const nid = Number(params.nid);
+const Post = async ({ params }: IProps) => {
+  const { nid } = await params;
+
+  const nidNumber = Number(nid);
 
   return (
     <section className="frame relative flex w-[theme(screens.xl.max)] flex-col items-center xl:w-full">
-      <Hydrate nid={nid}>
-        <PostHeader nid={nid} />
-        <PostContent nid={nid} />
-        <PostFooter nid={nid} />
+      <Hydrate nid={nidNumber}>
+        <PostHeader nid={nidNumber} />
+        <PostContent nid={nidNumber} />
+        <PostFooter nid={nidNumber} />
       </Hydrate>
     </section>
   );

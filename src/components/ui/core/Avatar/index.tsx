@@ -19,6 +19,7 @@ const Avatar: React.FC<IProps> = (props) => {
         height={height}
         src={src}
         alt="avatar"
+        loading="eager"
         className="aspect-square rounded-full bg-slate-400 object-cover"
       />
     </div>

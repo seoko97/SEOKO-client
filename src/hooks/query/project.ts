@@ -66,7 +66,7 @@ const useDeleteProjectMutation = (nid: number) => {
     onSuccess: () => {
       queryClient.removeQueries(["project", nid]);
       queryClient.invalidateQueries(["projects"]);
-      router.push("/projects");
+      router.push("/project");
     },
   });
 };

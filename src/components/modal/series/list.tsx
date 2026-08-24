@@ -42,7 +42,7 @@ const SeriesList = (props: IProps) => {
           {series?.length === 0 && <h3>시리즈가 없습니다.</h3>}
           {series?.map((item) => (
             <li
-              key={item._id + String(Math.random())}
+              key={item._id}
               onClick={() => setSeries(item.name)}
               className={`border-primary/50 flex-1 cursor-pointer border-t px-1 py-2 first:border-none hover:text-effect1 ${
                 defaultSeries === item.name && "text-green-500"

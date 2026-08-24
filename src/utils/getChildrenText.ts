@@ -1,6 +1,8 @@
 import removeMd from "remove-markdown";
 
-const getChildrenText = (node: React.ReactElement): string => {
+import { isValidElement, type ReactNode } from "react";
+
+const getChildrenText = (node: ReactNode): string => {
   if (typeof node === "string") {
     const text = removeMd(node);
     return text;
@@ -10,7 +12,7 @@ const getChildrenText = (node: React.ReactElement): string => {
     return node.map(getChildrenText).join(" ");
   }
 
-  if (typeof node === "object" && node !== null && node.props) {
+  if (isValidElement<{ children?: ReactNode }>(node)) {
     return getChildrenText(node.props.children);
   }
 

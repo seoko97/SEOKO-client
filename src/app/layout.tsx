@@ -13,8 +13,16 @@ import "@styles/globals.css";
 
 export const dynamic = "force-dynamic";
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "cyan" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+};
+
 export const metadata: Metadata = {
-  viewport: "width=device-width, initial-scale=1",
   metadataBase: siteMetadata.siteUrl as unknown as URL,
   title: {
     absolute: siteMetadata.title,
@@ -22,7 +30,6 @@ export const metadata: Metadata = {
   },
   description: siteMetadata.description,
   applicationName: siteMetadata.applicationName,
-  themeColor: "#ffffff",
   alternates: {
     canonical: siteMetadata.siteUrl,
     types: {
