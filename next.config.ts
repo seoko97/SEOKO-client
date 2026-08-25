@@ -4,9 +4,6 @@ import withBundleAnalyzer from "@next/bundle-analyzer";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   reactCompiler: true,
-  experimental: {
-    turbopackRustReactCompiler: true,
-  },
   output: "standalone",
   images: {
     remotePatterns: [

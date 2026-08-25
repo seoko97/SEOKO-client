@@ -1,28 +1,26 @@
 import { ICreateExperience, IExperience, IUpdateExperience } from "@/types/experience";
-import api from "@/apis";
+import { authRequest } from "@/apis";
 
 const getExperiences = async () => {
-  const { data } = await api.get<IExperience[]>("/experiences");
-
-  return data;
+  return authRequest<IExperience[]>("/experiences", { method: "GET" });
 };
 
 const createExperience = async (input: ICreateExperience) => {
-  const { data } = await api.post("/experiences", input);
-
-  return data;
+  return authRequest("/experiences", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
 };
 
 const updateExperience = async (_id: string, input: IUpdateExperience) => {
-  const { data } = await api.put(`/experiences/${_id}`, input);
-
-  return data;
+  return authRequest(`/experiences/${_id}`, {
+    method: "PUT",
+    body: JSON.stringify(input),
+  });
 };
 
 const deleteExperience = async (_id: string) => {
-  const { data } = await api.delete(`/experiences/${_id}`);
-
-  return data;
+  return authRequest(`/experiences/${_id}`, { method: "DELETE" });
 };
 
 export { getExperiences, createExperience, updateExperience, deleteExperience };

@@ -1,98 +1,208 @@
-import axios, { AxiosHeaders, AxiosRequestConfig } from "axios";
-
 import { AUTH_ERROR } from "@utils/constant/user";
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL;
-const isServer = typeof window === "undefined";
-
-const api = axios.create({
-  baseURL,
-  headers: { "Content-Type": "application/json" },
-});
-
-const getRegExpByTokenName = (tokeName: string) => {
-  return new RegExp(`(?:^|.*;\\s*)${tokeName}\\s*\\=\\s*([^;]*).*$`);
+type TokenName = "access-token" | "refresh-token";
+type ResponseType = "arrayBuffer" | "blob" | "formData" | "json" | "text";
+type RequestOptions = RequestInit & {
+  responseType?: ResponseType;
 };
 
-const getToken = async (tokeName: string) => {
-  if (isServer) {
-    const cookies = await import("next/headers").then((module) => module.cookies());
-
-    return cookies.get(tokeName)?.value ?? "";
-  } else {
-    const matches = document.cookie.match(getRegExpByTokenName(tokeName));
-
-    return matches?.[1] ?? "";
+class ApiError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number,
+  ) {
+    super(message);
   }
+}
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const IS_SERVER = typeof window === "undefined";
+const HEADERS_OPTIONS: HeadersInit = {
+  "Content-Type": "application/json",
 };
 
-const setForwardedForByServer = async (config: AxiosRequestConfig) => {
-  if (!isServer || !config.headers) return;
+const getUrl = (path: string) => {
+  if (!BASE_URL) {
+    throw new Error("NEXT_PUBLIC_API_URL is not defined");
+  }
+
+  if (!/^\/(?!\/)/.test(path)) {
+    throw new Error(`path must start with a single "/": ${path}`);
+  }
+
+  return new URL(`${BASE_URL}${path}`);
+};
+
+const getCookieValueFromSetCookie = (setCookie: string, name: TokenName) => {
+  const [cookie] = setCookie.split(";");
+  const prefix = `${name}=`;
+
+  if (!cookie.startsWith(prefix)) {
+    return;
+  }
+
+  return cookie.slice(prefix.length);
+};
+
+const getForwardedIp = async () => {
+  if (!IS_SERVER) {
+    return;
+  }
 
   const headers = await import("next/headers").then((module) => module.headers());
 
-  const ips = headers.get("x-forwarded-for")?.split(", ") ?? [];
-
-  if (ips.length === 0) return;
-
-  config.headers["x-forwarded-for"] = ips[0];
-  config.headers["x-real-ip"] = ips[0];
+  return headers.get("x-forwarded-for")?.split(", ")[0];
 };
 
-api.interceptors.request.use(async (config) => {
-  const token = await getToken("access-token");
+const getCookieValue = (cookieHeader: string, name: TokenName) => {
+  const prefix = `${name}=`;
 
-  if (token) config.headers.setAuthorization(`Bearer ${token}`);
+  return cookieHeader
+    .split("; ")
+    .find((cookie) => cookie.startsWith(prefix))
+    ?.slice(prefix.length);
+};
 
-  await setForwardedForByServer(config);
+const getClientToken = (name: TokenName) => {
+  return getCookieValue(document.cookie, name);
+};
 
-  return config;
-});
+const getServerToken = async (name: TokenName) => {
+  const cookies = await import("next/headers").then((module) => module.cookies());
 
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
+  return cookies.get(name)?.value;
+};
 
-    const status = error?.response?.status;
-    const message = error?.response?.data?.message;
+const getToken = (name: TokenName) => {
+  if (!IS_SERVER) {
+    return getClientToken(name);
+  }
 
-    if (status === 401 && message === AUTH_ERROR.EXPIRED_TOKEN && !originalRequest._retry) {
-      originalRequest._retry = true;
+  return Promise.resolve(getServerToken(name));
+};
 
-      const config: AxiosRequestConfig = {
-        baseURL,
-        withCredentials: !isServer,
-        headers: { "Content-Type": "application/json" },
-      };
+const createRequestHeaders = async (initHeaders?: HeadersInit) => {
+  const headers = new Headers(HEADERS_OPTIONS);
 
-      if (isServer) {
-        const token = await getToken("refresh-token");
+  new Headers(initHeaders).forEach((value, key) => {
+    headers.set(key, value);
+  });
 
-        (config.headers as AxiosHeaders).cookie = `refresh-token=${token}`;
-      }
+  const forwardedIp = await getForwardedIp();
 
-      const res = await axios.post("/auth/refresh", {}, config);
+  if (forwardedIp) {
+    headers.set("x-forwarded-for", forwardedIp);
+    headers.set("x-real-ip", forwardedIp);
+  }
 
-      if (res.status === 201) {
-        let token = "";
+  return headers;
+};
 
-        if (isServer) {
-          const setCookies = res.headers["set-cookie"] ?? [];
+const refreshAccessToken = async () => {
+  const headers = new Headers(HEADERS_OPTIONS);
 
-          token = setCookies?.[0].match(getRegExpByTokenName("access-token"))?.[1] ?? "";
-        } else {
-          token = await getToken("access-token");
-        }
+  if (IS_SERVER) {
+    const refreshToken = await getToken("refresh-token");
 
-        if (token) originalRequest.headers.setAuthorization(`Bearer ${token}`);
-
-        return axios(originalRequest);
-      }
+    if (!refreshToken) {
+      return;
     }
 
-    return Promise.reject(new Error(message ?? error));
-  },
-);
+    headers.set("Cookie", `refresh-token=${refreshToken}`);
+  }
 
-export default api;
+  const url = getUrl("/auth/refresh");
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({}),
+    credentials: IS_SERVER ? undefined : "include",
+  });
+
+  if (res.status !== 201) {
+    return;
+  }
+
+  if (!IS_SERVER) {
+    return getToken("access-token");
+  }
+
+  const setCookie = res.headers.get("set-cookie");
+
+  return setCookie ? getCookieValueFromSetCookie(setCookie, "access-token") : undefined;
+};
+
+const getResponseBody = <T>(res: Response, responseType: ResponseType) => {
+  switch (responseType) {
+    case "arrayBuffer":
+      return res.arrayBuffer() as Promise<T>;
+    case "blob":
+      return res.blob() as Promise<T>;
+    case "formData":
+      return res.formData() as Promise<T>;
+    case "text":
+      return res.text() as Promise<T>;
+    default:
+      return res.json() as Promise<T>;
+  }
+};
+
+const request = async <T = unknown>(
+  path: string,
+  { responseType = "json", ...options }: RequestOptions = {},
+) => {
+  const url = getUrl(path);
+  const headers = await createRequestHeaders(options.headers);
+
+  if (options.body instanceof FormData) {
+    headers.delete("Content-Type");
+  }
+
+  const res = await fetch(url, { ...options, headers });
+
+  if (!res.ok) {
+    const data = await res.json();
+
+    throw new ApiError(data.message ?? res.statusText, res.status);
+  }
+
+  return getResponseBody<T>(res, responseType);
+};
+
+const authRequest = async <T = unknown>(
+  path: string,
+  options: RequestOptions = {},
+  retry = true,
+  accessToken?: string,
+) => {
+  const token = accessToken ?? (await getToken("access-token"));
+  const headers = new Headers(options.headers);
+
+  if (token) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
+
+  try {
+    return await request<T>(path, { ...options, headers });
+  } catch (error) {
+    const isExpiredToken =
+      error instanceof ApiError &&
+      error.status === 401 &&
+      error.message === AUTH_ERROR.EXPIRED_TOKEN;
+
+    if (!retry || !isExpiredToken) {
+      throw error;
+    }
+
+    const refreshedToken = await refreshAccessToken();
+
+    if (!refreshedToken) {
+      throw error;
+    }
+
+    return authRequest<T>(path, options, false, refreshedToken);
+  }
+};
+
+export { request, authRequest };
