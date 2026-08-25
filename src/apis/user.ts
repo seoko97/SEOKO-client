@@ -1,22 +1,23 @@
 import { ISignInInput, IUser } from "@/types";
-import api from "@/apis";
+import { authRequest, request } from "@/apis";
 
 const getUser = async () => {
-  const res = await api.get<IUser>("/users");
-
-  return res.data;
+  return authRequest<IUser>("/users");
 };
 
 const signin = async (data: ISignInInput) => {
-  const res = await api.post<IUser>("/auth/signin", data, { withCredentials: true });
-
-  return res.data;
+  return request<IUser>("/auth/signin", {
+    method: "POST",
+    body: JSON.stringify(data),
+    credentials: "include",
+  });
 };
 
 const signOut = async () => {
-  const res = await api.post<true>("/auth/signout", {}, { withCredentials: true });
-
-  return res.data;
+  return authRequest<true>("/auth/signout", {
+    method: "POST",
+    credentials: "include",
+  });
 };
 
 export { getUser, signin, signOut };

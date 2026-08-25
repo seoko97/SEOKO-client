@@ -1,28 +1,26 @@
 import { ICreateSkill, TSkills, TUpdateSkill } from "@/types/skill";
-import api from "@/apis";
+import { authRequest } from "@/apis";
 
 const getSkills = async () => {
-  const { data } = await api.get<TSkills>("/skills");
-
-  return data;
+  return authRequest<TSkills>("/skills", { method: "GET" });
 };
 
 const createSkill = async (input: ICreateSkill) => {
-  const { data } = await api.post<TSkills>("/skills", input);
-
-  return data;
+  return authRequest<TSkills>("/skills", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
 };
 
 const updateSkill = async (_id: string, input: TUpdateSkill) => {
-  const { data } = await api.put<TSkills>(`/skills/${_id}`, input);
-
-  return data;
+  return authRequest<TSkills>(`/skills/${_id}`, {
+    method: "PUT",
+    body: JSON.stringify(input),
+  });
 };
 
 const deleteSkill = async (_id: string) => {
-  const { data } = await api.delete(`/skills/${_id}`);
-
-  return data;
+  return authRequest(`/skills/${_id}`, { method: "DELETE" });
 };
 
 export { getSkills, createSkill, updateSkill, deleteSkill };
