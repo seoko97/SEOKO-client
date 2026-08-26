@@ -30,7 +30,7 @@ const useGetPostQuery = (nid: number | null) => {
 };
 
 const useGetPostsQuery = (params: IGetPostsInput = {}) => {
-  const { data, fetchNextPage } = useInfiniteQuery({
+  const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery({
     queryKey: postQueryKeys.list(params),
     queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
     initialPageParam: 0,
@@ -45,13 +45,11 @@ const useGetPostsQuery = (params: IGetPostsInput = {}) => {
 
   const posts = data?.pages?.flat() ?? [];
 
-  const fetchMore = useCallback(() => {
-    const limit = params.limit ?? 10;
-
-    if (posts.length % limit !== 0) return;
+  const fetchMore = () => {
+    if (!hasNextPage || isFetching) return;
 
     fetchNextPage();
-  }, [params.limit, posts.length, fetchNextPage]);
+  };
 
   return [posts, fetchMore] as const;
 };
