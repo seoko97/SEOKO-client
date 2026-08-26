@@ -16,7 +16,7 @@ const useCreateSkillMutation = () => {
   return useMutation({
     mutationFn: (data: ICreateSkill) => createSkill(data),
     onSettled: () => {
-      queryClient.invalidateQueries(["skills"]);
+      queryClient.invalidateQueries({ queryKey: ["skills"] });
     },
   });
 };
@@ -27,7 +27,7 @@ const useUpdateSkillMutation = (_id: string) => {
   return useMutation({
     mutationFn: (data: TUpdateSkill) => updateSkill(_id, data),
     onMutate: (data: TUpdateSkill) => {
-      queryClient.cancelQueries(["skills"]);
+      queryClient.cancelQueries({ queryKey: ["skills"] });
 
       const previousSkills = queryClient.getQueryData<TSkills>(["skills"]);
 
@@ -61,7 +61,7 @@ const useUpdateSkillMutation = (_id: string) => {
       queryClient.setQueryData<TSkills>(["skills"], previousSkills);
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["skills"]);
+      queryClient.invalidateQueries({ queryKey: ["skills"] });
     },
   });
 };
@@ -72,7 +72,7 @@ const useDeleteSkillMutation = (_id: string) => {
   return useMutation({
     mutationFn: () => deleteSkill(_id),
     onMutate: () => {
-      queryClient.invalidateQueries(["skills"]);
+      queryClient.invalidateQueries({ queryKey: ["skills"] });
 
       const previousSkills = queryClient.getQueryData<TSkills>(["skills"]);
 
@@ -102,7 +102,7 @@ const useDeleteSkillMutation = (_id: string) => {
       queryClient.setQueryData<TSkills>(["skills"], previousSkills);
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["skills"]);
+      queryClient.invalidateQueries({ queryKey: ["skills"] });
     },
   });
 };

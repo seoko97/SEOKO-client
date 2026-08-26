@@ -30,7 +30,7 @@ const useUpdateSeriesMutation = (nid: number) => {
   return useMutation({
     mutationFn: (data: IUpdateSeriesInput) => updateSeries(nid, data),
     onMutate: (data: IUpdateSeriesInput) => {
-      queryClient.cancelQueries(["series", nid]);
+      queryClient.cancelQueries({ queryKey: ["series", nid] });
 
       const previousSeries = queryClient.getQueryData<ISeries>(["series", nid]);
 
@@ -67,8 +67,8 @@ const useUpdateSeriesMutation = (nid: number) => {
       queryClient.setQueryData<ISeries[]>(["series"], previousSeriesList);
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["series", nid]);
-      queryClient.invalidateQueries(["series"]);
+      queryClient.invalidateQueries({ queryKey: ["series", nid] });
+      queryClient.invalidateQueries({ queryKey: ["series"] });
     },
   });
 };
@@ -80,7 +80,7 @@ const useDeleteSeriesMutation = (nid: number) => {
   return useMutation({
     mutationFn: () => deleteSeries(nid),
     onMutate: () => {
-      queryClient.cancelQueries(["series", nid]);
+      queryClient.cancelQueries({ queryKey: ["series", nid] });
 
       const previousSeries = queryClient.getQueryData<ISeries>(["series", nid]);
       const previousSeriesList = queryClient.getQueryData<ISeries[]>(["series"]);
@@ -91,7 +91,7 @@ const useDeleteSeriesMutation = (nid: number) => {
         return prev.filter((series) => series.nid !== nid);
       });
 
-      queryClient.removeQueries(["series", nid]);
+      queryClient.removeQueries({ queryKey: ["series", nid] });
 
       return { previousSeries, previousSeriesList };
     },
@@ -106,8 +106,8 @@ const useDeleteSeriesMutation = (nid: number) => {
     onSettled: () => {
       router.push("/series");
 
-      queryClient.invalidateQueries(["series", nid]);
-      queryClient.invalidateQueries(["series"]);
+      queryClient.invalidateQueries({ queryKey: ["series", nid] });
+      queryClient.invalidateQueries({ queryKey: ["series"] });
     },
   });
 };

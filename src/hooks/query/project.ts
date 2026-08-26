@@ -37,7 +37,7 @@ const useCreateProjectMutation = () => {
   return useMutation({
     mutationFn: createProject,
     onSuccess: () => {
-      queryClient.invalidateQueries(["projects"]);
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
       router.replace("/project");
     },
   });
@@ -50,8 +50,8 @@ const useUpdateProjectMutation = (nid: number) => {
   return useMutation({
     mutationFn: (data: IProjectInput) => updateProject(nid, data),
     onSuccess: () => {
-      queryClient.invalidateQueries(["project", nid]);
-      queryClient.invalidateQueries(["projects"]);
+      queryClient.invalidateQueries({ queryKey: ["project", nid] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
       router.replace(`/project/${nid}`);
     },
   });
@@ -64,8 +64,8 @@ const useDeleteProjectMutation = (nid: number) => {
   return useMutation({
     mutationFn: () => deleteProject(nid),
     onSuccess: () => {
-      queryClient.removeQueries(["project", nid]);
-      queryClient.invalidateQueries(["projects"]);
+      queryClient.removeQueries({ queryKey: ["project", nid] });
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
       router.push("/project");
     },
   });

@@ -32,8 +32,8 @@ const useGetPostsQuery = (params: IGetPostsInput = {}) => {
   const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: ["posts", params],
     queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
+    initialPageParam: 0,
     getNextPageParam: (_, allPage) => allPage.flat().length,
-    keepPreviousData: true,
   });
 
   const posts = data?.pages?.flat() ?? [];
@@ -60,7 +60,7 @@ const useCreatePostMutation = () => {
   return useMutation({
     mutationFn: createPost,
     onSuccess: () => {
-      queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
       router.push("/");
     },
   });
@@ -73,8 +73,8 @@ const useUpdatePostMutation = (nid: number) => {
   return useMutation({
     mutationFn: (data: IUpdatePostInput) => updatePost(nid, data),
     onSuccess: () => {
-      queryClient.invalidateQueries(["post", nid]);
-      queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries({ queryKey: ["post", nid] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
       router.push(`/post/${nid}`);
     },
   });
@@ -88,8 +88,8 @@ const useDeletePostMutation = (nid: number) => {
     mutationFn: () => deletePost(nid),
     onSuccess: () => {
       router.push("/");
-      queryClient.removeQueries(["post", nid]);
-      queryClient.invalidateQueries(["posts"]);
+      queryClient.removeQueries({ queryKey: ["post", nid] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 };
@@ -100,7 +100,7 @@ const useLikePostMutation = (nid: number) => {
   return useMutation({
     mutationFn: () => likePost(nid),
     onMutate: () => {
-      queryClient.cancelQueries(["post", nid]);
+      queryClient.cancelQueries({ queryKey: ["post", nid] });
 
       const post = queryClient.getQueryData<IPost>(["post", nid]);
       const posts = queryClient.getQueryData<IPost[]>(["posts"]);
@@ -132,7 +132,7 @@ const useLikePostMutation = (nid: number) => {
       queryClient.setQueryData<IPost[] | undefined>(["posts"], posts);
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["post", nid]);
+      queryClient.invalidateQueries({ queryKey: ["post", nid] });
     },
   });
 };
@@ -143,7 +143,7 @@ const useUnlikePostMutation = (nid: number) => {
   return useMutation({
     mutationFn: () => unlikePost(nid),
     onMutate: () => {
-      queryClient.cancelQueries(["post", nid]);
+      queryClient.cancelQueries({ queryKey: ["post", nid] });
 
       const post = queryClient.getQueryData<IPost>(["post", nid]);
       const posts = queryClient.getQueryData<IPost[]>(["posts"]);
@@ -175,7 +175,7 @@ const useUnlikePostMutation = (nid: number) => {
       queryClient.setQueryData<IPost[] | undefined>(["posts"], posts);
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["post", nid]);
+      queryClient.invalidateQueries({ queryKey: ["post", nid] });
     },
   });
 };

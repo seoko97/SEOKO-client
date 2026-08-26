@@ -28,9 +28,10 @@ const Hydrate = async ({ name, children }: IProps) => {
 
     const params = { tag: tag._id };
 
-    await queryClient.prefetchInfiniteQuery({
+    await queryClient.infiniteQuery({
       queryKey: ["posts", params],
       queryFn: () => getPosts(params),
+      initialPageParam: 0,
     });
   } catch (error) {
     return notFound();

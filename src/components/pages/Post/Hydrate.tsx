@@ -14,9 +14,10 @@ interface IProps {
 const Hydrate = async ({ children, params = {} }: IProps) => {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchInfiniteQuery({
+  await queryClient.infiniteQuery({
     queryKey: ["posts", params],
     queryFn: () => getPosts(params),
+    initialPageParam: 0,
   });
   const dehydratedState = dehydrate(queryClient);
 
