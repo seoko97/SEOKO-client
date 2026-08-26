@@ -1,6 +1,6 @@
 import React from "react";
 
-import { dehydrate, Hydrate as RqHydrate } from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 import getQueryClient from "@utils/query/getQueryClient";
 import { getSkills } from "@/apis/skill";
@@ -31,7 +31,7 @@ const Hydrate = async ({ children }: IProps) => {
 
   const dehydrateState = dehydrate(queryClient);
 
-  return <RqHydrate state={dehydrateState}>{children}</RqHydrate>;
+  return <HydrationBoundary state={dehydrateState}>{children}</HydrationBoundary>;
 };
 
 export default Hydrate;
