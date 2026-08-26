@@ -14,19 +14,10 @@ interface IProps {
 const Hydrate = async ({ children }: IProps) => {
   const queryClient = getQueryClient();
 
-  await Promise.all([
-    queryClient.prefetchQuery({
-      queryKey: ["projects"],
-      queryFn: getProjects,
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ["skills"],
-      queryFn: getSkills,
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ["experiences"],
-      queryFn: getExperiences,
-    }),
+  await Promise.allSettled([
+    queryClient.query({ queryKey: ["projects"], queryFn: getProjects }),
+    queryClient.query({ queryKey: ["skills"], queryFn: getSkills }),
+    queryClient.query({ queryKey: ["experiences"], queryFn: getExperiences }),
   ]);
 
   const dehydrateState = dehydrate(queryClient);

@@ -19,7 +19,7 @@ const Hydrate = async ({ name, children }: IProps) => {
   if (!name) return notFound();
 
   try {
-    const tag = await queryClient.fetchQuery({
+    const tag = await queryClient.query({
       queryKey: ["tag", name],
       queryFn: () => getTag(name),
     });

@@ -19,7 +19,7 @@ const Hydrate = async ({ nid, children }: IProps) => {
   if (isNaN(nid)) return notFound();
 
   try {
-    const series = await queryClient.fetchQuery({
+    const series = await queryClient.query({
       queryKey: ["series", nid],
       queryFn: () => getSeries(nid),
     });

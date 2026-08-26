@@ -12,7 +12,7 @@ interface IProps {
 const Hydrate = async ({ children }: IProps) => {
   const queryClient = getQueryClient();
 
-  const projects = await queryClient.fetchQuery({
+  const projects = await queryClient.query({
     queryKey: ["projects"],
     queryFn: getProjects,
   });

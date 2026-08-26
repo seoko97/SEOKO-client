@@ -18,7 +18,7 @@ const Hydrate = async ({ children, nid }: IProps) => {
 
   if (nid !== null) {
     try {
-      await queryClient.fetchQuery({
+      await queryClient.query({
         queryKey: ["post", nid],
         queryFn: () => getPost(nid),
       });
@@ -28,7 +28,7 @@ const Hydrate = async ({ children, nid }: IProps) => {
   }
 
   try {
-    await queryClient.fetchQuery({
+    await queryClient.query({
       queryKey: ["user"],
       queryFn: getUser,
     });
