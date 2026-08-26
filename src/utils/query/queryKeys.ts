@@ -6,9 +6,9 @@ export const userQueryKeys = {
 
 export const postQueryKeys = {
   all: ["posts"] as const,
-  list: (params: IGetPostsInput) => [...postQueryKeys.all, params] as const,
-  detail: (nid: number | null) => [...postQueryKeys.all, nid] as const,
-  sibling: (nid: number) => [...postQueryKeys.all, nid, "sibling"] as const,
+  list: (params: IGetPostsInput) => [...postQueryKeys.all, "list", params] as const,
+  detail: (nid: number | null) => [...postQueryKeys.all, "detail", nid] as const,
+  sibling: (nid: number) => [...postQueryKeys.all, "sibling", nid] as const,
 } as const;
 
 export const projectQueryKeys = {
