@@ -33,7 +33,13 @@ const useGetPostsQuery = (params: IGetPostsInput = {}) => {
     queryKey: ["posts", params],
     queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
     initialPageParam: 0,
-    getNextPageParam: (_, allPage) => allPage.flat().length,
+    getNextPageParam: (lastPage, _, lastPageParam) => {
+      const limit = params.limit ?? 10;
+
+      if (lastPage.length < limit) return undefined;
+
+      return lastPageParam + lastPage.length;
+    },
   });
 
   const posts = data?.pages?.flat() ?? [];
