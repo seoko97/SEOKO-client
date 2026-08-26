@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
+import { postQueryKeys } from "@utils/query/queryKeys";
 import getQueryClient from "@utils/query/getQueryClient";
 import { getSeries } from "@/apis/series";
 import { getPosts } from "@/apis/post";
@@ -29,7 +30,7 @@ const Hydrate = async ({ nid, children }: IProps) => {
     const params = { series: series._id, sort: -1 };
 
     await queryClient.infiniteQuery({
-      queryKey: ["posts", params],
+      queryKey: postQueryKeys.list(params),
       queryFn: () => getPosts(params),
       initialPageParam: 0,
     });
