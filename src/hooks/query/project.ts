@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
+import { projectQueryKeys } from "@utils/query/queryKeys";
 import { IProjectInput } from "@/types";
 import {
   createProject,
@@ -12,8 +13,10 @@ import {
 } from "@/apis/project";
 
 const useGetProjectQuery = (nid: number | null) => {
+  const queryKey = nid == null ? projectQueryKeys.all : projectQueryKeys.detail(nid);
+
   return useQuery({
-    queryKey: ["project", nid],
+    queryKey,
     queryFn: () => {
       if (nid === null) return;
 
@@ -25,7 +28,7 @@ const useGetProjectQuery = (nid: number | null) => {
 
 const useGetProjectsQuery = () => {
   return useQuery({
-    queryKey: ["projects"],
+    queryKey: projectQueryKeys.all,
     queryFn: getProjects,
   });
 };
@@ -37,7 +40,7 @@ const useCreateProjectMutation = () => {
   return useMutation({
     mutationFn: createProject,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: projectQueryKeys.all });
       router.replace("/project");
     },
   });
@@ -50,8 +53,8 @@ const useUpdateProjectMutation = (nid: number) => {
   return useMutation({
     mutationFn: (data: IProjectInput) => updateProject(nid, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["project", nid] });
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: projectQueryKeys.detail(nid) });
+      queryClient.invalidateQueries({ queryKey: projectQueryKeys.all });
       router.replace(`/project/${nid}`);
     },
   });
@@ -64,8 +67,8 @@ const useDeleteProjectMutation = (nid: number) => {
   return useMutation({
     mutationFn: () => deleteProject(nid),
     onSuccess: () => {
-      queryClient.removeQueries({ queryKey: ["project", nid] });
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.removeQueries({ queryKey: projectQueryKeys.detail(nid) });
+      queryClient.invalidateQueries({ queryKey: projectQueryKeys.all });
       router.push("/project");
     },
   });

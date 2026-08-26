@@ -4,7 +4,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
-import { userQueryKeys } from "@utils/query/queryKeys";
+import { projectQueryKeys, userQueryKeys } from "@utils/query/queryKeys";
 import getQueryClient from "@utils/query/getQueryClient";
 import { getUser } from "@/apis/user";
 import { getProject } from "@/apis/project";
@@ -20,7 +20,7 @@ const Hydrate = async ({ children, nid }: IProps) => {
   if (nid !== null) {
     try {
       await queryClient.query({
-        queryKey: ["project", nid],
+        queryKey: projectQueryKeys.detail(nid),
         queryFn: () => getProject(nid),
       });
     } catch (error) {
