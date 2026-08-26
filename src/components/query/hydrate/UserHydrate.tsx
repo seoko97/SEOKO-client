@@ -2,6 +2,7 @@ import React from "react";
 
 import { HydrationBoundary, dehydrate, noop } from "@tanstack/react-query";
 
+import { userQueryKeys } from "@utils/query/queryKeys";
 import getQueryClient from "@utils/query/getQueryClient";
 import { getUser } from "@/apis/user";
 
@@ -14,7 +15,7 @@ const Hydrate = async ({ children }: IProps) => {
 
   await queryClient
     .query({
-      queryKey: ["user"],
+      queryKey: userQueryKeys.me,
       queryFn: getUser,
     })
     .catch(noop);
