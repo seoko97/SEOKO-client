@@ -21,7 +21,7 @@ const useCreateExperienceMutation = () => {
   return useMutation({
     mutationFn: (data: ICreateExperience) => createExperience(data),
     onSettled: () => {
-      queryClient.invalidateQueries(["experiences"]);
+      queryClient.invalidateQueries({ queryKey: ["experiences"] });
     },
   });
 };
@@ -32,7 +32,7 @@ const useUpdateExperienceMutation = (_id: string) => {
   return useMutation({
     mutationFn: (data: IUpdateExperience) => updateExperience(_id, data),
     onMutate: (data: IUpdateExperience) => {
-      queryClient.cancelQueries(["experiences"]);
+      queryClient.cancelQueries({ queryKey: ["experiences"] });
 
       const previousSkills = queryClient.getQueryData<IExperience[]>(["experiences"]);
 
@@ -60,7 +60,7 @@ const useUpdateExperienceMutation = (_id: string) => {
       queryClient.setQueryData<IExperience[]>(["experiences"], previousSkills);
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["experiences"]);
+      queryClient.invalidateQueries({ queryKey: ["experiences"] });
     },
   });
 };
@@ -71,7 +71,7 @@ const useDeleteExperienceMutation = (_id: string) => {
   return useMutation({
     mutationFn: () => deleteExperience(_id),
     onMutate: () => {
-      queryClient.cancelQueries(["experiences"]);
+      queryClient.cancelQueries({ queryKey: ["experiences"] });
 
       const previousSkills = queryClient.getQueryData<IExperience[]>(["experiences"]);
 
@@ -95,7 +95,7 @@ const useDeleteExperienceMutation = (_id: string) => {
       queryClient.setQueryData<IExperience[]>(["experiences"], previousSkills);
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["experiences"]);
+      queryClient.invalidateQueries({ queryKey: ["experiences"] });
     },
   });
 };

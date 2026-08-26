@@ -62,20 +62,11 @@
 
 ## 브랜치 한정 작업 지침
 
-> 이 섹션은 현재 브랜치의 Next.js 16 업그레이드 작업에만 적용한다.
+변경 범위를 v5 호환성으로 한정
 
-### 작업 범위
-
-- Next.js 15 → 16 업그레이드만 수행
-- 호환성 확보에 필요한 최소 코드·설정·의존성 변경만 허용
-
-### 제외 범위
-
-- 업그레이드와 무관한 리팩터링
-- 디자인·상태 관리·API 구조 변경
-- 무관한 패키지 업데이트
-
-### 완료 기준
-
-- `pnpm build` 성공
-- `pnpm lint` 성공
+- @tanstack/react-query, devtools를 같은 최신 안정 v5로 업데이트
+- Hydrate → HydrationBoundary
+- QueryClient 메서드의 object syntax 전환
+- 모든 infinite query의 initialPageParam 추가
+- keepPreviousData 대응
+- 타입 오류 수정

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { dehydrate, Hydrate as RqHydrate } from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 import getQueryClient from "@utils/query/getQueryClient";
 import { getSeriesAll } from "@/apis/series";
@@ -12,7 +12,7 @@ interface IProps {
 const Hydrate = async ({ children }: IProps) => {
   const queryClient = getQueryClient();
 
-  const series = await queryClient.fetchQuery({
+  const series = await queryClient.query({
     queryKey: ["series"],
     queryFn: getSeriesAll,
   });
@@ -20,7 +20,7 @@ const Hydrate = async ({ children }: IProps) => {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <RqHydrate state={dehydratedState}>
+    <HydrationBoundary state={dehydratedState}>
       <div className="w-[theme(screens.md.max)] px-0 py-4 sm:mb-4 md:w-full">
         <h1 className="mb-2 text-4xl font-bold text-primary transition-[color]">
           SERIES
@@ -32,7 +32,7 @@ const Hydrate = async ({ children }: IProps) => {
       </div>
       <div className="mb-8 mt-4 h-1 w-[300px] bg-slate-300 sm:hidden" />
       {children}
-    </RqHydrate>
+    </HydrationBoundary>
   );
 };
 

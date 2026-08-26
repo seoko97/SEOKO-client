@@ -2,7 +2,7 @@ import React from "react";
 
 import { notFound } from "next/navigation";
 
-import { Hydrate as RqHydrate, dehydrate } from "@tanstack/react-query";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
 import getQueryClient from "@utils/query/getQueryClient";
 import { getSeries } from "@/apis/series";
@@ -19,7 +19,7 @@ const Hydrate = async ({ nid, children }: IProps) => {
   if (isNaN(nid)) return notFound();
 
   try {
-    const series = await queryClient.fetchQuery({
+    const series = await queryClient.query({
       queryKey: ["series", nid],
       queryFn: () => getSeries(nid),
     });
@@ -28,9 +28,10 @@ const Hydrate = async ({ nid, children }: IProps) => {
 
     const params = { series: series._id, sort: -1 };
 
-    await queryClient.prefetchInfiniteQuery({
+    await queryClient.infiniteQuery({
       queryKey: ["posts", params],
       queryFn: () => getPosts(params),
+      initialPageParam: 0,
     });
   } catch (error) {
     return notFound();
@@ -38,7 +39,7 @@ const Hydrate = async ({ nid, children }: IProps) => {
 
   const dehydratedState = dehydrate(queryClient);
 
-  return <RqHydrate state={dehydratedState}>{children}</RqHydrate>;
+  return <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>;
 };
 
 export default Hydrate;

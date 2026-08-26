@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Hydrate as RqHydrate, dehydrate } from "@tanstack/react-query";
+import { HydrationBoundary, dehydrate, noop } from "@tanstack/react-query";
 
 import getQueryClient from "@utils/query/getQueryClient";
 import { getUser } from "@/apis/user";
@@ -12,14 +12,16 @@ interface IProps {
 const Hydrate = async ({ children }: IProps) => {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["user"],
-    queryFn: getUser,
-  });
+  await queryClient
+    .query({
+      queryKey: ["user"],
+      queryFn: getUser,
+    })
+    .catch(noop);
 
   const dehydratedState = dehydrate(queryClient);
 
-  return <RqHydrate state={dehydratedState}>{children}</RqHydrate>;
+  return <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>;
 };
 
 export default Hydrate;

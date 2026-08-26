@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Hydrate as RqHydrate, dehydrate } from "@tanstack/react-query";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
 import getQueryClient from "@utils/query/getQueryClient";
 import { getProjects } from "@/apis/project";
@@ -12,7 +12,7 @@ interface IProps {
 const Hydrate = async ({ children }: IProps) => {
   const queryClient = getQueryClient();
 
-  const projects = await queryClient.fetchQuery({
+  const projects = await queryClient.query({
     queryKey: ["projects"],
     queryFn: getProjects,
   });
@@ -20,7 +20,7 @@ const Hydrate = async ({ children }: IProps) => {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <RqHydrate state={dehydratedState}>
+    <HydrationBoundary state={dehydratedState}>
       <div className="w-full px-0 py-4">
         <h1 className="mb-1 text-4xl font-bold text-primary transition-[color]">
           PROJECT
@@ -31,7 +31,7 @@ const Hydrate = async ({ children }: IProps) => {
         </p>
       </div>
       {children}
-    </RqHydrate>
+    </HydrationBoundary>
   );
 };
 
