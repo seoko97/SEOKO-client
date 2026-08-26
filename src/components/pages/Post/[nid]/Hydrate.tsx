@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { HydrationBoundary, dehydrate, noop } from "@tanstack/react-query";
 
-import { postQueryKeys } from "@utils/query/queryKeys";
+import { postQueryKeys, seriesQueryKeys } from "@utils/query/queryKeys";
 import getQueryClient from "@utils/query/getQueryClient";
 import { getSeries } from "@/apis/series";
 import { getPost, getSiblingPost } from "@/apis/post";
@@ -32,7 +32,7 @@ const Hydrate = async ({ children, nid }: IProps) => {
     if (series) {
       await queryClient
         .query({
-          queryKey: ["series", series.nid],
+          queryKey: seriesQueryKeys.detail(series.nid),
           queryFn: () => getSeries(series.nid),
         })
         .catch(noop);
