@@ -30,7 +30,7 @@ const Hydrate = async ({ name, children }: IProps) => {
     const params = { tag: tag._id };
 
     await queryClient.infiniteQuery({
-      queryKey: postQueryKeys.list(params),
+      queryKey: postQueryKeys.listByParams(params),
       queryFn: () => getPosts(params),
       initialPageParam: 0,
     });

@@ -6,7 +6,8 @@ export const userQueryKeys = {
 
 export const postQueryKeys = {
   root: ["posts"] as const,
-  list: (params: IGetPostsInput) => [...postQueryKeys.root, "list", params] as const,
+  list: ["posts", "list"] as const,
+  listByParams: (params: IGetPostsInput) => [...postQueryKeys.list, params] as const,
   detail: (nid: number | null) => [...postQueryKeys.root, "detail", nid] as const,
   sibling: (nid: number) => [...postQueryKeys.root, "sibling", nid] as const,
 } as const;
