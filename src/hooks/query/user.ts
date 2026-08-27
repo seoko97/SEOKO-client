@@ -11,7 +11,7 @@ const useGetUserQuery = () => {
     queryKey: userQueryKeys.me,
     queryFn: getUser,
     select: (data) => data?.username ?? null,
-    initialData: { username: "" },
+    initialData: null,
   });
 };
 
@@ -29,12 +29,15 @@ const useSigninMutation = () => {
 };
 
 const useSignOutMutation = () => {
+  const router = useRouter();
+
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: signOut,
     onSuccess: () => {
       queryClient.setQueryData<IUser | null>(userQueryKeys.me, null);
+      router.replace("/");
     },
   });
 };
