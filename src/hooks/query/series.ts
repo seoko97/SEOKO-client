@@ -32,8 +32,8 @@ const useUpdateSeriesMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: (data: IUpdateSeriesInput) => updateSeries(nid, data),
-    onMutate: (data: IUpdateSeriesInput) => {
-      queryClient.cancelQueries({ queryKey: seriesQueryKeys.detail(nid) });
+    onMutate: async (data: IUpdateSeriesInput) => {
+      await queryClient.cancelQueries({ queryKey: seriesQueryKeys.root });
 
       const previousSeries = queryClient.getQueryData<ISeries>(seriesQueryKeys.detail(nid));
 
@@ -82,8 +82,8 @@ const useDeleteSeriesMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: () => deleteSeries(nid),
-    onMutate: () => {
-      queryClient.cancelQueries({ queryKey: seriesQueryKeys.detail(nid) });
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: seriesQueryKeys.root });
 
       const previousSeries = queryClient.getQueryData<ISeries>(seriesQueryKeys.detail(nid));
       const previousSeriesList = queryClient.getQueryData<ISeries[]>(seriesQueryKeys.root);

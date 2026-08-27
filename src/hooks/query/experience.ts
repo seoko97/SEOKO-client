@@ -32,8 +32,8 @@ const useUpdateExperienceMutation = (_id: string) => {
 
   return useMutation({
     mutationFn: (data: IUpdateExperience) => updateExperience(_id, data),
-    onMutate: (data: IUpdateExperience) => {
-      queryClient.cancelQueries({ queryKey: experienceQueryKeys.root });
+    onMutate: async (data: IUpdateExperience) => {
+      await queryClient.cancelQueries({ queryKey: experienceQueryKeys.root });
 
       const previousSkills = queryClient.getQueryData<IExperience[]>(experienceQueryKeys.root);
 
@@ -71,8 +71,8 @@ const useDeleteExperienceMutation = (_id: string) => {
 
   return useMutation({
     mutationFn: () => deleteExperience(_id),
-    onMutate: () => {
-      queryClient.cancelQueries({ queryKey: experienceQueryKeys.root });
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: experienceQueryKeys.root });
 
       const previousSkills = queryClient.getQueryData<IExperience[]>(experienceQueryKeys.root);
 

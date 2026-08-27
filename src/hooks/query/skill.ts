@@ -27,8 +27,8 @@ const useUpdateSkillMutation = (_id: string) => {
 
   return useMutation({
     mutationFn: (data: TUpdateSkill) => updateSkill(_id, data),
-    onMutate: (data: TUpdateSkill) => {
-      queryClient.cancelQueries({ queryKey: skillQueryKeys.root });
+    onMutate: async (data: TUpdateSkill) => {
+      await queryClient.cancelQueries({ queryKey: skillQueryKeys.root });
 
       const previousSkills = queryClient.getQueryData<TSkills>(skillQueryKeys.root);
 
@@ -72,8 +72,8 @@ const useDeleteSkillMutation = (_id: string) => {
 
   return useMutation({
     mutationFn: () => deleteSkill(_id),
-    onMutate: () => {
-      queryClient.invalidateQueries({ queryKey: skillQueryKeys.root });
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: skillQueryKeys.root });
 
       const previousSkills = queryClient.getQueryData<TSkills>(skillQueryKeys.root);
 
