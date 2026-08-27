@@ -30,7 +30,7 @@ const Hydrate = async ({ nid, children }: IProps) => {
     const params = { series: series._id, sort: -1 };
 
     await queryClient.infiniteQuery({
-      queryKey: postQueryKeys.list(params),
+      queryKey: postQueryKeys.listByParams(params),
       queryFn: () => getPosts(params),
       initialPageParam: 0,
     });

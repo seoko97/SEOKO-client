@@ -14,7 +14,7 @@ const Hydrate = async ({ children }: IProps) => {
   const queryClient = getQueryClient();
 
   const series = await queryClient.query({
-    queryKey: seriesQueryKeys.all,
+    queryKey: seriesQueryKeys.root,
     queryFn: getSeriesAll,
   });
 

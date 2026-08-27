@@ -13,7 +13,7 @@ import {
 } from "@/apis/project";
 
 const useGetProjectQuery = (nid: number | null) => {
-  const queryKey = nid == null ? projectQueryKeys.all : projectQueryKeys.detail(nid);
+  const queryKey = nid == null ? projectQueryKeys.root : projectQueryKeys.detail(nid);
 
   return useQuery({
     queryKey,
@@ -28,7 +28,7 @@ const useGetProjectQuery = (nid: number | null) => {
 
 const useGetProjectsQuery = () => {
   return useQuery({
-    queryKey: projectQueryKeys.all,
+    queryKey: projectQueryKeys.root,
     queryFn: getProjects,
   });
 };
@@ -40,7 +40,7 @@ const useCreateProjectMutation = () => {
   return useMutation({
     mutationFn: createProject,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: projectQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: projectQueryKeys.root });
       router.replace("/project");
     },
   });
@@ -54,7 +54,7 @@ const useUpdateProjectMutation = (nid: number) => {
     mutationFn: (data: IProjectInput) => updateProject(nid, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: projectQueryKeys.detail(nid) });
-      queryClient.invalidateQueries({ queryKey: projectQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: projectQueryKeys.root });
       router.replace(`/project/${nid}`);
     },
   });
@@ -68,7 +68,7 @@ const useDeleteProjectMutation = (nid: number) => {
     mutationFn: () => deleteProject(nid),
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: projectQueryKeys.detail(nid) });
-      queryClient.invalidateQueries({ queryKey: projectQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: projectQueryKeys.root });
       router.push("/project");
     },
   });
