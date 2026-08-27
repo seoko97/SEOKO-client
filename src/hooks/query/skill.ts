@@ -6,7 +6,7 @@ import { createSkill, deleteSkill, getSkills, updateSkill } from "@/apis/skill";
 
 const useGetSkillsQuery = () => {
   return useQuery({
-    queryKey: skillQueryKeys.all,
+    queryKey: skillQueryKeys.root,
     queryFn: getSkills,
   });
 };
@@ -17,7 +17,7 @@ const useCreateSkillMutation = () => {
   return useMutation({
     mutationFn: (data: ICreateSkill) => createSkill(data),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: skillQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: skillQueryKeys.root });
     },
   });
 };
@@ -28,13 +28,13 @@ const useUpdateSkillMutation = (_id: string) => {
   return useMutation({
     mutationFn: (data: TUpdateSkill) => updateSkill(_id, data),
     onMutate: (data: TUpdateSkill) => {
-      queryClient.cancelQueries({ queryKey: skillQueryKeys.all });
+      queryClient.cancelQueries({ queryKey: skillQueryKeys.root });
 
-      const previousSkills = queryClient.getQueryData<TSkills>(skillQueryKeys.all);
+      const previousSkills = queryClient.getQueryData<TSkills>(skillQueryKeys.root);
 
       if (!previousSkills) return;
 
-      queryClient.setQueryData<TSkills>(skillQueryKeys.all, (prev) => {
+      queryClient.setQueryData<TSkills>(skillQueryKeys.root, (prev) => {
         if (!prev) return prev;
 
         const newSkills = Object.keys(prev).reduce((acc, key) => {
@@ -59,10 +59,10 @@ const useUpdateSkillMutation = (_id: string) => {
 
       const previousSkills = context;
 
-      queryClient.setQueryData<TSkills>(skillQueryKeys.all, previousSkills);
+      queryClient.setQueryData<TSkills>(skillQueryKeys.root, previousSkills);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: skillQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: skillQueryKeys.root });
     },
   });
 };
@@ -73,13 +73,13 @@ const useDeleteSkillMutation = (_id: string) => {
   return useMutation({
     mutationFn: () => deleteSkill(_id),
     onMutate: () => {
-      queryClient.invalidateQueries({ queryKey: skillQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: skillQueryKeys.root });
 
-      const previousSkills = queryClient.getQueryData<TSkills>(skillQueryKeys.all);
+      const previousSkills = queryClient.getQueryData<TSkills>(skillQueryKeys.root);
 
       if (!previousSkills) return;
 
-      queryClient.setQueryData<TSkills>(skillQueryKeys.all, (prev) => {
+      queryClient.setQueryData<TSkills>(skillQueryKeys.root, (prev) => {
         if (!prev) return prev;
 
         const newSkills = Object.keys(prev).reduce((acc, key) => {
@@ -100,10 +100,10 @@ const useDeleteSkillMutation = (_id: string) => {
 
       const previousSkills = context;
 
-      queryClient.setQueryData<TSkills>(skillQueryKeys.all, previousSkills);
+      queryClient.setQueryData<TSkills>(skillQueryKeys.root, previousSkills);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: skillQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: skillQueryKeys.root });
     },
   });
 };

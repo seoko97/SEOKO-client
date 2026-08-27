@@ -8,13 +8,13 @@ import { deleteSeries, getSeries, getSeriesAll, updateSeries } from "@/apis/seri
 
 const useGetSeriesQueries = () => {
   return useQuery({
-    queryKey: seriesQueryKeys.all,
+    queryKey: seriesQueryKeys.root,
     queryFn: getSeriesAll,
   });
 };
 
 const useGetSeriesQuery = (nid: number | null = null) => {
-  const queryKey = nid === null ? seriesQueryKeys.all : seriesQueryKeys.detail(nid);
+  const queryKey = nid === null ? seriesQueryKeys.root : seriesQueryKeys.detail(nid);
 
   return useQuery({
     queryKey,
@@ -39,7 +39,7 @@ const useUpdateSeriesMutation = (nid: number) => {
 
       if (!previousSeries) return;
 
-      const previousSeriesList = queryClient.getQueryData<ISeries[]>(seriesQueryKeys.all);
+      const previousSeriesList = queryClient.getQueryData<ISeries[]>(seriesQueryKeys.root);
 
       const newSeries: ISeries = { ...previousSeries, name: data.name, thumbnail: data.thumbnail };
 
@@ -49,7 +49,7 @@ const useUpdateSeriesMutation = (nid: number) => {
         return newSeries;
       });
 
-      queryClient.setQueryData<ISeries[]>(seriesQueryKeys.all, (prev) => {
+      queryClient.setQueryData<ISeries[]>(seriesQueryKeys.root, (prev) => {
         if (!prev) return prev;
 
         return prev.map((series) => {
@@ -67,11 +67,11 @@ const useUpdateSeriesMutation = (nid: number) => {
       const { previousSeries, previousSeriesList } = context;
 
       queryClient.setQueryData<ISeries>(seriesQueryKeys.detail(nid), previousSeries);
-      queryClient.setQueryData<ISeries[]>(seriesQueryKeys.all, previousSeriesList);
+      queryClient.setQueryData<ISeries[]>(seriesQueryKeys.root, previousSeriesList);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: seriesQueryKeys.detail(nid) });
-      queryClient.invalidateQueries({ queryKey: seriesQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
     },
   });
 };
@@ -86,9 +86,9 @@ const useDeleteSeriesMutation = (nid: number) => {
       queryClient.cancelQueries({ queryKey: seriesQueryKeys.detail(nid) });
 
       const previousSeries = queryClient.getQueryData<ISeries>(seriesQueryKeys.detail(nid));
-      const previousSeriesList = queryClient.getQueryData<ISeries[]>(seriesQueryKeys.all);
+      const previousSeriesList = queryClient.getQueryData<ISeries[]>(seriesQueryKeys.root);
 
-      queryClient.setQueryData<ISeries[]>(seriesQueryKeys.all, (prev) => {
+      queryClient.setQueryData<ISeries[]>(seriesQueryKeys.root, (prev) => {
         if (!prev) return prev;
 
         return prev.filter((series) => series.nid !== nid);
@@ -104,13 +104,13 @@ const useDeleteSeriesMutation = (nid: number) => {
       const { previousSeries, previousSeriesList } = context;
 
       queryClient.setQueryData<ISeries>(seriesQueryKeys.detail(nid), previousSeries);
-      queryClient.setQueryData<ISeries[]>(seriesQueryKeys.all, previousSeriesList);
+      queryClient.setQueryData<ISeries[]>(seriesQueryKeys.root, previousSeriesList);
     },
     onSettled: () => {
       router.push("/series");
 
       queryClient.invalidateQueries({ queryKey: seriesQueryKeys.detail(nid) });
-      queryClient.invalidateQueries({ queryKey: seriesQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
     },
   });
 };

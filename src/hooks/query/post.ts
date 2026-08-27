@@ -68,7 +68,7 @@ const useCreatePostMutation = () => {
   return useMutation({
     mutationFn: createPost,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.root });
       router.push("/");
     },
   });
@@ -82,7 +82,7 @@ const useUpdatePostMutation = (nid: number) => {
     mutationFn: (data: IUpdatePostInput) => updatePost(nid, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: postQueryKeys.detail(nid) });
-      queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.root });
       router.push(`/post/${nid}`);
     },
   });
@@ -97,7 +97,7 @@ const useDeletePostMutation = (nid: number) => {
     onSuccess: () => {
       router.push("/");
       queryClient.removeQueries({ queryKey: postQueryKeys.detail(nid) });
-      queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.root });
     },
   });
 };
@@ -111,7 +111,7 @@ const useLikePostMutation = (nid: number) => {
       queryClient.cancelQueries({ queryKey: postQueryKeys.detail(nid) });
 
       const post = queryClient.getQueryData<IPost>(postQueryKeys.detail(nid));
-      const posts = queryClient.getQueryData<IPost[]>(postQueryKeys.all);
+      const posts = queryClient.getQueryData<IPost[]>(postQueryKeys.root);
 
       queryClient.setQueryData<IPost | undefined>(postQueryKeys.detail(nid), (prev) => {
         if (!prev) return prev;
@@ -119,7 +119,7 @@ const useLikePostMutation = (nid: number) => {
         return { ...prev, isLiked: true, likeCount: prev.likeCount + 1 };
       });
 
-      queryClient.setQueryData<IPost[] | undefined>(postQueryKeys.all, (prev) => {
+      queryClient.setQueryData<IPost[] | undefined>(postQueryKeys.root, (prev) => {
         if (!prev) return prev;
 
         return prev.map((post) => {
@@ -137,7 +137,7 @@ const useLikePostMutation = (nid: number) => {
       const { post, posts } = prev;
 
       queryClient.setQueryData<IPost | undefined>(postQueryKeys.detail(nid), post);
-      queryClient.setQueryData<IPost[] | undefined>(postQueryKeys.all, posts);
+      queryClient.setQueryData<IPost[] | undefined>(postQueryKeys.root, posts);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: postQueryKeys.detail(nid) });
@@ -154,7 +154,7 @@ const useUnlikePostMutation = (nid: number) => {
       queryClient.cancelQueries({ queryKey: postQueryKeys.detail(nid) });
 
       const post = queryClient.getQueryData<IPost>(postQueryKeys.detail(nid));
-      const posts = queryClient.getQueryData<IPost[]>(postQueryKeys.all);
+      const posts = queryClient.getQueryData<IPost[]>(postQueryKeys.root);
 
       queryClient.setQueryData<IPost | undefined>(postQueryKeys.detail(nid), (prev) => {
         if (!prev) return prev;
@@ -162,7 +162,7 @@ const useUnlikePostMutation = (nid: number) => {
         return { ...prev, isLiked: false, likeCount: prev.likeCount - 1 };
       });
 
-      queryClient.setQueryData<IPost[] | undefined>(postQueryKeys.all, (prev) => {
+      queryClient.setQueryData<IPost[] | undefined>(postQueryKeys.root, (prev) => {
         if (!prev) return prev;
 
         return prev.map((post) => {
@@ -180,7 +180,7 @@ const useUnlikePostMutation = (nid: number) => {
       const { post, posts } = prev;
 
       queryClient.setQueryData<IPost | undefined>(postQueryKeys.detail(nid), post);
-      queryClient.setQueryData<IPost[] | undefined>(postQueryKeys.all, posts);
+      queryClient.setQueryData<IPost[] | undefined>(postQueryKeys.root, posts);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: postQueryKeys.detail(nid) });

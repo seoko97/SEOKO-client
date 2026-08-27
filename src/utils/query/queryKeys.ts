@@ -5,31 +5,31 @@ export const userQueryKeys = {
 } as const;
 
 export const postQueryKeys = {
-  all: ["posts"] as const,
-  list: (params: IGetPostsInput) => [...postQueryKeys.all, "list", params] as const,
-  detail: (nid: number | null) => [...postQueryKeys.all, "detail", nid] as const,
-  sibling: (nid: number) => [...postQueryKeys.all, "sibling", nid] as const,
+  root: ["posts"] as const,
+  list: (params: IGetPostsInput) => [...postQueryKeys.root, "list", params] as const,
+  detail: (nid: number | null) => [...postQueryKeys.root, "detail", nid] as const,
+  sibling: (nid: number) => [...postQueryKeys.root, "sibling", nid] as const,
 } as const;
 
 export const projectQueryKeys = {
-  all: ["projects"] as const,
-  detail: (nid: number) => [...projectQueryKeys.all, nid] as const,
+  root: ["projects"] as const,
+  detail: (nid: number) => [...projectQueryKeys.root, nid] as const,
 } as const;
 
 export const seriesQueryKeys = {
-  all: ["series"] as const,
-  detail: (nid: number) => [...seriesQueryKeys.all, nid] as const,
+  root: ["series"] as const,
+  detail: (nid: number) => [...seriesQueryKeys.root, nid] as const,
 } as const;
 
 export const tagQueryKeys = {
-  all: ["tags"] as const,
-  detail: (name: string) => [...tagQueryKeys.all, name] as const,
+  root: ["tags"] as const,
+  detail: (name: string) => [...tagQueryKeys.root, name] as const,
 } as const;
 
 export const skillQueryKeys = {
-  all: ["skills"] as const,
+  root: ["skills"] as const,
 } as const;
 
 export const experienceQueryKeys = {
-  all: ["experiences"] as const,
+  root: ["experiences"] as const,
 } as const;

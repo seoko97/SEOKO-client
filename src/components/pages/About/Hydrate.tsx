@@ -16,9 +16,9 @@ const Hydrate = async ({ children }: IProps) => {
   const queryClient = getQueryClient();
 
   await Promise.allSettled([
-    queryClient.query({ queryKey: projectQueryKeys.all, queryFn: getProjects }),
-    queryClient.query({ queryKey: skillQueryKeys.all, queryFn: getSkills }),
-    queryClient.query({ queryKey: experienceQueryKeys.all, queryFn: getExperiences }),
+    queryClient.query({ queryKey: projectQueryKeys.root, queryFn: getProjects }),
+    queryClient.query({ queryKey: skillQueryKeys.root, queryFn: getSkills }),
+    queryClient.query({ queryKey: experienceQueryKeys.root, queryFn: getExperiences }),
   ]);
 
   const dehydrateState = dehydrate(queryClient);
