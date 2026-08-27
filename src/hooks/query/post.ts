@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { useMutation, useQuery, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
 
-import { postQueryKeys } from "@utils/query/queryKeys";
+import { postQueryKeys, seriesQueryKeys, tagQueryKeys } from "@utils/query/queryKeys";
 import { ICreatePostInput, IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
 import {
   createPost,
@@ -69,6 +69,8 @@ const useCreatePostMutation = () => {
     mutationFn: createPost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: postQueryKeys.root });
+      queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
+      queryClient.invalidateQueries({ queryKey: tagQueryKeys.root });
       router.push("/");
     },
   });
@@ -83,6 +85,8 @@ const useUpdatePostMutation = (nid: number) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: postQueryKeys.detail(nid) });
       queryClient.invalidateQueries({ queryKey: postQueryKeys.list });
+      queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
+      queryClient.invalidateQueries({ queryKey: tagQueryKeys.root });
       router.push(`/post/${nid}`);
     },
   });
@@ -97,7 +101,10 @@ const useDeletePostMutation = (nid: number) => {
     onSuccess: () => {
       router.push("/");
       queryClient.removeQueries({ queryKey: postQueryKeys.detail(nid) });
+      queryClient.removeQueries({ queryKey: postQueryKeys.sibling(nid) });
       queryClient.invalidateQueries({ queryKey: postQueryKeys.list });
+      queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
+      queryClient.invalidateQueries({ queryKey: tagQueryKeys.root });
     },
   });
 };
