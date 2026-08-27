@@ -5,7 +5,13 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
 
 import { postQueryKeys, seriesQueryKeys, tagQueryKeys } from "@utils/query/queryKeys";
-import { ICreatePostInput, IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
+import {
+  ICreatePostInput,
+  IGetPostsInput,
+  IGetSiblingPost,
+  IPost,
+  IUpdatePostInput,
+} from "@/types";
 import {
   createPost,
   deletePost,
@@ -99,12 +105,22 @@ const useDeletePostMutation = (nid: number) => {
   return useMutation({
     mutationFn: () => deletePost(nid),
     onSuccess: () => {
-      router.push("/");
+      const siblingPosts =
+        queryClient.getQueryData<IGetSiblingPost>(postQueryKeys.sibling(nid)) ?? {};
+
+      Object.values<IPost>(siblingPosts).map((post) => {
+        const { nid } = post;
+
+        queryClient.removeQueries({ queryKey: postQueryKeys.sibling(nid) });
+      });
+
       queryClient.removeQueries({ queryKey: postQueryKeys.detail(nid) });
       queryClient.removeQueries({ queryKey: postQueryKeys.sibling(nid) });
       queryClient.invalidateQueries({ queryKey: postQueryKeys.list });
       queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
       queryClient.invalidateQueries({ queryKey: tagQueryKeys.root });
+
+      router.push("/");
     },
   });
 };
