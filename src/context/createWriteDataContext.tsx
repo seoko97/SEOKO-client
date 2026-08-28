@@ -1,6 +1,6 @@
 import { type ReactNode, createContext, useContext } from "react";
 
-import { type IWriteDataRef, useWriteDataRef } from "@hooks/write/useWriteDataRef";
+import { type IWriteDataRef, useWriteDataRef } from "@hooks/useWriteDataRef";
 
 interface IWriteDataProviderProps<T extends object> {
   children: ReactNode;

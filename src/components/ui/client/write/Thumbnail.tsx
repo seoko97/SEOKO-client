@@ -2,23 +2,22 @@ import { useEffect, useRef } from "react";
 
 import { useUploadImage } from "@hooks/query/image";
 import Image from "@components/ui/core/Image";
-
 import { ImageIcon } from "@components/icons";
 import { EImageType } from "@/types/base";
-import { usePostWriteContext } from "@/context/PostWriteContext";
 
-const ThumbnailEditor = () => {
-  const { dataRef, updateData } = usePostWriteContext();
+interface IProps {
+  defaultValue?: string;
+  setThumbnail: (thumbnail: string) => void;
+  type: EImageType;
+}
+
+const Thumbnail = ({ defaultValue, setThumbnail, type }: IProps) => {
   const thumbnailRef = useRef<HTMLInputElement | null>(null);
-
   const {
     image: thumbnail,
     changeImage,
     clearImage,
-  } = useUploadImage({
-    defaultImg: dataRef.current.thumbnail,
-    type: EImageType.POST,
-  });
+  } = useUploadImage({ defaultImg: defaultValue, type });
 
   const thumbnailHandler = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -27,8 +26,8 @@ const ThumbnailEditor = () => {
   };
 
   useEffect(() => {
-    updateData("thumbnail", thumbnail);
-  }, [thumbnail, updateData]);
+    setThumbnail(thumbnail);
+  }, [setThumbnail, thumbnail]);
 
   return (
     <div className="flex w-full flex-col gap-4">
@@ -59,4 +58,4 @@ const ThumbnailEditor = () => {
   );
 };
 
-export default ThumbnailEditor;
+export default Thumbnail;

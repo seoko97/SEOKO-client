@@ -1,110 +1,29 @@
 import React from "react";
 
-import Image from "@components/ui/core/Image";
-import { ImageIcon } from "@components/icons";
-import { IProjectInput } from "@/types";
+import Thumbnail from "@components/ui/client/write/Thumbnail";
+import ProjectInput from "@components/ui/client/write/project/Input";
+import ProjectDateInput from "@components/ui/client/write/project/Date";
+import { EImageType } from "@/types/base";
+import { useProjectWriteContext } from "@/context/ProjectWriteContext";
 
-interface IProps extends Omit<IProjectInput, "content"> {
-  onChangeValue: React.ChangeEventHandler;
-  onChangeThumbnail: React.ChangeEventHandler;
-  thumbnailHandler: React.MouseEventHandler;
-  clearThumbnail: React.MouseEventHandler;
-  thumbnailRef: React.MutableRefObject<HTMLInputElement | null>;
-}
-
-const Header = (props: IProps) => {
-  const {
-    title,
-    description,
-    thumbnail,
-    github,
-    start,
-    end,
-    page,
-    thumbnailRef,
-    onChangeValue,
-    onChangeThumbnail,
-    thumbnailHandler,
-    clearThumbnail,
-  } = props;
+const ProjectHeader = () => {
+  const { dataRef, updateData } = useProjectWriteContext();
 
   return (
     <header className="flex w-full flex-col gap-4">
-      <input
-        name="title"
-        className="write-text-input"
-        defaultValue={title}
-        onChange={onChangeValue}
-        placeholder="제목을 입력하세요"
+      <ProjectInput name="title" placeholder="제목을 입력하세요" />
+      <ProjectInput name="description" placeholder="설명을 입력하세요" />
+      <ProjectInput name="github" placeholder="깃허브 주소를 입력하세요" />
+      <ProjectInput name="page" placeholder="배포 주소를 입력하세요" />
+      <ProjectDateInput name="start" label="프로젝트 시작 날짜" />
+      <ProjectDateInput name="end" label="프로젝트 종료 날짜" />
+      <Thumbnail
+        defaultValue={dataRef.current.thumbnail}
+        setThumbnail={(thumbnail) => updateData("thumbnail", thumbnail)}
+        type={EImageType.PROJECT}
       />
-      <input
-        name="description"
-        className="write-text-input"
-        defaultValue={description}
-        onChange={onChangeValue}
-        placeholder="설명을 입력하세요"
-      />
-      <input
-        name="github"
-        className="write-text-input"
-        defaultValue={github}
-        onChange={onChangeValue}
-        placeholder="깃허브 주소를 입력하세요"
-      />
-      <input
-        name="page"
-        className="write-text-input"
-        defaultValue={page ?? ""}
-        onChange={onChangeValue}
-        placeholder="배포 주소를 입력하세요"
-      />
-      <div className="text-primary transition-[color]">
-        <span>프로젝트 시작 날짜 : </span>
-        <input
-          name="start"
-          type="date"
-          placeholder="YYYY-MM-DD"
-          defaultValue={start}
-          onChange={onChangeValue}
-          className="rounded-md bg-secondary p-2 transition-[background-color]"
-        />
-      </div>
-      <div className="text-primary transition-[color]">
-        <span>프로젝트 종료 날짜 : </span>
-        <input
-          name="end"
-          type="date"
-          placeholder="YYYY-MM-DD"
-          defaultValue={end ?? ""}
-          onChange={onChangeValue}
-          className="rounded-md bg-secondary p-2 transition-[background-color]"
-        />
-      </div>
-      <h3 className="text-xl font-semibold text-primary transition-[color]">썸네일</h3>
-      <div className="flex items-center gap-4">
-        <div className="w-[200px] md:w-full">
-          {thumbnail && (
-            <Image
-              src={thumbnail}
-              alt="thumbnail"
-              onClick={clearThumbnail}
-              className="aspect-default rounded-lg"
-            />
-          )}
-        </div>
-        <span onClick={thumbnailHandler}>
-          <ImageIcon className="h-16 w-16 cursor-pointer fill-[theme(textColor.primary)] transition-[fill] hover:opacity-50" />
-        </span>
-        <input
-          type="file"
-          accept="image/jpg, image/jpeg, image/png"
-          ref={thumbnailRef}
-          style={{ display: "none" }}
-          onChange={onChangeThumbnail}
-        />
-      </div>
     </header>
   );
 };
 
-export default Header;
+export default ProjectHeader;
