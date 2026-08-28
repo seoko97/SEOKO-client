@@ -69,11 +69,13 @@
 
 ## 브랜치 한정 작업 지침
 
-변경 범위를 v5 호환성으로 한정
+변경 범위를 write 화면의 form 상태와 생성·수정 컴포넌트 리팩토링으로 한정
 
-- @tanstack/react-query, devtools를 같은 최신 안정 v5로 업데이트
-- Hydrate → HydrationBoundary
-- QueryClient 메서드의 object syntax 전환
-- 모든 infinite query의 initialPageParam 추가
-- keepPreviousData 대응
-- 타입 오류 수정
+- `src/hooks/write`의 write hook 리팩토링
+- 게시글 생성·수정 컴포넌트 리팩토링
+- 프로젝트 생성·수정 컴포넌트 리팩토링
+- 태그 추가·삭제·복원 시 `addedTags`, `deletedTags` 상태 전이 정확성 보장
+- 신규 작성 폼의 초기값이 인스턴스 간 공유되지 않도록 수정
+- 컴포넌트와 hook의 역할을 분리하고, 기존 API 요청 계약 및 사용자 동작 유지
+- write hook의 핵심 상태 전이를 검증하는 테스트 추가 또는 보완
+- 리팩토링으로 발생하는 타입 오류 수정

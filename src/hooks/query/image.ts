@@ -10,6 +10,8 @@ interface IProps {
   type: EImageType;
 }
 
+const DEFAULT_IMAGE = "/SEOKO.png";
+
 const useUploadImageMutation = (type: EImageType) => {
   return useMutation({
     mutationFn: (file: FormData) => uploadImage(type, file),
@@ -17,7 +19,7 @@ const useUploadImageMutation = (type: EImageType) => {
 };
 
 const useUploadImage = ({ type, defaultImg }: IProps) => {
-  const [image, setImage] = useState<string>(defaultImg || "/SEOKO.png");
+  const [image, setImage] = useState<string>(defaultImg || DEFAULT_IMAGE);
 
   const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -32,7 +34,7 @@ const useUploadImage = ({ type, defaultImg }: IProps) => {
   };
 
   const clearImage = () => {
-    setImage("/main.jpg");
+    setImage(DEFAULT_IMAGE);
   };
 
   const { mutate } = useMutation({

@@ -130,6 +130,10 @@
 }
 
 @layer components {
+  .write-text-input {
+    @apply w-auto flex-1 bg-primary px-2 py-3 text-xl font-semibold text-primary outline-none transition-[color,background-color];
+  }
+
   .frame {
     width: theme(screens.lg.max);
     @apply relative mx-auto my-0 box-border lg:w-full lg:px-4 lg:py-0;
