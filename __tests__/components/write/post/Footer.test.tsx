@@ -1,7 +1,6 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import { usePostMutation } from "@hooks/query/post";
-import TagEditor from "@components/ui/client/write/post/Tag";
 import PostFooter from "@components/ui/client/write/post/Footer";
 import { ICreatePostInput, IPost, IPostWriteInput, IUpdatePostInput } from "@/types";
 import { PostWriteProvider } from "@/context/PostWriteContext";
@@ -55,39 +54,6 @@ const renderPostFooter = (initialData: IPostWriteInput, nid: number | null, post
     </PostWriteProvider>,
   );
 };
-
-const renderTagEditorWithFooter = (initialData: IPostWriteInput, post: IPost) => {
-  return render(
-    <PostWriteProvider initialData={initialData}>
-      <TagEditor />
-      <PostFooter nid={post.nid} post={post} />
-    </PostWriteProvider>,
-  );
-};
-
-const addTag = async (tagName: string) => {
-  const input = screen.getByPlaceholderText("태그를 입력하세요");
-
-  fireEvent.change(input, { target: { value: tagName } });
-  fireEvent.keyDown(input, { key: "Enter" });
-
-  await waitFor(() => expect(screen.getByText(tagName)).toBeInTheDocument());
-};
-
-const deleteTag = async (tagName: string) => {
-  fireEvent.click(screen.getByText(tagName));
-
-  await waitFor(() => expect(screen.queryByText(tagName)).not.toBeInTheDocument());
-};
-
-const createUpdatePayload = (addTags: string[], deleteTags: string[]): IUpdatePostInput => ({
-  title: "작성 제목",
-  content: "작성 본문",
-  thumbnail: "/new-thumbnail.png",
-  series: "Frontend",
-  addTags,
-  deleteTags,
-});
 
 describe("PostFooter", () => {
   const confirmSpy = jest.spyOn(window, "confirm");

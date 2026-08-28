@@ -1,11 +1,12 @@
-import { type ReactNode, type RefObject, useEffect } from "react";
+import { type ReactNode } from "react";
 import userEvent from "@testing-library/user-event";
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 
 import { useGetSeriesQueries } from "@hooks/query/series";
 import SeriesEditor from "@components/ui/client/write/post/Series";
 import { IPostWriteInput, ISeries } from "@/types";
-import { PostWriteProvider, usePostWriteContext } from "@/context/PostWriteContext";
+
+import { expectPostWriteProperty, renderPostWriteEditor } from "../../../utils/postWrite";
 
 jest.mock("@/hooks/query/series", () => ({
   useGetSeriesQueries: jest.fn(),
@@ -15,20 +16,6 @@ jest.mock("@/components/modal/ModalLayout", () => ({
   __esModule: true,
   default: ({ children }: { children: ReactNode }) => <div role="dialog">{children}</div>,
 }));
-
-interface IContextProbeProps {
-  onReady: (dataRef: RefObject<IPostWriteInput>) => void;
-}
-
-const ContextProbe = ({ onReady }: IContextProbeProps) => {
-  const { dataRef } = usePostWriteContext();
-
-  useEffect(() => {
-    onReady(dataRef);
-  }, [dataRef, onReady]);
-
-  return null;
-};
 
 const mockUseGetSeriesQueries = jest.mocked(useGetSeriesQueries);
 
@@ -52,26 +39,7 @@ const createWriteInput = (series?: string): IPostWriteInput => ({
 });
 
 const renderSeriesEditor = (initialSeries?: string) => {
-  let dataRef: RefObject<IPostWriteInput> | null = null;
-
-  render(
-    <PostWriteProvider initialData={createWriteInput(initialSeries)}>
-      <SeriesEditor />
-      <ContextProbe onReady={(ref) => (dataRef = ref)} />
-    </PostWriteProvider>,
-  );
-
-  if (!dataRef) {
-    throw new Error("PostWriteContext dataRef를 찾을 수 없습니다.");
-  }
-
-  return dataRef;
-};
-
-const expectSeries = async (dataRef: RefObject<IPostWriteInput>, expectedSeries?: string) => {
-  await waitFor(() => {
-    expect(dataRef.current?.series).toBe(expectedSeries);
-  });
+  return renderPostWriteEditor(<SeriesEditor />, createWriteInput(initialSeries));
 };
 
 describe("SeriesEditor", () => {
@@ -88,7 +56,7 @@ describe("SeriesEditor", () => {
     await user.click(screen.getByText("Frontend"));
     await user.click(screen.getByRole("button", { name: "확인" }));
 
-    await expectSeries(dataRef, "Frontend");
+    await expectPostWriteProperty(dataRef, "series", "Frontend");
     expect(screen.getByText("Frontend")).toBeInTheDocument();
   });
 
@@ -100,7 +68,7 @@ describe("SeriesEditor", () => {
     await user.click(screen.getByRole("button", { name: "추가" }));
     await user.type(screen.getByRole("textbox"), "DevOps{enter}");
 
-    await expectSeries(dataRef, "DevOps");
+    await expectPostWriteProperty(dataRef, "series", "DevOps");
     expect(screen.getByText("DevOps")).toBeInTheDocument();
   });
 
@@ -113,7 +81,7 @@ describe("SeriesEditor", () => {
     await user.click(screen.getByText("Frontend"));
     await user.click(screen.getByRole("button", { name: "확인" }));
 
-    await expectSeries(dataRef, "Frontend");
+    await expectPostWriteProperty(dataRef, "series", "Frontend");
     expect(screen.getByText("Frontend")).toBeInTheDocument();
     expect(screen.queryByText("Backend")).not.toBeInTheDocument();
   });
@@ -124,7 +92,7 @@ describe("SeriesEditor", () => {
 
     await user.click(screen.getByRole("button", { name: "제거" }));
 
-    await expectSeries(dataRef);
+    await expectPostWriteProperty(dataRef, "series", undefined);
     expect(screen.queryByText("Backend")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "추가" })).toBeInTheDocument();
   });

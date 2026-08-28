@@ -1,10 +1,14 @@
-import { type RefObject, useEffect } from "react";
 import userEvent from "@testing-library/user-event";
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 
 import ThumbnailEditor from "@components/ui/client/write/post/Thumbnail";
 import { IPostWriteInput } from "@/types";
-import { PostWriteProvider, usePostWriteContext } from "@/context/PostWriteContext";
+
+import {
+  expectPostWriteProperty,
+  renderPostWriteEditor,
+  TPostWriteDataRef,
+} from "../../../utils/postWrite";
 
 const DEFAULT_IMAGE = "/SEOKO.png";
 const UPLOADED_IMAGE = "/uploaded-thumbnail.png";
@@ -32,35 +36,10 @@ jest.mock("@/components/ui/core/Image", () => ({
   ),
 }));
 
-interface IContextProbeProps {
-  onReady: (dataRef: RefObject<IPostWriteInput>) => void;
-}
-
-const ContextProbe = ({ onReady }: IContextProbeProps) => {
-  const { dataRef } = usePostWriteContext();
-
-  useEffect(() => {
-    onReady(dataRef);
-  }, [dataRef, onReady]);
-
-  return null;
-};
-
 const renderThumbnailEditor = (thumbnail = "") => {
-  let dataRef: RefObject<IPostWriteInput> | null = null;
+  const initialData: IPostWriteInput = { title: "제목", content: "본문", tags: [], thumbnail };
 
-  render(
-    <PostWriteProvider initialData={{ title: "제목", content: "본문", tags: [], thumbnail }}>
-      <ThumbnailEditor />
-      <ContextProbe onReady={(ref) => (dataRef = ref)} />
-    </PostWriteProvider>,
-  );
-
-  if (!dataRef) {
-    throw new Error("PostWriteContext dataRef를 찾을 수 없습니다.");
-  }
-
-  return dataRef;
+  return renderPostWriteEditor(<ThumbnailEditor />, initialData);
 };
 
 const getFileInput = () => {
@@ -73,11 +52,12 @@ const getFileInput = () => {
   return input;
 };
 
-const expectThumbnail = async (dataRef: RefObject<IPostWriteInput>, expectedThumbnail: string) => {
+const expectThumbnail = async (dataRef: TPostWriteDataRef, expectedThumbnail: string) => {
   await waitFor(() => {
     expect(screen.getByAltText("thumbnail")).toHaveAttribute("src", expectedThumbnail);
-    expect(dataRef.current?.thumbnail).toBe(expectedThumbnail);
   });
+
+  await expectPostWriteProperty(dataRef, "thumbnail", expectedThumbnail);
 };
 
 describe("ThumbnailEditor", () => {

@@ -1,23 +1,9 @@
-import { type RefObject, useEffect } from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 
 import TagEditor from "@components/ui/client/write/post/Tag";
 import { IPost, IPostWriteInput, ITag } from "@/types";
-import { PostWriteProvider, usePostWriteContext } from "@/context/PostWriteContext";
 
-interface IContextProbeProps {
-  onReady: (dataRef: RefObject<IPostWriteInput>) => void;
-}
-
-const ContextProbe = ({ onReady }: IContextProbeProps) => {
-  const { dataRef } = usePostWriteContext();
-
-  useEffect(() => {
-    onReady(dataRef);
-  }, [dataRef, onReady]);
-
-  return null;
-};
+import { expectPostWriteProperty, renderPostWriteEditor } from "../../../utils/postWrite";
 
 const createTag = (name: string, index: number): ITag => ({
   _id: `tag-${index}`,
@@ -53,26 +39,7 @@ const createWriteInput = (post: IPost): IPostWriteInput => ({
 });
 
 const renderTagEditor = (post: IPost) => {
-  let dataRef: RefObject<IPostWriteInput> | null = null;
-
-  render(
-    <PostWriteProvider initialData={createWriteInput(post)}>
-      <TagEditor />
-      <ContextProbe onReady={(ref) => (dataRef = ref)} />
-    </PostWriteProvider>,
-  );
-
-  if (!dataRef) {
-    throw new Error("PostWriteContext dataRef를 찾을 수 없습니다.");
-  }
-
-  return dataRef;
-};
-
-const expectTags = async (dataRef: RefObject<IPostWriteInput>, expectedTags: string[]) => {
-  await waitFor(() => {
-    expect(dataRef.current?.tags).toEqual(expectedTags);
-  });
+  return renderPostWriteEditor(<TagEditor />, createWriteInput(post));
 };
 
 describe("TagEditor", () => {
@@ -84,7 +51,7 @@ describe("TagEditor", () => {
     fireEvent.change(input, { target: { value: "nextjs" } });
     fireEvent.keyDown(input, { key: "Enter" });
 
-    await expectTags(dataRef, ["react", "nextjs"]);
+    await expectPostWriteProperty(dataRef, "tags", ["react", "nextjs"]);
   });
 
   it("입력 중인 텍스트가 있으면 Backspace를 눌러도 태그를 삭제하지 않는다", async () => {
@@ -95,7 +62,7 @@ describe("TagEditor", () => {
     fireEvent.change(input, { target: { value: "입력 중" } });
     fireEvent.keyDown(input, { key: "Backspace" });
 
-    await expectTags(dataRef, ["react"]);
+    await expectPostWriteProperty(dataRef, "tags", ["react"]);
   });
 
   it("입력값이 없을 때 Backspace를 누르면 마지막 태그를 삭제한다", async () => {
@@ -105,7 +72,7 @@ describe("TagEditor", () => {
 
     fireEvent.keyDown(input, { key: "Backspace" });
 
-    await expectTags(dataRef, ["react"]);
+    await expectPostWriteProperty(dataRef, "tags", ["react"]);
   });
 
   it("태그를 클릭하면 해당 태그를 삭제한다", async () => {
@@ -114,6 +81,6 @@ describe("TagEditor", () => {
 
     fireEvent.click(screen.getByText("react"));
 
-    await expectTags(dataRef, ["nextjs"]);
+    await expectPostWriteProperty(dataRef, "tags", ["nextjs"]);
   });
 });
