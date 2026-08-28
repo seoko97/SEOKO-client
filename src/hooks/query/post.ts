@@ -193,7 +193,7 @@ const usePostMutation = (nid: number | null = null) => {
   const { mutate: create } = useCreatePostMutation();
   const { mutate: update } = useUpdatePostMutation(nid ?? 0);
 
-  const onMutation = async <T extends ICreatePostInput>(input: T) => {
+  const onMutation = <T extends ICreatePostInput | IUpdatePostInput>(input: T) => {
     if (nid === null) {
       create(input);
     } else {
