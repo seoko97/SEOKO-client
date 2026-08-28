@@ -14,7 +14,10 @@ const TagEditor = () => {
   }, [tags, updateData]);
 
   const onClickTag: MouseEventHandler<HTMLDivElement> = (e) => {
-    const tagName = e.currentTarget.innerText;
+    const tagName = e.currentTarget.textContent;
+
+    if (!tagName) return;
+
     const newTags = [...tags];
 
     const idx = tags.indexOf(tagName);
