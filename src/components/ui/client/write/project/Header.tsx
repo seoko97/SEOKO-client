@@ -12,9 +12,6 @@ interface IProps extends Omit<IProjectInput, "content"> {
   thumbnailRef: React.MutableRefObject<HTMLInputElement | null>;
 }
 
-const TEXT_INPUT_CLASS_NAME =
-  "w-auto flex-1 bg-primary px-2 py-3 text-xl font-semibold text-primary outline-none transition-[color,background-color]";
-
 const Header = (props: IProps) => {
   const {
     title,
@@ -35,28 +32,28 @@ const Header = (props: IProps) => {
     <header className="flex w-full flex-col gap-4">
       <input
         name="title"
-        className={TEXT_INPUT_CLASS_NAME}
+        className="write-text-input"
         defaultValue={title}
         onChange={onChangeValue}
         placeholder="제목을 입력하세요"
       />
       <input
         name="description"
-        className={TEXT_INPUT_CLASS_NAME}
+        className="write-text-input"
         defaultValue={description}
         onChange={onChangeValue}
         placeholder="설명을 입력하세요"
       />
       <input
         name="github"
-        className={TEXT_INPUT_CLASS_NAME}
+        className="write-text-input"
         defaultValue={github}
         onChange={onChangeValue}
         placeholder="깃허브 주소를 입력하세요"
       />
       <input
         name="page"
-        className={TEXT_INPUT_CLASS_NAME}
+        className="write-text-input"
         defaultValue={page ?? ""}
         onChange={onChangeValue}
         placeholder="배포 주소를 입력하세요"
