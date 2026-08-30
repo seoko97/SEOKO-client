@@ -24,6 +24,7 @@ const PostFooter = ({ nid, post }: IProps) => {
       const initialTags = post.tags.map((tag) => tag.name);
       const input: IUpdatePostInput = {
         ...postInput,
+        _id: post._id,
         addTags: tags.filter((tag) => !initialTags.includes(tag)),
         deleteTags: initialTags.filter((tag) => !tags.includes(tag)),
       };
