@@ -3,7 +3,6 @@ import React, { useRef, useState } from "react";
 import MDEditor, {
   MDEditorProps,
   ICommand,
-  commands,
   bold,
   hr,
   italic,
