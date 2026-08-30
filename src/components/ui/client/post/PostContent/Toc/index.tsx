@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import { useState } from "react";
 
 import { usePathname } from "next/navigation";
 
@@ -36,4 +36,4 @@ const Toc = ({ markdown }: IProps) => {
   );
 };
 
-export default memo(Toc);
+export default Toc;

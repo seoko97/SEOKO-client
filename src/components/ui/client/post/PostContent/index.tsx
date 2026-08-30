@@ -7,7 +7,6 @@ import { compiler } from "markdown-to-jsx";
 import { createHeadingSlug } from "@utils/getToc";
 import { useGetPostQuery } from "@hooks/query/post";
 import overrides from "@components/ui/Markdown/overrides";
-import { Viewer } from "@components/ui/Markdown";
 import Toc from "@components/ui/client/post/PostContent/Toc";
 import Like from "@components/ui/client/post/PostContent/Like";
 
@@ -17,18 +16,14 @@ interface IProps {
 
 const PostContent = ({ nid }: IProps) => {
   const { data } = useGetPostQuery(nid);
-  const markdown = useMemo(
-    () =>
-      compiler(data?.content ?? "", {
-        wrapper: null,
-        overrides,
-        slugify: createHeadingSlug(),
-        disableParsingRawHTML: true,
-      }),
-    [data?._id],
-  );
 
   if (!data) return null;
+
+  const markdown = compiler(data.content, {
+    wrapper: null,
+    overrides,
+    slugify: createHeadingSlug(),
+  });
 
   const { isLiked } = data;
 
@@ -37,7 +32,7 @@ const PostContent = ({ nid }: IProps) => {
       <div className="sticky top-24 flex h-fit w-full flex-1 justify-end lg:my-8 lg:justify-center">
         <Like nid={nid} isLiked={isLiked} />
       </div>
-      <Viewer content={data.content} />
+      <div className="markdown w-[theme(screens.md.max)] md:w-full">{markdown}</div>
       <div className="sticky top-24 h-fit flex-1 overflow-hidden lg:hidden">
         <Toc markdown={markdown} />
       </div>

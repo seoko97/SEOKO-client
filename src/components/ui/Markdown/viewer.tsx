@@ -13,7 +13,6 @@ const Viewer = ({ content, className = "" }: IProps) => {
     wrapper: null,
     overrides,
     slugify: createHeadingSlug(),
-    disableParsingRawHTML: true,
   });
 
   return (
