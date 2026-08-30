@@ -30,7 +30,7 @@ const IMAGE_COMMAND: ICommand = {
 const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
   const editorRef = useRef<RefMDEditor>(null);
   const imageRef = useRef<HTMLInputElement | null>(null);
-  const [value, setValue] = useState(content || "## Hello World");
+  const [value, setValue] = useState(content);
   const { mutateAsync } = useUploadImageMutation(type);
 
   const onChange: MDEditorProps["onChange"] = (value) => {
