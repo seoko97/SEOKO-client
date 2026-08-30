@@ -18,9 +18,11 @@ PrismLight.registerLanguage("ts", typescript);
 PrismLight.registerLanguage("jsx", jsx);
 PrismLight.registerLanguage("tsx", tsx);
 PrismLight.registerLanguage("bash", bash);
+PrismLight.registerLanguage("sh", bash);
 PrismLight.registerLanguage("css", css);
 PrismLight.registerLanguage("json", json);
 PrismLight.registerLanguage("yaml", yaml);
+PrismLight.registerLanguage("yml", yaml);
 
 import InlineCode from "./inlineCode";
 
@@ -44,8 +46,8 @@ const code = ({ children, className = "", preProps, ...props }: IProps) => {
       showInlineLineNumbers={true}
       style={oneDark}
       customStyle={preStyle}
-      codeTagProps={{ ...props, className: "text-sm" }}
-      className={`relative w-full rounded-md !p-4 shadow-md !transition-[background-color] !text-shadow-none ${preClassName ?? ""}`}
+      codeTagProps={{ ...props, className: "text-sm leading-5 md:text-xs md:leading-[1.5]" }}
+      className={`relative w-full rounded-md !p-4 shadow-md !transition-[background-color] !text-shadow-none md:!p-3 ${preClassName ?? ""}`}
     >
       {String(children).replace(/\n$/, "")}
     </PrismLight>
