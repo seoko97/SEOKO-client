@@ -7,6 +7,8 @@ import MDEditor, {
   bold,
   hr,
   italic,
+  RefMDEditor,
+  TextAreaTextApi,
 } from "@uiw/react-md-editor";
 
 import { useUploadImageMutation } from "@hooks/query/image";
@@ -27,6 +29,7 @@ const IMAGE_COMMAND: ICommand = {
 };
 
 const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
+  const editorRef = useRef<RefMDEditor>(null);
   const imageRef = useRef<HTMLInputElement | null>(null);
   const [value, setValue] = useState(content || "## Hello World");
   const { mutateAsync } = useUploadImageMutation(type);
@@ -47,8 +50,9 @@ const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
 
   const imageHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    const textarea = editorRef.current?.textarea;
 
-    if (!file) return;
+    if (!file || !textarea) return;
 
     const encodedFile = new File([file], encodeURI(file.name), { type: file.type });
 
@@ -58,9 +62,7 @@ const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
 
     const imageUrl = await mutateAsync(formData);
 
-    const textarea = document.querySelector(".w-md-editor-text-input") as HTMLTextAreaElement;
-
-    const api = new commands.TextAreaTextApi(textarea);
+    const api = new TextAreaTextApi(textarea);
 
     const modifyText = `![](${imageUrl})\n`;
 
@@ -77,6 +79,7 @@ const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
         onChange={imageHandler}
       />
       <MDEditor
+        ref={editorRef}
         value={value}
         onChange={onChange}
         height={600}
