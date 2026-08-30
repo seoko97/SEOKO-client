@@ -6,6 +6,7 @@ import type { JSX } from "react";
 
 import { compiler } from "markdown-to-jsx";
 
+import { createHeadingSlug } from "@utils/getToc";
 import { useGetPostQuery } from "@hooks/query/post";
 import overrides from "@components/ui/Markdown/overrides";
 import { Viewer } from "@components/ui/Markdown";
@@ -19,7 +20,12 @@ interface IProps {
 const PostContent = ({ nid }: IProps) => {
   const { data } = useGetPostQuery(nid);
   const markdown = useMemo(
-    () => compiler(data?.content ?? "", { wrapper: null, overrides }),
+    () =>
+      compiler(data?.content ?? "", {
+        wrapper: null,
+        overrides,
+        slugify: createHeadingSlug(),
+      }),
     [data?._id],
   ) as unknown as JSX.Element;
 

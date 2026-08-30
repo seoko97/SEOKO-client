@@ -1,3 +1,4 @@
+import removeMd from "remove-markdown";
 import { ReactNode, JSX } from "react";
 
 import { getChildrenText } from "@utils/getChildrenText";
@@ -5,11 +6,22 @@ import { IToc } from "@/types/base";
 
 const removeSpecialCharacters = (text: string) => {
   return text
-    .replace(/[^a-zA-Z0-9가-힣\s]/g, "")
-    .replace(/\s+/g, " ")
-    .replace(/\s/g, "-")
     .toLowerCase()
-    .trim();
+    .replace(/[^a-z0-9가-힣]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+};
+
+const createHeadingSlug = () => {
+  const slugCounts = new Map<string, number>();
+
+  return (text: string) => {
+    const baseSlug = removeSpecialCharacters(removeMd(text)) || "heading";
+    const count = slugCounts.get(baseSlug) ?? 0;
+
+    slugCounts.set(baseSlug, count + 1);
+
+    return count === 0 ? baseSlug : `${baseSlug}-${count + 1}`;
+  };
 };
 
 const getToc = (markdown: ReactNode) => {
@@ -18,14 +30,14 @@ const getToc = (markdown: ReactNode) => {
   const content = markdown as unknown as JSX.Element[];
 
   content.forEach((el) => {
-    const tagname = el?.props?.tagname;
+    const tagname = typeof el?.type === "string" ? el.type : undefined;
 
-    if (!tagname) return;
+    if (!tagname || !/^h[1-6]$/.test(tagname)) return;
 
     const children = el?.props?.children;
 
     const text = getChildrenText(children);
-    const id = removeSpecialCharacters(text);
+    const id = el?.props?.id ?? (removeSpecialCharacters(text) || "heading");
     const level = Number(tagname.replace("h", "")) - 1;
 
     if (level > 2) return;
@@ -36,4 +48,4 @@ const getToc = (markdown: ReactNode) => {
   return toc;
 };
 
-export { getToc, removeSpecialCharacters };
+export { createHeadingSlug, getToc, removeSpecialCharacters };
