@@ -7,7 +7,7 @@ import {
   TimesCircleIcon,
 } from "@components/icons";
 
-interface IProps {
+interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   type: "info" | "success" | "warning" | "danger";
 }
@@ -35,12 +35,17 @@ const typeMapping = {
   },
 };
 
-const Alert = ({ type = "info", children }: IProps) => {
-  const { icon: Icon, style, iconStyle } = typeMapping[type];
+const Alert = ({ type = "info", children, className, ...rest }: IProps) => {
+  const props = typeMapping[type];
+
+  if (!props) return;
+
+  const { icon: Icon, style, iconStyle } = props;
 
   return (
     <div
-      className={`relative my-12 rounded-r-md border-l-2 px-5 py-3 !transition-[background-color,color] sm:border-l-4 [&>*:not(svg)]:my-4 ${style}`}
+      {...rest}
+      className={`relative my-12 rounded-r-md border-l-2 px-5 py-3 !transition-[background-color,color] sm:border-l-4 [&>*:not(svg)]:my-4 ${style} ${className ?? ""}`}
     >
       <Icon
         className={`${iconStyle} duration-default absolute -left-0.5 top-0 h-8 w-8 -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-full border border-[theme(backgroundColor.primary)] bg-primary p-0.5 transition-[background-color,border] sm:h-10 sm:w-10`}

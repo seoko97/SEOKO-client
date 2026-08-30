@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
 
 import type { JSX } from "react";
 
@@ -9,17 +8,28 @@ import NextImage from "@components/ui/core/Image";
 
 const IMAGE_BASE_URL = "image.toast.com";
 
+const isConfiguredImageUrl = (src: string) => {
+  try {
+    return new URL(src).hostname === IMAGE_BASE_URL;
+  } catch {
+    return false;
+  }
+};
+
 const img = (props: ImageProps) => {
-  const { alt, ...rest } = props;
+  const { alt, className, src, ...rest } = props;
 
-  const isInclude = rest.src.toString().includes(IMAGE_BASE_URL);
+  if (!src) return;
 
-  if (!isInclude) {
+  const hasConfigured = typeof src === "string" && isConfiguredImageUrl(src);
+
+  if (!hasConfigured) {
     return (
       <img
         {...(rest as JSX.IntrinsicElements["img"])}
         alt={alt ?? "post_image"}
-        className="inline-block"
+        src={src as string}
+        className={`inline-block ${className ?? ""}`}
       />
     );
   }
@@ -27,12 +37,11 @@ const img = (props: ImageProps) => {
   return (
     <>
       <NextImage
-        priority
+        loading="lazy"
         alt={alt ?? "post_image"}
+        src={src}
         {...rest}
-        width={1000}
-        height={1000}
-        className="mx-auto my-0 h-auto w-auto max-w-full rounded-md shadow-sm sm:w-full"
+        className={`mx-auto my-0 h-auto w-auto max-w-full rounded-md shadow-sm sm:w-full ${className ?? ""}`}
       />
       {alt && <p className="mt-2 text-center text-sm text-gray-400">{alt}</p>}
     </>
