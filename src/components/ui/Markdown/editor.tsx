@@ -32,10 +32,10 @@ const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
   const { mutateAsync } = useUploadImageMutation(type);
 
   const onChange: MDEditorProps["onChange"] = (value) => {
-    if (!value) return;
+    const newValue = value ?? "";
 
-    setValue(value);
-    onChangeContent(value);
+    setValue(newValue);
+    onChangeContent(newValue);
   };
 
   const image: ICommand = {
