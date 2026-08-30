@@ -2,8 +2,6 @@
 
 import { useMemo } from "react";
 
-import type { JSX } from "react";
-
 import { compiler } from "markdown-to-jsx";
 
 import { createHeadingSlug } from "@utils/getToc";
@@ -25,9 +23,10 @@ const PostContent = ({ nid }: IProps) => {
         wrapper: null,
         overrides,
         slugify: createHeadingSlug(),
+        disableParsingRawHTML: true,
       }),
     [data?._id],
-  ) as unknown as JSX.Element;
+  );
 
   if (!data) return null;
 
@@ -38,7 +37,7 @@ const PostContent = ({ nid }: IProps) => {
       <div className="sticky top-24 flex h-fit w-full flex-1 justify-end lg:my-8 lg:justify-center">
         <Like nid={nid} isLiked={isLiked} />
       </div>
-      <Viewer content={markdown} isMarked={true} />
+      <Viewer content={data.content} />
       <div className="sticky top-24 h-fit flex-1 overflow-hidden lg:hidden">
         <Toc markdown={markdown} />
       </div>

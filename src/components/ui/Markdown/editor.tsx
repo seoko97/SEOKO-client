@@ -48,24 +48,31 @@ const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
   };
 
   const imageHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const input = e.currentTarget;
+    const file = input.files?.[0];
     const textarea = editorRef.current?.textarea;
 
-    if (!file || !textarea) return;
+    if (!file) return;
 
-    const encodedFile = new File([file], encodeURI(file.name), { type: file.type });
+    try {
+      if (!textarea) return;
 
-    const formData = new FormData();
+      const encodedFile = new File([file], encodeURI(file.name), { type: file.type });
 
-    formData.append("image", encodedFile);
+      const formData = new FormData();
 
-    const imageUrl = await mutateAsync(formData);
+      formData.append("image", encodedFile);
 
-    const api = new TextAreaTextApi(textarea);
+      const imageUrl = await mutateAsync(formData);
 
-    const modifyText = `![](${imageUrl})\n`;
+      const api = new TextAreaTextApi(textarea);
 
-    api.replaceSelection(modifyText);
+      const modifyText = `![](${imageUrl})\n`;
+
+      api.replaceSelection(modifyText);
+    } finally {
+      input.value = "";
+    }
   };
 
   return (
