@@ -29,7 +29,7 @@ const img = (props: ImageProps) => {
         {...(rest as JSX.IntrinsicElements["img"])}
         alt={alt ?? "post_image"}
         src={src as string}
-        className={`inline-block ${className ?? ""}`}
+        className={`my-6 block h-auto max-w-full ${className ?? ""}`}
       />
     );
   }
@@ -41,7 +41,7 @@ const img = (props: ImageProps) => {
         alt={alt ?? "post_image"}
         src={src}
         {...rest}
-        className={`mx-auto my-0 h-auto w-auto max-w-full rounded-md shadow-sm sm:w-full ${className ?? ""}`}
+        className={`mx-auto my-6 h-auto w-auto max-w-full rounded-md shadow-sm sm:w-full ${className ?? ""}`}
       />
       {alt && <p className="mt-2 text-center text-sm text-gray-400">{alt}</p>}
     </>
