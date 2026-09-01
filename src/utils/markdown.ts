@@ -1,7 +1,10 @@
 import removeMd from "remove-markdown";
 import { ReactNode, JSX } from "react";
 
+import { compiler } from "markdown-to-jsx";
+
 import { getChildrenText } from "@utils/getChildrenText";
+import overrides from "@components/ui/Markdown/overrides";
 import { IToc } from "@/types/base";
 
 const removeSpecialCharacters = (text: string) => {
@@ -48,4 +51,12 @@ const getToc = (markdown: ReactNode) => {
   return toc;
 };
 
-export { createHeadingSlug, getToc, removeSpecialCharacters };
+const compileMarkdown = (content: string) => {
+  return compiler(content, {
+    wrapper: null,
+    overrides,
+    slugify: createHeadingSlug(),
+  });
+};
+
+export { createHeadingSlug, getToc, removeSpecialCharacters, compileMarkdown };

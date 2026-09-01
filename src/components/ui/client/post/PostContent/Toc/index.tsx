@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { usePathname } from "next/navigation";
 
-import { getToc } from "@utils/getToc";
+import { getToc } from "@utils/markdown";
 import { useTocEvent } from "@hooks/useTocEvent";
 import { useIntersectionObserver } from "@hooks/useIntersectionObserver";
 import TocItem from "@components/ui/client/post/PostContent/Toc/item";

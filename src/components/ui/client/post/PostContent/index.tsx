@@ -1,12 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
-
-import { compiler } from "markdown-to-jsx";
-
-import { createHeadingSlug } from "@utils/getToc";
+import { compileMarkdown } from "@utils/markdown";
 import { useGetPostQuery } from "@hooks/query/post";
-import overrides from "@components/ui/Markdown/overrides";
 import Toc from "@components/ui/client/post/PostContent/Toc";
 import Like from "@components/ui/client/post/PostContent/Like";
 
@@ -19,11 +14,7 @@ const PostContent = ({ nid }: IProps) => {
 
   if (!data) return null;
 
-  const markdown = compiler(data.content, {
-    wrapper: null,
-    overrides,
-    slugify: createHeadingSlug(),
-  });
+  const markdown = compileMarkdown(data.content);
 
   const { isLiked } = data;
 

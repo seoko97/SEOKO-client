@@ -1,7 +1,4 @@
-import { compiler } from "markdown-to-jsx";
-
-import { createHeadingSlug } from "@utils/getToc";
-import overrides from "@components/ui/Markdown/overrides";
+import { compileMarkdown } from "@components/ui/Markdown/compiler";
 
 interface IProps {
   content: string;
@@ -9,11 +6,7 @@ interface IProps {
 }
 
 const Viewer = ({ content, className = "" }: IProps) => {
-  const markdown = compiler(content, {
-    wrapper: null,
-    overrides,
-    slugify: createHeadingSlug(),
-  });
+  const markdown = compileMarkdown(content);
 
   return (
     <div className={`markdown w-[theme(screens.md.max)] md:w-full ${className}`}>{markdown}</div>

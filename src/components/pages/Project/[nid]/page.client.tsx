@@ -1,11 +1,8 @@
 "use client";
 
-import { compiler } from "markdown-to-jsx";
-
-import { createHeadingSlug } from "@utils/getToc";
+import { compileMarkdown } from "@utils/markdown";
 import { useGetProjectQuery } from "@hooks/query/project";
 import ProjectHeader from "@components/ui/ProjectHeader";
-import overrides from "@components/ui/Markdown/overrides";
 
 interface IProps {
   nid: number;
@@ -16,11 +13,7 @@ const ProjectClient = ({ nid }: IProps) => {
 
   if (!project) return null;
 
-  const markdown = compiler(project.content, {
-    wrapper: null,
-    overrides,
-    slugify: createHeadingSlug(),
-  });
+  const markdown = compileMarkdown(project.content);
 
   return (
     <>
