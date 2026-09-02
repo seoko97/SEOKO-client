@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 
 import NextLink from "next/link";
 
@@ -33,4 +33,4 @@ const TocItem = ({ item, isActive, onClick }: IProps) => {
   );
 };
 
-export default memo(TocItem, (prev, next) => prev.isActive === next.isActive);
+export default TocItem;

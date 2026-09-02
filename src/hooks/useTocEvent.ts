@@ -3,9 +3,11 @@ import { useEffect } from "react";
 import { MARKDOWN_HEADING_SELECTOR } from "@utils/constant/toc";
 import { IToc } from "@/types/base";
 
-const useTocEvent = (toc: IToc[]) => {
+const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null>) => {
   const scroll = (id: string, behavior: ScrollBehavior = "smooth") => {
-    const headingElements = Array.from(document.querySelectorAll(MARKDOWN_HEADING_SELECTOR));
+    const headingElements = Array.from(
+      contentRef?.current?.querySelectorAll<HTMLElement>(MARKDOWN_HEADING_SELECTOR) || [],
+    );
 
     if (!headingElements.length) return;
 

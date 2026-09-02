@@ -1,24 +1,22 @@
 import { useState } from "react";
 
-import { usePathname } from "next/navigation";
-
 import { extractToc } from "@utils/markdown";
 import { useTocEvent } from "@hooks/useTocEvent";
-import { useIntersectionObserver } from "@hooks/useIntersectionObserver";
+import { useActiveHeading } from "@hooks/useActiveHeading";
 import TocItem from "@components/ui/client/post/PostContent/Toc/item";
 
 interface IProps {
   markdown: React.ReactNode;
+  contentRef: React.RefObject<HTMLDivElement | null>;
 }
 
-const Toc = ({ markdown }: IProps) => {
+const Toc = ({ markdown, contentRef }: IProps) => {
   const toc = extractToc(markdown);
-  const pathname = usePathname();
 
   const [activeId, setActiveId] = useState("");
-  const scrollToTargetItem = useTocEvent(toc);
+  const scrollToTargetItem = useTocEvent(toc, contentRef);
 
-  useIntersectionObserver(setActiveId, pathname);
+  useActiveHeading(setActiveId, toc, contentRef);
 
   if (toc.length === 0) return null;
 
