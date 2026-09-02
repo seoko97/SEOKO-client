@@ -12,11 +12,8 @@ interface IProps {
 
 const Toc = ({ markdown, contentRef }: IProps) => {
   const toc = extractToc(markdown);
-
-  const [activeId, setActiveId] = useState("");
+  const activeId = useActiveHeading(toc, contentRef);
   const scrollToTargetItem = useTocEvent(toc, contentRef);
-
-  useActiveHeading(setActiveId, toc, contentRef);
 
   if (toc.length === 0) return null;
 
