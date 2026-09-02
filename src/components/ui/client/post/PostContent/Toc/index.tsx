@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { usePathname } from "next/navigation";
 
-import { getToc } from "@utils/markdown";
+import { extractToc } from "@utils/markdown";
 import { useTocEvent } from "@hooks/useTocEvent";
 import { useIntersectionObserver } from "@hooks/useIntersectionObserver";
 import TocItem from "@components/ui/client/post/PostContent/Toc/item";
@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const Toc = ({ markdown }: IProps) => {
-  const toc = getToc(markdown);
+  const toc = extractToc(markdown);
   const pathname = usePathname();
 
   const [activeId, setActiveId] = useState("");

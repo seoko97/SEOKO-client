@@ -32,7 +32,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const code = ({ children, className = "", preProps, ...props }: IProps) => {
-  const language = className?.replace("lang-", "");
+  const language = className.startsWith("lang-") ? className.replace("lang-", "") : "";
 
   const isText = language === "txt" || language === "text";
   const { className: preClassName, style: preStyle, ...restPreProps } = preProps ?? {};
