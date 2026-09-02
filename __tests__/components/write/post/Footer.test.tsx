@@ -96,6 +96,7 @@ describe("PostFooter", () => {
     fireEvent.click(screen.getByRole("button", { name: "저장" }));
 
     const expected: IUpdatePostInput = {
+      _id: "post-id",
       title: "작성 제목",
       content: "작성 본문",
       thumbnail: "/new-thumbnail.png",

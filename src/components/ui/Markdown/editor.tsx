@@ -3,10 +3,11 @@ import React, { useRef, useState } from "react";
 import MDEditor, {
   MDEditorProps,
   ICommand,
-  commands,
   bold,
   hr,
   italic,
+  RefMDEditor,
+  TextAreaTextApi,
 } from "@uiw/react-md-editor";
 
 import { useUploadImageMutation } from "@hooks/query/image";
@@ -27,15 +28,16 @@ const IMAGE_COMMAND: ICommand = {
 };
 
 const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
+  const editorRef = useRef<RefMDEditor>(null);
   const imageRef = useRef<HTMLInputElement | null>(null);
-  const [value, setValue] = useState(content || "## Hello World");
+  const [value, setValue] = useState(content);
   const { mutateAsync } = useUploadImageMutation(type);
 
   const onChange: MDEditorProps["onChange"] = (value) => {
-    if (!value) return;
+    const newValue = value ?? "";
 
-    setValue(value);
-    onChangeContent(value);
+    setValue(newValue);
+    onChangeContent(newValue);
   };
 
   const image: ICommand = {
@@ -46,25 +48,31 @@ const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
   };
 
   const imageHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const input = e.currentTarget;
+    const file = input.files?.[0];
+    const textarea = editorRef.current?.textarea;
 
     if (!file) return;
 
-    const encodedFile = new File([file], encodeURI(file.name), { type: file.type });
+    try {
+      if (!textarea) return;
 
-    const formData = new FormData();
+      const encodedFile = new File([file], encodeURI(file.name), { type: file.type });
 
-    formData.append("image", encodedFile);
+      const formData = new FormData();
 
-    const imageUrl = await mutateAsync(formData);
+      formData.append("image", encodedFile);
 
-    const textarea = document.querySelector(".w-md-editor-text-input") as HTMLTextAreaElement;
+      const imageUrl = await mutateAsync(formData);
 
-    const api = new commands.TextAreaTextApi(textarea);
+      const api = new TextAreaTextApi(textarea);
 
-    const modifyText = `![](${imageUrl})\n`;
+      const modifyText = `![](${imageUrl})\n`;
 
-    api.replaceSelection(modifyText);
+      api.replaceSelection(modifyText);
+    } finally {
+      input.value = "";
+    }
   };
 
   return (
@@ -77,6 +85,7 @@ const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
         onChange={imageHandler}
       />
       <MDEditor
+        ref={editorRef}
         value={value}
         onChange={onChange}
         height={600}

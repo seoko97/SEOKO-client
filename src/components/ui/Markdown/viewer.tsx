@@ -1,22 +1,16 @@
-import { memo } from "react";
-import type { JSX } from "react";
-
-import { compiler } from "markdown-to-jsx";
-
-import overrides from "@components/ui/Markdown/overrides";
+import { compileMarkdown } from "@components/ui/Markdown/compiler";
 
 interface IProps {
-  isMarked?: boolean;
-  content: string | JSX.Element;
+  content: string;
   className?: string;
 }
 
-const Viewer = ({ content, className = "", isMarked = false }: IProps) => {
-  const markdown = isMarked ? content : compiler(content as string, { wrapper: null, overrides });
+const Viewer = ({ content, className = "" }: IProps) => {
+  const markdown = compileMarkdown(content);
 
   return (
     <div className={`markdown w-[theme(screens.md.max)] md:w-full ${className}`}>{markdown}</div>
   );
 };
 
-export default memo(Viewer, (prev, next) => prev.content === next.content);
+export default Viewer;

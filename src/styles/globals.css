@@ -144,7 +144,7 @@
   }
 
   .markdown {
-    @apply select-text break-words text-base;
+    @apply select-text break-words break-keep text-lg leading-[1.7] md:text-base;
 
     & > *:first-child {
       @apply mt-0;
@@ -161,7 +161,7 @@
     & pre {
       color: theme(textColor.primary);
 
-      @apply break-all rounded-lg transition-[color];
+      @apply rounded-lg transition-[color];
 
       & .token {
         background: none !important;
@@ -178,11 +178,11 @@
 
     & ul,
     & ol {
-      @apply list-outside pl-8;
+      @apply my-[18px] list-outside pl-10 md:my-4;
     }
 
     & li {
-      @apply mb-3;
+      @apply m-0;
     }
 
     & h1,
@@ -194,19 +194,20 @@
     & div,
     & td,
     & ul,
-    & ol {
+    & ol,
+    & p {
       color: theme(textColor.primary);
 
-      @apply break-all transition-[color];
+      @apply transition-[color];
     }
 
-    & div,
-    & ul,
-    & ol,
     & table,
-    & blockquote,
     & pre {
       @apply mb-6;
+    }
+
+    & .markdown-paragraph {
+      @apply my-[18px] md:my-4;
     }
 
     & h1,
@@ -214,26 +215,33 @@
     & h3,
     & h4,
     & h5,
-    & h6,
-    & strong {
-      @apply mx-0 mb-1 mt-3 font-bold;
+    & h6 {
+      @apply mx-0 mb-4 mt-6 font-bold md:mb-3;
     }
 
     & h1 {
-      @apply mt-11 text-3xl;
+      @apply text-[2rem] leading-[1.4] md:text-[1.75rem];
     }
     & h2 {
-      @apply mb-6 mt-10 text-2xl;
+      @apply text-[1.75rem] leading-[1.4] md:text-[1.5rem];
     }
     & h3 {
-      @apply mb-5 mt-9 text-xl;
+      @apply text-[1.5rem] leading-[1.5] md:text-[1.25rem];
     }
     & h4 {
-      @apply mb-4 mt-8 text-lg;
+      @apply text-[1.25rem] leading-[1.5] md:text-[1.125rem];
     }
 
-    & > p:has(> img) {
-      @apply flex;
+    & .markdown-paragraph + h1,
+    & .markdown-paragraph + h2,
+    & .markdown-paragraph + h3,
+    & .markdown-paragraph + h4 {
+      @apply mt-10 md:mt-8;
+    }
+
+    & blockquote,
+    & hr {
+      @apply my-8;
     }
 
     & a {
@@ -241,7 +249,7 @@
     }
 
     & table {
-      @apply w-full text-primary transition-[color];
+      @apply w-full text-primary transition-[color] md:text-sm;
 
       & td {
         @apply border-x-0;

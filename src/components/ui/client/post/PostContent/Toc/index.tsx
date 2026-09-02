@@ -1,8 +1,8 @@
-import React, { memo, useState } from "react";
+import { useState } from "react";
 
 import { usePathname } from "next/navigation";
 
-import { getToc } from "@utils/getToc";
+import { getToc } from "@utils/markdown";
 import { useTocEvent } from "@hooks/useTocEvent";
 import { useIntersectionObserver } from "@hooks/useIntersectionObserver";
 import TocItem from "@components/ui/client/post/PostContent/Toc/item";
@@ -36,4 +36,4 @@ const Toc = ({ markdown }: IProps) => {
   );
 };
 
-export default memo(Toc);
+export default Toc;

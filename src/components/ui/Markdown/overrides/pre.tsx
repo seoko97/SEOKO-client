@@ -1,17 +1,19 @@
 import React from "react";
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
-  children: React.JSX.Element;
+  children: React.ReactNode;
 }
 
-const pre = ({ children }: IProps) => {
-  const language = children.props.className?.replace("lang-", "");
+interface ICodeProps {
+  preProps?: React.HTMLAttributes<HTMLPreElement>;
+}
 
-  if (language) {
-    return <>{children}</>;
+const pre = ({ children, ...props }: IProps) => {
+  if (!React.isValidElement(children)) {
+    return <pre {...props}>{children}</pre>;
   }
 
-  return <pre>{children}</pre>;
+  return React.cloneElement(children as React.ReactElement<ICodeProps>, { preProps: props });
 };
 
 export default pre;
