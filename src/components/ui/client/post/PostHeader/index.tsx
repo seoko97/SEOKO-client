@@ -43,14 +43,16 @@ const PostHeader = ({ nid }: IProps) => {
   };
 
   const onClickTag = (e: React.MouseEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
+    const tagName = e.currentTarget.textContent?.trim();
 
-    router.push(`/tag/${target.innerText}`);
+    if (!tagName) return;
+
+    router.push(`/tag/${encodeURIComponent(tagName)}`);
   };
 
   return (
     <div className="mb-2 mt-4 flex w-[theme(screens.md.max)] flex-col items-center justify-center gap-5 break-all md:w-full">
-      <Image priority alt="post-thumbnail" src={thumbnail} className="aspect-default rounded-lg" />
+      <Image alt="post-thumbnail" src={thumbnail} className="aspect-default rounded-lg" />
       <h1 className="text-center text-xl font-bold text-primary transition-[color]">{title}</h1>
       {tags.length > 0 && <TagList className="justify-center" tags={tags} onClick={onClickTag} />}
       <PostSubInfo viewCount={viewCount} likeCount={likeCount} createdAt={createdAt} />
