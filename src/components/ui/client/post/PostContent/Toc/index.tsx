@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { extractToc } from "@utils/markdown";
 import { useTocEvent } from "@hooks/useTocEvent";
 import { useActiveHeading } from "@hooks/useActiveHeading";

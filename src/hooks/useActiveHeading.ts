@@ -4,8 +4,8 @@ import { MARKDOWN_HEADING_SELECTOR } from "@utils/constant/toc";
 
 const HEADER_OFFSET = 100 as const;
 
-const useActiveHeading = <T>(
-  headingVersion: T,
+const useActiveHeading = (
+  headingVersion: unknown,
   contentRef: React.RefObject<HTMLElement | null> = { current: null },
 ) => {
   const [activeId, setActiveId] = useState("");
