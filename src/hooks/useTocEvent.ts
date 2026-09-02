@@ -20,12 +20,8 @@ const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null
     window.scrollTo({ top: scrollY, behavior, left: 0 });
   };
 
-  const scrollToTargetItem: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLElement;
-
-    if (!target) return;
-
-    const id = target.dataset.id;
+  const scrollToTargetItem: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
+    const id = e.currentTarget.dataset.id;
 
     if (!id) return;
 
@@ -33,7 +29,14 @@ const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null
   };
 
   useEffect(() => {
-    const decodedHash = decodeURI(window.location.hash.slice(1));
+    const url = new URL(window.location.href);
+    let decodedHash = "";
+
+    try {
+      decodedHash = decodeURI(url.hash.slice(1));
+    } catch {
+      return;
+    }
 
     if (!decodedHash) return;
 
