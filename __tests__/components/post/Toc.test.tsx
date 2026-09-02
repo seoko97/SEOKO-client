@@ -1,3 +1,4 @@
+import { createRef } from "react";
 import { render, screen } from "@testing-library/react";
 
 import { extractToc } from "@/utils/markdown";
@@ -11,8 +12,8 @@ jest.mock("next/navigation", () => ({
   usePathname: () => "/post/1",
 }));
 
-jest.mock("@/hooks/useIntersectionObserver", () => ({
-  useIntersectionObserver: jest.fn(),
+jest.mock("@/hooks/useActiveHeading", () => ({
+  useActiveHeading: jest.fn(),
 }));
 
 jest.mock("@/hooks/useTocEvent", () => ({
@@ -20,6 +21,7 @@ jest.mock("@/hooks/useTocEvent", () => ({
 }));
 
 const mockExtractToc = jest.mocked(extractToc);
+const contentRef = createRef<HTMLDivElement>();
 
 const tocItems = [
   { id: "introduction", text: "소개", level: 0 },
@@ -31,7 +33,7 @@ describe("Toc", () => {
   it("목차 항목이 없으면 렌더링하지 않는다", () => {
     mockExtractToc.mockReturnValue([]);
 
-    const { container } = render(<Toc markdown={null} />);
+    const { container } = render(<Toc markdown={null} contentRef={contentRef} />);
 
     expect(container).toBeEmptyDOMElement();
   });
@@ -39,7 +41,7 @@ describe("Toc", () => {
   it("목차 항목을 제목과 해시 링크 순서대로 렌더링한다", () => {
     mockExtractToc.mockReturnValue(tocItems);
 
-    render(<Toc markdown={null} />);
+    render(<Toc markdown={null} contentRef={contentRef} />);
 
     const links = screen.getAllByRole("link");
 
