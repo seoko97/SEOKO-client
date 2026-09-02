@@ -4,8 +4,7 @@ import { isValidElement, type ReactNode } from "react";
 
 const getChildrenText = (node: ReactNode): string => {
   if (typeof node === "string") {
-    const text = removeMd(node);
-    return text;
+    return removeMd(node);
   }
 
   if (Array.isArray(node)) {

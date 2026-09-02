@@ -27,7 +27,7 @@ const createHeadingSlug = () => {
   };
 };
 
-const getToc = (markdown: ReactNode) => {
+const extractToc = (markdown: ReactNode) => {
   const toc: IToc[] = [];
 
   const content = markdown as unknown as JSX.Element[];
@@ -59,4 +59,4 @@ const compileMarkdown = (content: string) => {
   });
 };
 
-export { createHeadingSlug, getToc, removeSpecialCharacters, compileMarkdown };
+export { createHeadingSlug, extractToc, removeSpecialCharacters, compileMarkdown };
