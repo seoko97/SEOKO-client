@@ -5,7 +5,6 @@ type ResponseType = "arrayBuffer" | "blob" | "formData" | "json" | "text";
 type RequestOptions = RequestInit & {
   responseType?: ResponseType;
 };
-
 class ApiError extends Error {
   constructor(
     message: string,
@@ -205,4 +204,4 @@ const authRequest = async <T = unknown>(
   }
 };
 
-export { request, authRequest };
+export { request, authRequest, ApiError };
