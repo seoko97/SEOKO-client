@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+
 import { compileMarkdown } from "@utils/markdown";
 import { useGetPostQuery } from "@hooks/query/post";
 import Toc from "@components/ui/client/post/PostContent/Toc";
@@ -10,6 +12,8 @@ interface IProps {
 }
 
 const PostContent = ({ nid }: IProps) => {
+  const contentRef = useRef<HTMLDivElement | null>(null);
+
   const { data } = useGetPostQuery(nid);
 
   if (!data) return null;
@@ -23,9 +27,11 @@ const PostContent = ({ nid }: IProps) => {
       <div className="sticky top-24 flex h-fit w-full flex-1 justify-end lg:my-8 lg:justify-center">
         <Like nid={nid} isLiked={isLiked} />
       </div>
-      <div className="markdown w-[theme(screens.md.max)] md:w-full">{markdown}</div>
+      <div ref={contentRef} className="markdown w-[theme(screens.md.max)] md:w-full">
+        {markdown}
+      </div>
       <div className="sticky top-24 h-fit flex-1 overflow-hidden lg:hidden">
-        <Toc markdown={markdown} />
+        <Toc markdown={markdown} contentRef={contentRef} />
       </div>
     </div>
   );

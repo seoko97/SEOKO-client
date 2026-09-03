@@ -3,9 +3,11 @@ import { useEffect } from "react";
 import { MARKDOWN_HEADING_SELECTOR } from "@utils/constant/toc";
 import { IToc } from "@/types/base";
 
-const useTocEvent = (toc: IToc[]) => {
+const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null>) => {
   const scroll = (id: string, behavior: ScrollBehavior = "smooth") => {
-    const headingElements = Array.from(document.querySelectorAll(MARKDOWN_HEADING_SELECTOR));
+    const headingElements = Array.from(
+      contentRef?.current?.querySelectorAll<HTMLElement>(MARKDOWN_HEADING_SELECTOR) || [],
+    );
 
     if (!headingElements.length) return;
 
@@ -18,12 +20,8 @@ const useTocEvent = (toc: IToc[]) => {
     window.scrollTo({ top: scrollY, behavior, left: 0 });
   };
 
-  const scrollToTargetItem: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLElement;
-
-    if (!target) return;
-
-    const id = target.dataset.id;
+  const scrollToTargetItem: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
+    const id = e.currentTarget.dataset.id;
 
     if (!id) return;
 
@@ -31,7 +29,14 @@ const useTocEvent = (toc: IToc[]) => {
   };
 
   useEffect(() => {
-    const decodedHash = decodeURI(window.location.hash.slice(1));
+    const url = new URL(window.location.href);
+    let decodedHash = "";
+
+    try {
+      decodedHash = decodeURI(url.hash.slice(1));
+    } catch {
+      return;
+    }
 
     if (!decodedHash) return;
 

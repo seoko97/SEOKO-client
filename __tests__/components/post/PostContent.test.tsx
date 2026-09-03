@@ -17,8 +17,8 @@ jest.mock("next/navigation", () => ({
   usePathname: () => "/post/1",
 }));
 
-jest.mock("@/hooks/useIntersectionObserver", () => ({
-  useIntersectionObserver: jest.fn(),
+jest.mock("@/hooks/useActiveHeading", () => ({
+  useActiveHeading: jest.fn(),
 }));
 
 jest.mock("@/hooks/useTocEvent", () => ({
