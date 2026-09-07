@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import userEvent from "@testing-library/user-event";
 import { render, screen, waitFor } from "@testing-library/react";
 
