@@ -6,6 +6,7 @@ import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
 import { projectQueryKeys } from "@utils/query/queryKeys";
 import getQueryClient from "@utils/query/getQueryClient";
+import getOrNotFound from "@utils/getOrNotFound";
 
 import { getProject } from "@/apis/project";
 
@@ -19,14 +20,12 @@ const Hydrate = async ({ children, nid }: IProps) => {
 
   if (isNaN(nid)) return notFound();
 
-  try {
-    await queryClient.query({
+  await getOrNotFound(() =>
+    queryClient.query({
       queryKey: projectQueryKeys.detail(nid),
       queryFn: () => getProject(nid),
-    });
-  } catch (error) {
-    return notFound();
-  }
+    }),
+  );
 
   const dehydratedState = dehydrate(queryClient);
 

@@ -6,6 +6,7 @@ import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
 import { postQueryKeys, tagQueryKeys } from "@utils/query/queryKeys";
 import getQueryClient from "@utils/query/getQueryClient";
+import getOrNotFound from "@utils/getOrNotFound";
 import { getTag } from "@/apis/tag";
 import { getPosts } from "@/apis/post";
 
@@ -19,24 +20,20 @@ const Hydrate = async ({ name, children }: IProps) => {
 
   if (!name) return notFound();
 
-  try {
-    const tag = await queryClient.query({
+  const tag = await getOrNotFound(() =>
+    queryClient.query({
       queryKey: tagQueryKeys.detail(name),
       queryFn: () => getTag(name),
-    });
+    }),
+  );
 
-    if (!tag) return notFound();
+  const params = { tag: tag._id };
 
-    const params = { tag: tag._id };
-
-    await queryClient.infiniteQuery({
-      queryKey: postQueryKeys.listByParams(params),
-      queryFn: () => getPosts(params),
-      initialPageParam: 0,
-    });
-  } catch (error) {
-    return notFound();
-  }
+  await queryClient.infiniteQuery({
+    queryKey: postQueryKeys.listByParams(params),
+    queryFn: () => getPosts(params),
+    initialPageParam: 0,
+  });
 
   const dehydratedState = dehydrate(queryClient);
 

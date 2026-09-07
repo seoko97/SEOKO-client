@@ -6,6 +6,7 @@ import { HydrationBoundary, dehydrate, noop } from "@tanstack/react-query";
 
 import { postQueryKeys, seriesQueryKeys } from "@utils/query/queryKeys";
 import getQueryClient from "@utils/query/getQueryClient";
+import getOrNotFound from "@utils/getOrNotFound";
 import { getSeries } from "@/apis/series";
 import { getPost, getSiblingPost } from "@/apis/post";
 
@@ -19,34 +20,30 @@ const Hydrate = async ({ children, nid }: IProps) => {
 
   if (isNaN(nid)) return notFound();
 
-  try {
-    const post = await queryClient.query({
+  const post = await getOrNotFound(() =>
+    queryClient.query({
       queryKey: postQueryKeys.detail(nid),
       queryFn: () => getPost(nid),
-    });
+    }),
+  );
 
-    if (!post) return notFound();
+  const { series } = post;
 
-    const { series } = post;
-
-    if (series) {
-      await queryClient
-        .query({
-          queryKey: seriesQueryKeys.detail(series.nid),
-          queryFn: () => getSeries(series.nid),
-        })
-        .catch(noop);
-    }
-
+  if (series) {
     await queryClient
       .query({
-        queryKey: postQueryKeys.sibling(nid),
-        queryFn: () => getSiblingPost(nid),
+        queryKey: seriesQueryKeys.detail(series.nid),
+        queryFn: () => getSeries(series.nid),
       })
       .catch(noop);
-  } catch (error) {
-    return notFound();
   }
+
+  await queryClient
+    .query({
+      queryKey: postQueryKeys.sibling(nid),
+      queryFn: () => getSiblingPost(nid),
+    })
+    .catch(noop);
 
   const dehydratedState = dehydrate(queryClient);
 
