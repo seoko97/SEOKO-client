@@ -1,18 +1,18 @@
-import React from "react";
-
-import { useRouter, useSearchParams } from "next/navigation";
+import type { ChangeEvent } from "react";
+import { useRouter } from "next/navigation";
 
 import { debounce } from "@utils/debounce";
 import Input from "@components/ui/core/Input";
 import { SearchIcon } from "@components/icons";
 
-const HomeHeader = () => {
+interface IProps {
+  text: string;
+}
+
+const HomeHeader = ({ text: textParam }: IProps) => {
   const router = useRouter();
-  const params = useSearchParams();
 
-  const textParam = params.get("text") ?? "";
-
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value
       .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\\{\\}\\[\]\\\\/]/gim, "")
       .trim();

@@ -1,15 +1,14 @@
-import React from "react";
-
 import ProjectClient from "@components/ui/client/write/project";
 
 import Hydrate from "@components/pages/WriteProject/Hydrate";
 
 interface IProps {
-  params?: Promise<{ nid: number }>;
+  params?: PageProps<"/write/project/[nid]">["params"];
 }
 
 const WriteProject = async ({ params }: IProps) => {
-  const nid = (await params)?.nid ?? null;
+  const paramNid = (await params)?.nid;
+  const nid = paramNid ? Number(paramNid) : null;
 
   return (
     <Hydrate nid={nid}>

@@ -4,12 +4,34 @@ import HomeClient from "@components/ui/client/home";
 import Hydrate from "@components/pages/Post/Hydrate";
 import { IGetPostsInput } from "@/types";
 
-interface IProps {
-  searchParams: Promise<IGetPostsInput>;
-}
+type TProps = Pick<PageProps<"/">, "searchParams">;
 
-const Post = async ({ searchParams }: IProps) => {
-  const params = await searchParams;
+const getStringParam = (value: string | string[] | undefined) =>
+  typeof value === "string" ? value : undefined;
+
+const getNumberParam = (value: string | string[] | undefined) => {
+  const stringValue = getStringParam(value);
+
+  if (!stringValue) return undefined;
+
+  const numberValue = Number(stringValue);
+
+  return Number.isNaN(numberValue) ? undefined : numberValue;
+};
+
+const normalizeSearchParams = (
+  searchParams: Awaited<PageProps<"/">["searchParams"]>,
+): IGetPostsInput => ({
+  series: getStringParam(searchParams.series),
+  skip: getNumberParam(searchParams.skip),
+  limit: getNumberParam(searchParams.limit),
+  tag: getStringParam(searchParams.tag),
+  text: getStringParam(searchParams.text),
+  sort: getNumberParam(searchParams.sort),
+});
+
+const Post = async ({ searchParams }: TProps) => {
+  const params = normalizeSearchParams(await searchParams);
 
   return (
     <main className="frame flex flex-col items-center justify-center">

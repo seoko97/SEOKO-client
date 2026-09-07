@@ -1,14 +1,13 @@
-import React from "react";
-
 import PostClient from "@components/ui/client/write/post";
 import Hydrate from "@components/pages/WritePost/Hydrate";
 
 interface IProps {
-  params?: Promise<{ nid: number }>;
+  params?: PageProps<"/write/post/[nid]">["params"];
 }
 
 const WritePost = async ({ params }: IProps) => {
-  const nid = (await params)?.nid ?? null;
+  const paramNid = (await params)?.nid;
+  const nid = paramNid ? Number(paramNid) : null;
 
   return (
     <Hydrate nid={nid}>

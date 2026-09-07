@@ -1,20 +1,16 @@
-import React from "react";
-
 import ProjectClient from "@components/pages/Project/[nid]/page.client";
 import Hydrate from "@components/pages/Project/[nid]/Hydrate";
 
-interface IProps {
-  params: Promise<{ nid: number }>;
-}
+type TProps = Pick<PageProps<"/project/[nid]">, "params">;
 
-const Project = async ({ params }: IProps) => {
-  const { nid } = await params;
-  const nidNumber = Number(nid);
+const Project = async ({ params }: TProps) => {
+  const { nid: paramNid } = await params;
+  const nid = Number(paramNid);
 
   return (
     <section className="frame flex w-[theme(screens.xl.max)] flex-col items-center xl:w-full">
-      <Hydrate nid={nidNumber}>
-        <ProjectClient nid={nidNumber} />
+      <Hydrate nid={nid}>
+        <ProjectClient nid={nid} />
       </Hydrate>
     </section>
   );

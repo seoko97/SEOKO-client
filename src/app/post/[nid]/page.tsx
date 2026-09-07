@@ -4,12 +4,11 @@ import { Metadata } from "next";
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { getPost } from "@/apis/post";
 
-interface IProps {
-  params: Promise<{ nid: number }>;
-}
+type TProps = Pick<PageProps<"/post/[nid]">, "params">;
 
-export const generateMetadata = async ({ params }: IProps): Promise<Metadata> => {
-  const { nid } = await params;
+export const generateMetadata = async ({ params }: TProps): Promise<Metadata> => {
+  const { nid: paramNid } = await params;
+  const nid = Number(paramNid);
 
   if (isNaN(nid)) return {};
 
