@@ -5,6 +5,8 @@ import { useActiveHeading } from "@/hooks/useActiveHeading";
 const createContentRef = (headings: Array<{ id: string; top: () => number }>) => {
   const content = document.createElement("article");
 
+  content.classList.add("markdown");
+
   headings.forEach(({ id, top }) => {
     const heading = document.createElement("h2");
 

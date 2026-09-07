@@ -46,7 +46,11 @@ describe("apis/index server", () => {
     setTokens({ "access-token": "server-access-token" });
     fetchMock.mockResolvedValueOnce(jsonResponse({ id: 1 }));
 
-    await expect(authRequest<{ id: number }>("/users")).resolves.toEqual({ id: 1 });
+    await expect(
+      authRequest<{ id: number }>("/users", {
+        forwardClientIp: true,
+      }),
+    ).resolves.toEqual({ id: 1 });
 
     const { url, init } = getRequest(fetchMock);
     const headers = new Headers(init.headers);

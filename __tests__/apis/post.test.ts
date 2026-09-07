@@ -51,7 +51,7 @@ describe("apis/post", () => {
   });
 
   it.each([
-    ["게시글 상세 조회", () => getPost(1), "/posts/1", { method: "GET" }],
+    ["게시글 상세 조회", () => getPost(1), "/posts/1", { method: "GET", forwardClientIp: true }],
     ["이전·다음 게시글 조회", () => getSiblingPost(1), "/posts/1/sibling", { method: "GET" }],
     ["게시글 좋아요", () => likePost(1), "/posts/1/like", { method: "PATCH" }],
     ["게시글 좋아요 취소", () => unlikePost(1), "/posts/1/unlike", { method: "PATCH" }],
