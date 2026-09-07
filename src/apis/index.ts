@@ -24,7 +24,7 @@ const request = async <T = unknown>(
   { responseType = "json", forwardClientIp = false, ...options }: RequestOptions = {},
 ) => {
   const url = getUrl(path);
-  const headers = await createRequestHeaders(options.headers);
+  const headers = createRequestHeaders(options.headers);
 
   if (forwardClientIp) {
     await appendForwardedIp(headers);

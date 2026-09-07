@@ -56,7 +56,7 @@ const getToken = (name: TokenName) => {
   return Promise.resolve(getServerToken(name));
 };
 
-const createRequestHeaders = async (initHeaders?: HeadersInit) => {
+const createRequestHeaders = (initHeaders?: HeadersInit) => {
   const headers = new Headers(HEADERS_OPTIONS);
 
   new Headers(initHeaders).forEach((value, key) => {
