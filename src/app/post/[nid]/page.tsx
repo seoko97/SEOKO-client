@@ -1,6 +1,7 @@
 import removeMd from "remove-markdown";
 import { Metadata } from "next";
 
+import getOrNotFound from "@utils/getOrNotFound";
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { getPost } from "@/apis/post";
 
@@ -12,9 +13,7 @@ export const generateMetadata = async ({ params }: TProps): Promise<Metadata> =>
 
   if (isNaN(nid)) return {};
 
-  const post = await getPost(nid);
-
-  if (!post) return {};
+  const post = await getOrNotFound(() => getPost(nid));
 
   const { title, content, thumbnail } = post;
 

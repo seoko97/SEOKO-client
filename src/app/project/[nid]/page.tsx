@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 
+import getOrNotFound from "@utils/getOrNotFound";
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { getProject } from "@/apis/project";
 
@@ -11,9 +12,7 @@ export const generateMetadata = async ({ params }: TProps): Promise<Metadata> =>
 
   if (isNaN(nid)) return {};
 
-  const project = await getProject(nid);
-
-  if (!project) return {};
+  const project = await getOrNotFound(() => getProject(nid));
 
   const { title, description, thumbnail } = project;
 

@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 
+import getOrNotFound from "@utils/getOrNotFound";
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { getSeries } from "@/apis/series";
 
@@ -11,9 +12,7 @@ export const generateMetadata = async ({ params }: TProps): Promise<Metadata> =>
 
   if (isNaN(nid)) return {};
 
-  const series = await getSeries(nid);
-
-  if (!series) return {};
+  const series = await getOrNotFound(() => getSeries(nid));
 
   const { name, thumbnail = "/SEOKO.png" } = series;
 

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { GOOGLE_SITE_VERIFICATION } from "@utils/constant/env";
@@ -13,7 +13,7 @@ import "@styles/globals.css";
 
 export const dynamic = "force-dynamic";
 
-export const viewport = {
+export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
@@ -23,13 +23,14 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: siteMetadata.siteUrl as unknown as URL,
+  metadataBase: new URL(siteMetadata.siteUrl),
   title: {
     absolute: siteMetadata.title,
     template: siteMetadata.titleTemplate,
   },
   description: siteMetadata.description,
   applicationName: siteMetadata.applicationName,
+  keywords: siteMetadata.keywords,
   alternates: {
     canonical: siteMetadata.siteUrl,
     types: {
@@ -37,6 +38,7 @@ export const metadata: Metadata = {
     },
   },
   creator: siteMetadata.author,
+  verification: GOOGLE_SITE_VERIFICATION ? { google: GOOGLE_SITE_VERIFICATION } : undefined,
   robots: {
     index: true,
     follow: true,
@@ -98,9 +100,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="ko">
-      <head>
-        <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
-      </head>
       <body suppressHydrationWarning={true}>
         <script dangerouslySetInnerHTML={{ __html: fnToRunOnClient }} />
         <Analytics />
