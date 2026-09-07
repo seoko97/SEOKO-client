@@ -22,7 +22,7 @@ const getPosts = async (params: IGetPostsInput = {}) => {
 };
 
 const getPost = cache(async (nid: number) => {
-  return request<IPost>(`/posts/${nid}`, { method: "GET" });
+  return request<IPost>(`/posts/${nid}`, { method: "GET", forwardClientIp: true });
 });
 
 const getSiblingPost = async (nid: number) => {
