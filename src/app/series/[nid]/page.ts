@@ -1,20 +1,18 @@
 import { Metadata } from "next";
 
+import getOrNotFound from "@utils/getOrNotFound";
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { getSeries } from "@/apis/series";
 
-interface IProps {
-  params: Promise<{ nid: number }>;
-}
+type TProps = Pick<PageProps<"/series/[nid]">, "params">;
 
-export const generateMetadata = async ({ params }: IProps): Promise<Metadata> => {
-  const { nid } = await params;
+export const generateMetadata = async ({ params }: TProps): Promise<Metadata> => {
+  const { nid: paramNid } = await params;
+  const nid = Number(paramNid);
 
   if (isNaN(nid)) return {};
 
-  const series = await getSeries(nid);
-
-  if (!series) return {};
+  const series = await getOrNotFound(() => getSeries(nid));
 
   const { name, thumbnail = "/SEOKO.png" } = series;
 

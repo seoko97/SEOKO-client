@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 
 import Image from "@components/ui/core/Image";
 
@@ -9,7 +9,7 @@ interface IProps {
   onClick?: () => void;
 }
 
-const Avatar: React.FC<IProps> = (props) => {
+const Avatar: FC<IProps> = (props) => {
   const { src = "/main.jpg", width = 30, height = 30, onClick } = props;
 
   return (
@@ -19,6 +19,7 @@ const Avatar: React.FC<IProps> = (props) => {
         height={height}
         src={src}
         alt="avatar"
+        sizes={`${width}px`}
         loading="eager"
         className="aspect-square rounded-full bg-slate-400 object-cover"
       />

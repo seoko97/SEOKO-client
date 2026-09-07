@@ -41,6 +41,7 @@ const img = (props: ImageProps) => {
         alt={alt ?? "post_image"}
         src={src}
         {...rest}
+        quality={100}
         className={`mx-auto my-6 h-auto w-auto max-w-full rounded-md shadow-sm sm:w-full ${className ?? ""}`}
       />
       {alt && <p className="mt-2 text-center text-sm text-gray-400">{alt}</p>}

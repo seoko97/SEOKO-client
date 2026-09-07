@@ -18,7 +18,7 @@ const HomeClient = ({ params }: IProps) => {
 
   return (
     <section className="flex w-full flex-col gap-5">
-      <ContentHeader />
+      <ContentHeader text={params.text ?? ""} />
       {posts.length > 0 && <PostList ref={ref} posts={posts} func={fetchMorePosts} />}
       {posts?.length === 0 && (
         <div className="py-10 text-center text-2xl font-bold text-gray-400 sm:text-xl">

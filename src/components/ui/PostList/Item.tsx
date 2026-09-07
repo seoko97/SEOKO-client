@@ -1,6 +1,6 @@
 import removeMd from "remove-markdown";
-import React from "react";
 
+import type { MouseEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ const PostItem = ({ post }: IProps) => {
   const { nid, thumbnail, title, tags, content, viewCount, likeCount, createdAt } = post;
   const parsedContent = removeMd(content).substring(0, 120);
 
-  const onClickTag = (e: React.MouseEvent) => {
+  const onClickTag = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -30,13 +30,13 @@ const PostItem = ({ post }: IProps) => {
   return (
     <Link href={`/post/${nid}`} className="w-full">
       <div className="group relative flex w-full cursor-pointer items-center justify-center gap-8 rounded-md px-2 py-2 transition-[background-color] hover:bg-tertiary md:flex-col md:gap-0">
-        <div className="relative flex w-[250px] flex-col rounded-lg bg-gray-400 transition-[box-shadow] group-hover:shadow-md md:w-full">
+        <div className="relative flex aspect-default w-[250px] flex-col rounded-lg bg-gray-400 transition-[box-shadow] group-hover:shadow-md md:w-full">
           <Image
+            fill
             src={thumbnail}
             alt={title}
-            placeholder="blur"
-            blurDataURL={thumbnail}
-            className="aspect-default rounded-lg"
+            sizes="(max-width: 768px) calc(100vw - 48px), 250px"
+            className="rounded-lg"
           />
         </div>
         <div className="flex flex-1 flex-col justify-around gap-4 break-all text-primary md:min-h-0 md:w-full md:gap-3 md:px-2 md:py-3">

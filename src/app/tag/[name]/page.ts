@@ -1,18 +1,15 @@
 import { Metadata } from "next";
 
+import getOrNotFound from "@utils/getOrNotFound";
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { getTag } from "@/apis/tag";
 
-interface IProps {
-  params: Promise<{ name: string }>;
-}
+type TProps = Pick<PageProps<"/tag/[name]">, "params">;
 
-export const generateMetadata = async ({ params }: IProps): Promise<Metadata> => {
+export const generateMetadata = async ({ params }: TProps): Promise<Metadata> => {
   const { name: paramsName } = await params;
 
-  const tag = await getTag(paramsName);
-
-  if (!tag) return {};
+  const tag = await getOrNotFound(() => getTag(paramsName));
 
   const { name } = tag;
 

@@ -1,25 +1,20 @@
-import React from "react";
-
 import PostHeader from "@components/ui/client/post/PostHeader";
 import PostFooter from "@components/ui/client/post/PostFooter";
 import PostContent from "@components/ui/client/post/PostContent";
 import Hydrate from "@components/pages/Post/[nid]/Hydrate";
 
-interface IProps {
-  params: Promise<{ nid: number }>;
-}
+type TProps = Pick<PageProps<"/post/[nid]">, "params">;
 
-const Post = async ({ params }: IProps) => {
-  const { nid } = await params;
-
-  const nidNumber = Number(nid);
+const Post = async ({ params }: TProps) => {
+  const { nid: paramNid } = await params;
+  const nid = Number(paramNid);
 
   return (
     <section className="frame relative flex w-[theme(screens.xl.max)] flex-col items-center xl:w-full">
-      <Hydrate nid={nidNumber}>
-        <PostHeader nid={nidNumber} />
-        <PostContent nid={nidNumber} />
-        <PostFooter nid={nidNumber} />
+      <Hydrate nid={nid}>
+        <PostHeader nid={nid} />
+        <PostContent nid={nid} />
+        <PostFooter nid={nid} />
       </Hydrate>
     </section>
   );

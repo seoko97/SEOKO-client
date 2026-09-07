@@ -1,13 +1,9 @@
-import React from "react";
-
 import TagClient from "@components/pages/Tag/[name]/page.client";
 import Hydrate from "@components/pages/Tag/[name]/Hydrate";
 
-interface IProps {
-  params: Promise<{ name: string }>;
-}
+type TProps = Pick<PageProps<"/tag/[name]">, "params">;
 
-const Tag = async ({ params }: IProps) => {
+const Tag = async ({ params }: TProps) => {
   const { name } = await params;
 
   return (

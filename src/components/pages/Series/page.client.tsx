@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import Link from "next/link";
 
 import { useGetSeriesQueries } from "@hooks/query/series";
@@ -21,12 +19,15 @@ const Series = () => {
             key={series._id}
             className="group flex cursor-pointer flex-col items-center justify-start gap-3"
           >
-            <Image
-              src={series.thumbnail ?? "/SEOKO.png"}
-              alt={series.name}
-              priority
-              className="aspect-default w-full flex-1 rounded-b-md rounded-t-md "
-            />
+            <div className="relative aspect-default w-full overflow-hidden rounded-md">
+              <Image
+                fill
+                src={series.thumbnail ?? "/SEOKO.png"}
+                alt={series.name}
+                sizes="(max-width: 480px) calc(100vw - 32px), (max-width: 768px) calc((100vw - 52px) / 2), (max-width: 1024px) calc((100vw - 72px) / 3), 328px"
+                className="rounded-md"
+              />
+            </div>
             <div className="flex w-full flex-col gap-2">
               <h3 className="truncate font-semibold text-primary transition-[color] group-hover:text-effect1">
                 {series.name}
