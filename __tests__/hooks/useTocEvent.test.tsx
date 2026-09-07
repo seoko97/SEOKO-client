@@ -6,6 +6,8 @@ const createContentRef = (id: string, top: number) => {
   const content = document.createElement("article");
   const heading = document.createElement("h2");
 
+  content.classList.add("markdown");
+
   heading.id = id;
   heading.getBoundingClientRect = () => ({ top }) as DOMRect;
   content.appendChild(heading);
