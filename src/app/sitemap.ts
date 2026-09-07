@@ -27,7 +27,7 @@ async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     return [...routes, ...postsSiteMap];
-  } catch (e) {
+  } catch {
     return [];
   }
 }
