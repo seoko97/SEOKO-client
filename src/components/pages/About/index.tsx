@@ -18,7 +18,7 @@ const About = () => {
             입니다.
           </h1>
           <Image
-            priority={true}
+            preload={true}
             src="/main.jpg"
             alt="main"
             width={200}

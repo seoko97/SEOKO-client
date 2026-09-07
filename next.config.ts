@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true,
   reactCompiler: true,
   output: "standalone",
   images: {

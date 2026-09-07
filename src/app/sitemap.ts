@@ -1,35 +1,45 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 
-import { API_URL, HOST } from "@utils/constant/env";
-import { IPost } from "@/types";
+import { siteMetadata } from "@utils/constant/metadata";
+import { API_URL } from "@utils/constant/env";
+import type { IPost } from "@/types";
 
-async function sitemap(): Promise<MetadataRoute.Sitemap> {
+const createUrl = (path: string) => new URL(path, siteMetadata.siteUrl).toString();
+
+const staticRoutes: MetadataRoute.Sitemap = ["/", "/project", "/series", "/about"].map((path) => ({
+  url: createUrl(path),
+}));
+
+const getPostSitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const query = new URLSearchParams({ sort: "1", limit: "9999" }).toString();
   const url = `${API_URL}/posts?${query}`;
 
   try {
     const res = await fetch(url, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
       next: { revalidate: 86400 },
     });
 
-    const posts = (await res.json()) as IPost[];
+    if (!res.ok) return [];
 
-    const postsSiteMap = posts.map(({ nid, createdAt }) => ({
-      url: `${HOST}/post/${nid}`,
-      lastModified: createdAt,
+    const data: unknown = await res.json();
+
+    if (!Array.isArray(data)) return [];
+
+    const posts = data as IPost[];
+
+    return posts.map(({ nid, createdAt, updatedAt }: IPost) => ({
+      url: createUrl(`/post/${nid}`),
+      lastModified: updatedAt || createdAt,
     }));
-
-    const routes = ["", "/project", "/series", "/about"].map((route) => ({
-      url: `${HOST}${route}`,
-      lastModified: new Date().toISOString(),
-    }));
-
-    return [...routes, ...postsSiteMap];
   } catch {
     return [];
   }
+};
+
+async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await getPostSitemap();
+
+  return [...staticRoutes, ...posts];
 }
 
 export default sitemap;
