@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 import { useSkillMutation } from "@hooks/query/skill";
 import { useUploadImage } from "@hooks/query/image";
@@ -115,6 +115,7 @@ const SkillForm = ({ onClose, skill }: IProps) => {
                 onClick={clearImage}
                 width={72}
                 height={72}
+                sizes="72px"
               />
             )}
             <span onClick={imageHandler}>

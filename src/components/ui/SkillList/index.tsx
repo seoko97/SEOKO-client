@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 import SkillImage from "@components/ui/core/SkillImage";
 import { ISkill } from "@/types/skill";
@@ -36,7 +36,7 @@ const SkillList = ({ skills = [], onClick, type }: IProps) => {
               <span className="text-2xl text-slate-600 transition-[color] dark:text-slate-300 md:hidden">
                 •
               </span>
-              <SkillImage priority src={skill.icon} alt={skill.name} />
+              <SkillImage src={skill.icon} alt={skill.name} />
               <h3 className="font-medium">{skill.name}</h3>
             </div>
             <p className="gap-4 whitespace-pre-line break-all text-slate-600 transition-[color] dark:text-slate-300">

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import type { MouseEvent } from "react";
 
 import { useRouter } from "next/navigation";
 
@@ -42,7 +42,7 @@ const PostHeader = ({ nid }: IProps) => {
     deletePostMutate();
   };
 
-  const onClickTag = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onClickTag = (e: MouseEvent<HTMLDivElement>) => {
     const tagName = e.currentTarget.textContent?.trim();
 
     if (!tagName) return;
@@ -52,12 +52,17 @@ const PostHeader = ({ nid }: IProps) => {
 
   return (
     <div className="mb-2 mt-4 flex w-[theme(screens.md.max)] flex-col items-center justify-center gap-5 break-all md:w-full">
-      <Image
-        preload={true}
-        alt="post-thumbnail"
-        src={thumbnail}
-        className="aspect-default rounded-lg"
-      />
+      <div className="relative aspect-default w-full overflow-hidden rounded-lg">
+        <Image
+          fill
+          preload={true}
+          alt="post-thumbnail"
+          src={thumbnail}
+          quality={100}
+          sizes="(max-width: 768px) calc(100vw - 32px), 768px"
+          className="rounded-lg"
+        />
+      </div>
       <h1 className="text-center text-xl font-bold text-primary transition-[color]">{title}</h1>
       {tags.length > 0 && <TagList className="justify-center" tags={tags} onClick={onClickTag} />}
       <PostSubInfo viewCount={viewCount} likeCount={likeCount} createdAt={createdAt} />

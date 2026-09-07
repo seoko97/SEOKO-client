@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useRouter } from "next/navigation";
 
 import { useGetUserQuery } from "@hooks/query/user";
@@ -36,7 +34,16 @@ const ProjectHeader = ({ project }: IProps) => {
 
   return (
     <header className="mt-8 flex w-[theme(screens.md.max)] flex-col items-center justify-center gap-3 break-all md:w-full">
-      <Image src={thumbnail} alt="project-thumbnail" className="aspect-default rounded-lg" />
+      <div className="relative aspect-default w-full overflow-hidden rounded-lg">
+        <Image
+          fill
+          src={thumbnail}
+          alt="project-thumbnail"
+          quality={100}
+          sizes="(max-width: 768px) calc(100vw - 32px), 768px"
+          className="rounded-lg"
+        />
+      </div>
       <h1 className="text-xl font-bold text-primary transition-[color]">{title}</h1>
       <p className="text-sm text-slate-500 transition-[color] dark:text-slate-400">{description}</p>
       <div className="text-sm text-slate-500 transition-[color] dark:text-slate-400">

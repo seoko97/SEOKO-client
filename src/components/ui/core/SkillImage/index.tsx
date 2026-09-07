@@ -1,5 +1,3 @@
-import React from "react";
-
 import { ImageProps } from "next/image";
 
 import Image from "@components/ui/core/Image";
@@ -16,9 +14,9 @@ const SkillImage = ({ alt, size = 52, className = "", ...rest }: IProps) => {
         {...rest}
         alt={alt}
         style={{ width: size, height: size, objectFit: "contain" }}
-        priority
         width={size}
         height={size}
+        sizes={`${size}px`}
         className={`m-1 rounded-sm ${className}`}
       />
     </div>
