@@ -21,7 +21,7 @@ const PostHeader = ({ nid }: IProps) => {
   const router = useRouter();
   const { data: post } = useGetPostQuery(nid);
   const { data: username } = useGetUserQuery();
-  const { data: series } = useGetSeriesQuery(post?.series?.nid);
+  const { data: series } = useGetSeriesQuery(post?.series?.nid ?? null);
   const { mutate: deletePostMutate } = useDeletePostMutation(nid);
 
   if (!post) return null;
