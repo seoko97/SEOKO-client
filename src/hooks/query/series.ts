@@ -14,10 +14,8 @@ const useGetSeriesQueries = () => {
 };
 
 const useGetSeriesQuery = (nid: number | null = null) => {
-  const queryKey = nid === null ? seriesQueryKeys.root : seriesQueryKeys.detail(nid);
-
   return useQuery({
-    queryKey,
+    queryKey: seriesQueryKeys.detail(nid),
     queryFn: () => {
       if (!nid) return null;
 

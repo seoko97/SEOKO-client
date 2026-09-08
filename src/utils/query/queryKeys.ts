@@ -19,7 +19,7 @@ export const projectQueryKeys = {
 
 export const seriesQueryKeys = {
   root: ["series"] as const,
-  detail: (nid: number) => [...seriesQueryKeys.root, nid] as const,
+  detail: (nid: number | null) => [...seriesQueryKeys.root, "detail", nid] as const,
 } as const;
 
 export const tagQueryKeys = {

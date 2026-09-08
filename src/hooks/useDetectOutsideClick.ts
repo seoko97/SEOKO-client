@@ -1,13 +1,13 @@
-import { MutableRefObject, useState, useEffect } from "react";
+import { RefObject, useState, useEffect } from "react";
 
 import { usePathname } from "next/navigation";
 
-const useDetectOutsideClick = (el: MutableRefObject<Node | null>, initialState: boolean) => {
+const useDetectOutsideClick = (el: RefObject<Node | null>, initialState: boolean) => {
   const pathname = usePathname();
   const [isActive, setIsActive] = useState(initialState);
 
   const onChangeActive = () => {
-    setIsActive(!isActive);
+    setIsActive((prev) => !prev);
   };
 
   useEffect(() => {

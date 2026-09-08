@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import { THEME } from "@utils/constant/theme";
 import useDarkMode from "@hooks/useDarkMode";
 
 import { SunIcon, MoonIcon } from "@components/icons";
@@ -11,7 +12,7 @@ const DarkModeButton = () => {
 
   if (!mode) return null;
 
-  const Icon = mode === "light" ? MoonIcon : SunIcon;
+  const Icon = mode === THEME.light ? MoonIcon : SunIcon;
 
   return (
     <button

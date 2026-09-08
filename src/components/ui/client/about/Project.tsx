@@ -7,16 +7,18 @@ import ProjectList from "@components/ui/ProjectList";
 import SectionHeader from "@components/ui/client/about/SectionHeader";
 
 const Project = () => {
-  const { data } = useGetProjectsQuery();
+  const { data: projects } = useGetProjectsQuery();
 
-  if (!data) return null;
+  if (!projects) return null;
 
-  const projects = data.sort((a, b) => (new Date(a.start) > new Date(b.start) ? -1 : 1));
+  const sortedProjects = [...projects].sort((a, b) =>
+    new Date(a.start) > new Date(b.start) ? -1 : 1,
+  );
 
   return (
     <section className="flex w-full flex-col">
       <SectionHeader>Project</SectionHeader>
-      <ProjectList projects={projects} />
+      <ProjectList projects={sortedProjects} />
     </section>
   );
 };

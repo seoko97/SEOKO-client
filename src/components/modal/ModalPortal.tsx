@@ -7,18 +7,21 @@ interface Props {
 
 const ModalPortal: FC<Props> = ({ children }) => {
   const modalRef = useRef<HTMLElement | null>(null);
-  const bodyRef = useRef<HTMLElement | null>(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    modalRef.current = document.getElementById("modal");
-    bodyRef.current = document.body;
+    const modal = document.getElementById("modal");
 
-    bodyRef.current.style.overflow = "hidden";
+    if (!modal) return;
+
+    const prevOverflow = document.body.style.overflow;
+
+    modalRef.current = modal;
+    document.body.style.overflow = "hidden";
+    setMounted(true);
+
     return () => {
-      setMounted(false);
-      (bodyRef.current as HTMLElement).style.overflow = "auto";
+      document.body.style.overflow = prevOverflow;
     };
   }, []);
 

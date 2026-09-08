@@ -15,7 +15,7 @@ const useModal = () => {
   };
 
   useEffect(() => {
-    close();
+    setter(false);
   }, [pathname]);
 
   return [isOpen, open, close, setter] as const;

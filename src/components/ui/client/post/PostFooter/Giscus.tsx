@@ -2,16 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { usePathname } from "next/navigation";
 
+import { THEME } from "@utils/constant/theme";
 import { GISCUS } from "@utils/constant/env";
-import useLocalStorage from "@hooks/useLocalStorage";
-
-const LIGHT = "light" as const;
+import useThemeStorage from "@hooks/useThemeStorage";
 
 const Giscus = () => {
   const [mounted, setMounted] = useState(false);
 
   const pathname = usePathname();
-  const theme = useLocalStorage<string>("theme")[0] || LIGHT;
+  const theme = useThemeStorage()[0] || THEME.light;
 
   const ref = useRef<HTMLDivElement>(null);
   const themeRef = useRef(theme);
