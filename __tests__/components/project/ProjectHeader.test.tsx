@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 
 import { useGetUserQuery } from "@hooks/query/user";
 import { useDeleteProjectMutation } from "@hooks/query/project";
-import ProjectHeader from "@components/ui/ProjectHeader";
+import ProjectHeader from "@components/ui/client/project/ProjectHeader";
 import type { TProject } from "@/types";
 
 jest.mock("next/navigation", () => ({
