@@ -8,10 +8,10 @@ import { useGetUserQuery } from "@hooks/query/user";
 import { useGetSeriesQuery } from "@hooks/query/series";
 import { useDeletePostMutation, useGetPostQuery } from "@hooks/query/post";
 import TagList from "@components/ui/TagList";
-import PostSeriesInfo from "@components/ui/PostSeriesInfo";
 import Navigation from "@components/ui/Navigation";
 import Image from "@components/ui/core/Image";
 import PostSubInfo from "@components/ui/client/post/PostHeader/PostSubInfo";
+import PostSeriesInfo from "@components/ui/client/post/PostHeader/PostSeriesInfo";
 
 interface IProps {
   nid: number;

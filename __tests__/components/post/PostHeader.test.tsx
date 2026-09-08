@@ -31,7 +31,7 @@ jest.mock("@/components/ui/core/Image", () => ({
   default: ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />,
 }));
 
-jest.mock("@/components/ui/PostSeriesInfo", () => ({
+jest.mock("@/components/ui/client/post/PostHeader/PostSeriesInfo", () => ({
   __esModule: true,
   default: ({ series }: { series: ISeries }) => <div>{series.name}</div>,
 }));
