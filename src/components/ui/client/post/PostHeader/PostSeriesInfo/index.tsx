@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import Link from "next/link";
 
-import NavigateButton from "@components/ui/PostSeriesInfo/NavigateButton";
-import ListItem from "@components/ui/PostSeriesInfo/Listitem";
+import NavigateButton from "@components/ui/client/post/PostHeader/PostSeriesInfo/NavigateButton";
+import ListItem from "@components/ui/client/post/PostHeader/PostSeriesInfo/Listitem";
+
 import { BookmarkIcon, TriangleIcon } from "@components/icons";
 import { ISeries } from "@/types";
 

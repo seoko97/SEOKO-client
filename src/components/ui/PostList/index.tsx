@@ -1,24 +1,46 @@
-import React, { forwardRef } from "react";
+"use client";
+
+import { type RefObject, useRef } from "react";
 
 import useInfinityScroll from "@hooks/useInfinityScroll";
+import { useGetPostsQuery } from "@hooks/query/post";
 import PostItem from "@components/ui/PostList/Item";
-import { IPost } from "@/types";
+import { IGetPostsInput } from "@/types";
 
 interface IProps {
-  posts: IPost[];
-  func: () => void;
+  params?: IGetPostsInput;
+  keepPrevData?: boolean;
 }
 
-const PostList = forwardRef<HTMLDivElement, IProps>(({ posts, func }, ref) => {
-  useInfinityScroll(ref as React.RefObject<HTMLDivElement>, func);
+const PostList = (props: IProps) => {
+  const { params = {}, keepPrevData = false } = props;
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [posts, fetchMorePosts] = useGetPostsQuery(params, { keepPrevData });
+
+  useInfinityScroll(ref as RefObject<HTMLDivElement>, fetchMorePosts);
+
+  if (posts?.length === 0) {
+    return (
+      <div className="w-full py-10 text-center text-2xl font-bold text-gray-400 sm:text-xl">
+        포스트를 찾을 수 없습니다 🙄
+      </div>
+    );
+  }
 
   return (
-    <div ref={ref} className="relative mb-8 flex flex-col items-center justify-center gap-4">
-      {posts.map((post) => (
-        <PostItem key={post.nid} post={post} />
-      ))}
-    </div>
+    <>
+      <div
+        ref={ref}
+        className="relative mb-8 flex w-full flex-col items-center justify-center gap-4"
+      >
+        {posts.map((post) => (
+          <PostItem key={post.nid} post={post} />
+        ))}
+      </div>
+    </>
   );
-});
+};
 
 export default PostList;

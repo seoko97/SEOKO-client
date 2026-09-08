@@ -1,5 +1,4 @@
-import React from "react";
-
+import { MouseEvent } from "react";
 import Link from "next/link";
 
 import { IPost } from "@/types";
@@ -14,7 +13,7 @@ const ListItem = ({ post, isSelected }: IProps) => {
 
   const text = isSelected ? "text-main" : "text-primary hover:text-effect1";
 
-  const onClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
     if (!isSelected) return;
 
     e.preventDefault();

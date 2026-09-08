@@ -1,10 +1,9 @@
 import { ABOUT_INFOS, USER_DETAIL, USER_LINKS } from "@utils/constant/user";
 import Image from "@components/ui/core/Image";
 
-import Skill from "@components/ui/client/about/Skill";
-import Project from "@components/ui/client/about/Project";
-import Experience from "@components/ui/client/about/Experience";
-import Hydrate from "@components/pages/About/Hydrate";
+import Skill from "@components/pages/About/Skill";
+import Project from "@components/pages/About/Project";
+import Experience from "@components/pages/About/Experience";
 
 const About = () => {
   return (
@@ -49,11 +48,9 @@ const About = () => {
           </div>
         ))}
       </div>
-      <Hydrate>
-        <Skill />
-        <Experience />
-        <Project />
-      </Hydrate>
+      <Skill />
+      <Experience />
+      <Project />
     </section>
   );
 };

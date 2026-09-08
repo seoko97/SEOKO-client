@@ -1,8 +1,20 @@
 import { ISignInInput, IUser } from "@/types";
-import { authRequest, request } from "@/apis";
+import { ApiError, authRequest, request } from "@/apis";
 
 const getUser = async () => {
   return authRequest<IUser>("/users");
+};
+
+const getUserOrNull = async () => {
+  try {
+    return await getUser();
+  } catch (error) {
+    if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+      return null;
+    }
+
+    throw error;
+  }
 };
 
 const signin = async (data: ISignInInput) => {
@@ -20,4 +32,4 @@ const signOut = async () => {
   });
 };
 
-export { getUser, signin, signOut };
+export { getUser, getUserOrNull, signin, signOut };

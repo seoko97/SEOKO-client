@@ -13,10 +13,8 @@ import {
 } from "@/apis/project";
 
 const useGetProjectQuery = (nid: number | null) => {
-  const queryKey = nid == null ? projectQueryKeys.root : projectQueryKeys.detail(nid);
-
   return useQuery({
-    queryKey,
+    queryKey: projectQueryKeys.detail(nid),
     queryFn: () => {
       if (nid === null) return;
 
