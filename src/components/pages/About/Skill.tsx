@@ -1,4 +1,4 @@
-import SkillList from "@components/ui/SkillList";
+import SkillList from "@components/ui/client/about/SkillList";
 import SkillEditor from "@components/ui/client/about/SkillEditor";
 import SectionHeader from "@components/ui/client/about/SectionHeader";
 import SkillHydrate from "@components/pages/About/SkillHydrate";

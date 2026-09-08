@@ -1,4 +1,4 @@
-import SkillImage from "@components/ui/core/SkillImage";
+import SkillImage from "@components/ui/client/about/SkillImage";
 import { ISkill } from "@/types/skill";
 
 interface IProps {

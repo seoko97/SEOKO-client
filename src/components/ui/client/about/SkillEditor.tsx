@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 
 import useModal from "@hooks/useModal";
 import { useGetSkillsQuery } from "@hooks/query/skill";
-import SkillList from "@components/ui/SkillList";
+import SkillList from "@components/ui/client/about/SkillList";
 import SectionHeader from "@components/ui/client/about/SectionHeader";
 import { ISkill } from "@/types/skill";
 
