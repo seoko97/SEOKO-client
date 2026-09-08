@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
+import { THEME, THEME_STORAGE_KEY } from "@utils/constant/theme";
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { GOOGLE_SITE_VERIFICATION } from "@utils/constant/env";
 import Header from "@components/ui/Header";
@@ -81,22 +82,24 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  function setBodyDatasetByTheme() {
+  function setBodyDatasetByTheme(darkTheme: string, lightTheme: string, storageKey: string) {
     const prefersDarkFromMq = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    const theme = localStorage.getItem("theme");
+    const theme = localStorage.getItem(storageKey);
 
-    const persistedPreference = theme === "dark" || theme === "light" ? theme : null;
+    const persistedPreference = theme === darkTheme || theme === lightTheme ? theme : null;
 
-    const colorMode = persistedPreference || (prefersDarkFromMq ? "dark" : "light");
+    const colorMode = persistedPreference || (prefersDarkFromMq ? darkTheme : lightTheme);
 
-    localStorage.setItem("theme", colorMode);
+    localStorage.setItem(storageKey, colorMode);
     document.body.dataset.theme = colorMode;
   }
 
   const stringifyFn = String(setBodyDatasetByTheme);
 
-  const fnToRunOnClient = `(${stringifyFn})()`;
+  const fnToRunOnClient = `(${stringifyFn})(${JSON.stringify(THEME.dark)}, ${JSON.stringify(
+    THEME.light,
+  )}, ${JSON.stringify(THEME_STORAGE_KEY)})`;
 
   return (
     <html lang="ko">
