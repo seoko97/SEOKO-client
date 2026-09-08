@@ -1,33 +1,36 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 
-import useLocalStorage from "@hooks/useLocalStorage";
+import { THEME, type TTheme } from "@utils/constant/theme";
+import useThemeStorage from "@hooks/useThemeStorage";
 
-type TDarkMode = "light" | "dark";
+type TDarkMode = TTheme;
 type TResult = () => [TDarkMode | undefined, () => void];
 
 const useDarkMode: TResult = () => {
-  const [mode, setMode] = useLocalStorage<TDarkMode | undefined>("theme");
+  const [mode, setMode] = useThemeStorage();
+
+  const onChangeTheme = () => {
+    if (!mode) return;
+
+    const theme = mode === THEME.light ? THEME.dark : THEME.light;
+
+    setMode(theme);
+  };
 
   useEffect(() => {
-    const theme = (document.body.dataset.theme ||
-      localStorage.getItem("theme") ||
-      "light") as TDarkMode;
+    const theme = document.body.dataset.theme === THEME.dark ? THEME.dark : THEME.light;
+
+    if (mode === theme) return;
 
     setMode(theme);
   }, []);
 
   useEffect(() => {
-    if (!mode) return;
+    const body = document.body;
 
-    document.body.dataset.theme = mode;
-  }, [mode]);
+    if (!mode || body?.dataset.theme === mode) return;
 
-  const onChangeTheme = useCallback(() => {
-    if (!mode) return;
-
-    const theme = mode === "light" ? "dark" : "light";
-
-    setMode(theme);
+    body.dataset.theme = mode;
   }, [mode]);
 
   return [mode, onChangeTheme];
