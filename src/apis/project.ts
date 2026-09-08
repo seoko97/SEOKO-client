@@ -4,11 +4,11 @@ import { IProjectInput, TProject } from "@/types";
 import { authRequest, request } from "@/apis";
 
 const getProject = cache(async (nid: number) => {
-  return request<TProject>(`/projects/${nid}`, { method: "GET" });
+  return request<TProject>(`/projects/${nid}`, { method: "GET", next: { revalidate: 300 } });
 });
 
 const getProjects = async () => {
-  return request<TProject[]>("/projects", { method: "GET" });
+  return request<TProject[]>("/projects", { method: "GET", next: { revalidate: 300 } });
 };
 
 const createProject = async (input: IProjectInput) => {

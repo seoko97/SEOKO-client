@@ -2,7 +2,7 @@ import { ICreateSkill, TSkills, TUpdateSkill } from "@/types/skill";
 import { authRequest, request } from "@/apis";
 
 const getSkills = async () => {
-  return request<TSkills>("/skills", { method: "GET" });
+  return request<TSkills>("/skills", { method: "GET", next: { revalidate: 3600 } });
 };
 
 const createSkill = async (input: ICreateSkill) => {
