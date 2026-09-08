@@ -1,26 +1,15 @@
-import { useMemo } from "react";
-
 import SkillImage from "@components/ui/core/SkillImage";
 import { ISkill } from "@/types/skill";
 
 interface IProps {
   skills: ISkill[];
-  onClick: ((data: ISkill) => void) | null;
+  onClick?: (data: ISkill) => void;
   type: string;
 }
 
 const SkillList = ({ skills = [], onClick, type }: IProps) => {
-  const isAdmin = useMemo(() => Boolean(onClick), [onClick]);
-
-  const CURSOR = isAdmin ? "cursor-pointer" : "";
-
-  const filteredSkills = useMemo(
-    () =>
-      skills.filter((skill) => {
-        return !!skill.description;
-      }),
-    [skills],
-  );
+  const cursor = onClick ? "cursor-pointer" : "";
+  const filteredSkills = skills.filter((skill) => skill.description);
 
   return (
     <div className="flex w-full flex-col items-start gap-4 [&:not(:last-child)]:mb-12">
@@ -29,8 +18,8 @@ const SkillList = ({ skills = [], onClick, type }: IProps) => {
         {filteredSkills.map((skill) => (
           <li
             key={skill._id}
-            onClick={isAdmin && onClick ? () => onClick(skill) : undefined}
-            className={`flex w-full items-center gap-4 text-primary transition-[color] md:flex-col md:items-start ${CURSOR}`}
+            onClick={onClick ? () => onClick(skill) : undefined}
+            className={`flex w-full items-center gap-4 text-primary transition-[color] md:flex-col md:items-start ${cursor}`}
           >
             <div className="flex min-w-max items-center gap-4">
               <span className="text-2xl text-slate-600 transition-[color] dark:text-slate-300 md:hidden">
