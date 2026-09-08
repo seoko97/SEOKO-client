@@ -20,6 +20,7 @@ const getUserOrNull = async () => {
 const signin = async (data: ISignInInput) => {
   return request<IUser>("/auth/signin", {
     method: "POST",
+    cache: "no-store",
     body: JSON.stringify(data),
     credentials: "include",
   });

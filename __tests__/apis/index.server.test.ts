@@ -80,6 +80,7 @@ describe("apis/index server", () => {
 
     expect(fetchMock).toHaveBeenCalledTimes(3);
     expect(getRequest(fetchMock, 1).url.href).toBe("http://localhost:3065/api/auth/refresh");
+    expect(getRequest(fetchMock, 1).init.cache).toBe("no-store");
     expect(new Headers(getRequest(fetchMock, 1).init.headers).get("Cookie")).toBe(
       "refresh-token=server-refresh-token",
     );

@@ -25,6 +25,7 @@ describe("apis/user", () => {
 
     expect(mockRequest).toHaveBeenCalledWith("/auth/signin", {
       method: "POST",
+      cache: "no-store",
       body: JSON.stringify(user),
       credentials: "include",
     });
