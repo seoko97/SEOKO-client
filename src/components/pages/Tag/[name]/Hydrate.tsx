@@ -1,33 +1,19 @@
-import React from "react";
-
-import { notFound } from "next/navigation";
-
+import type { ReactNode } from "react";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
-import { postQueryKeys, tagQueryKeys } from "@utils/query/queryKeys";
+import { postQueryKeys } from "@utils/query/queryKeys";
 import getQueryClient from "@utils/query/getQueryClient";
-import getOrNotFound from "@utils/getOrNotFound";
-import { getTag } from "@/apis/tag";
 import { getPosts } from "@/apis/post";
 
 interface IProps {
-  name: string;
-  children: React.ReactNode;
+  tagId: string;
+  children: ReactNode;
 }
 
-const Hydrate = async ({ name, children }: IProps) => {
+const Hydrate = async ({ tagId, children }: IProps) => {
   const queryClient = getQueryClient();
 
-  if (!name) return notFound();
-
-  const tag = await getOrNotFound(() =>
-    queryClient.query({
-      queryKey: tagQueryKeys.detail(name),
-      queryFn: () => getTag(name),
-    }),
-  );
-
-  const params = { tag: tag._id };
+  const params = { tag: tagId };
 
   await queryClient.infiniteQuery({
     queryKey: postQueryKeys.listByParams(params),
