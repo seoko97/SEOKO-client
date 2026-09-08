@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
 import { MARKDOWN_HEADING_SELECTOR } from "@utils/constant/toc";
+import { IToc } from "@/types/base";
 
 const HEADER_OFFSET = 100 as const;
 
 const useActiveHeading = (
-  headingVersion: unknown,
+  toc: IToc[],
   contentRef: React.RefObject<HTMLElement | null> = { current: null },
 ) => {
   const [activeId, setActiveId] = useState("");
@@ -48,7 +49,7 @@ const useActiveHeading = (
       cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;
     };
-  }, [headingVersion, setActiveId]);
+  }, [toc]);
 
   return activeId;
 };
