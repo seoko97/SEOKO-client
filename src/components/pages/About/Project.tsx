@@ -1,13 +1,9 @@
-"use client";
-
-import React from "react";
-
-import { useGetProjectsQuery } from "@hooks/query/project";
 import ProjectList from "@components/ui/ProjectList";
 import SectionHeader from "@components/ui/client/about/SectionHeader";
+import { getProjects } from "@/apis/project";
 
-const Project = () => {
-  const { data: projects } = useGetProjectsQuery();
+const Project = async () => {
+  const projects = await getProjects();
 
   if (!projects) return null;
 

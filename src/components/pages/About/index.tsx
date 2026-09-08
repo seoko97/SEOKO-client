@@ -2,8 +2,8 @@ import { ABOUT_INFOS, USER_DETAIL, USER_LINKS } from "@utils/constant/user";
 import Image from "@components/ui/core/Image";
 
 import Skill from "@components/ui/client/about/Skill";
-import Project from "@components/ui/client/about/Project";
 import Experience from "@components/ui/client/about/Experience";
+import Project from "@components/pages/About/Project";
 import Hydrate from "@components/pages/About/Hydrate";
 
 const About = () => {
@@ -52,8 +52,8 @@ const About = () => {
       <Hydrate>
         <Skill />
         <Experience />
-        <Project />
       </Hydrate>
+      <Project />
     </section>
   );
 };
