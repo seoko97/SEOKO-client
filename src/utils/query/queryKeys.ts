@@ -14,7 +14,7 @@ export const postQueryKeys = {
 
 export const projectQueryKeys = {
   root: ["projects"] as const,
-  detail: (nid: number) => [...projectQueryKeys.root, nid] as const,
+  detail: (nid: number | null) => [...projectQueryKeys.root, "detail", nid] as const,
 } as const;
 
 export const seriesQueryKeys = {
