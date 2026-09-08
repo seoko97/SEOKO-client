@@ -1,6 +1,12 @@
 import { useRouter } from "next/navigation";
 
-import { useMutation, useQuery, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 
 import { postQueryKeys, seriesQueryKeys, tagQueryKeys } from "@utils/query/queryKeys";
 import {
@@ -33,7 +39,13 @@ const useGetPostQuery = (nid: number | null) => {
   });
 };
 
-const useGetPostsQuery = (params: IGetPostsInput = {}) => {
+interface IOptions {
+  keepPrevData?: boolean;
+}
+
+const useGetPostsQuery = (params: IGetPostsInput = {}, options: IOptions = {}) => {
+  const { keepPrevData = false } = options;
+
   const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery({
     queryKey: postQueryKeys.listByParams(params),
     queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
@@ -45,6 +57,7 @@ const useGetPostsQuery = (params: IGetPostsInput = {}) => {
 
       return lastPageParam + lastPage.length;
     },
+    placeholderData: keepPrevData ? keepPreviousData : undefined,
   });
 
   const posts = data?.pages?.flat() ?? [];
