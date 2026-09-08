@@ -7,7 +7,7 @@ import Header from "@components/ui/Header";
 import Footer from "@components/ui/Footer";
 import Providers from "@components/query/Providers";
 
-import Hydrate from "@components/query/hydrate/UserHydrate";
+import UserHydrate from "@components/query/hydrate/UserHydrate";
 import Analytics from "@components/Analytics";
 
 import "@styles/globals.css";
@@ -108,11 +108,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <Analytics />
         <div className="relative min-h-screen w-full bg-primary pb-36 transition-[background-color]">
           <Providers>
-            <Hydrate>
+            <UserHydrate>
               <Header />
-              {children}
-              <Footer />
-            </Hydrate>
+            </UserHydrate>
+            {children}
+            <Footer />
           </Providers>
         </div>
         <div id="modal" />
