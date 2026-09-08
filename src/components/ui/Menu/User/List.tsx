@@ -1,6 +1,6 @@
 import React from "react";
 
-import MenuItem from "@components/ui/core/MenuItem";
+import MenuItem from "@components/ui/Menu/Item";
 
 interface IProps {
   username?: string | null;
