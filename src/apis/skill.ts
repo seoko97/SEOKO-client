@@ -1,8 +1,8 @@
 import { ICreateSkill, TSkills, TUpdateSkill } from "@/types/skill";
-import { authRequest } from "@/apis";
+import { authRequest, request } from "@/apis";
 
 const getSkills = async () => {
-  return authRequest<TSkills>("/skills", { method: "GET" });
+  return request<TSkills>("/skills", { method: "GET" });
 };
 
 const createSkill = async (input: ICreateSkill) => {
