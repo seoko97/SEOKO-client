@@ -12,8 +12,6 @@ import Analytics from "@components/Analytics";
 
 import "@styles/globals.css";
 
-export const dynamic = "force-dynamic";
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
