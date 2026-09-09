@@ -76,7 +76,7 @@ const SkillForm = ({ onClose, skill }: IProps) => {
             name="type"
             className="rounded-md border border-slate-300 bg-secondary px-2 py-1"
             onChange={onChangeInput}
-            defaultValue={formDataRef.current.type ?? ""}
+            defaultValue={skill?.type ?? ""}
           >
             <option value={ESkillType.LANGUAGE}>LANGUAGE</option>
             <option value={ESkillType.FRONT_END}>FRONT</option>
@@ -90,7 +90,7 @@ const SkillForm = ({ onClose, skill }: IProps) => {
             name="name"
             placeholder="이름입력"
             onChange={onChangeInput}
-            defaultValue={formDataRef.current.name ?? ""}
+            defaultValue={skill?.name ?? ""}
             className="w-min"
           />
         </div>
@@ -100,7 +100,7 @@ const SkillForm = ({ onClose, skill }: IProps) => {
             name="description"
             placeholder="정보입력"
             onChange={onChangeInput}
-            defaultValue={formDataRef.current.description ?? ""}
+            defaultValue={skill?.description ?? ""}
             className="w-full"
           />
         </div>

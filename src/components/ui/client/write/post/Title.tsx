@@ -3,7 +3,7 @@ import type { ChangeEventHandler } from "react";
 import { usePostWriteContext } from "@/context/PostWriteContext";
 
 const TitleEditor = () => {
-  const { dataRef, updateData } = usePostWriteContext();
+  const { initialData, updateData } = usePostWriteContext();
 
   const onChangeTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
     const title = e.target.value;
@@ -15,7 +15,7 @@ const TitleEditor = () => {
     <input
       name="title"
       className="write-text-input"
-      defaultValue={dataRef.current.title}
+      defaultValue={initialData.title}
       onChange={onChangeTitle}
       placeholder="제목을 입력하세요"
     />

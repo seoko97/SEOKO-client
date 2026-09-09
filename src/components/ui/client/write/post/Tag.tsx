@@ -5,9 +5,9 @@ import Tag from "@components/ui/TagList/item";
 import { usePostWriteContext } from "@/context/PostWriteContext";
 
 const TagEditor = () => {
-  const { dataRef, updateData } = usePostWriteContext();
+  const { initialData, updateData } = usePostWriteContext();
 
-  const [tags, setTags] = useState(dataRef.current.tags);
+  const [tags, setTags] = useState(initialData.tags);
 
   useEffect(() => {
     updateData("tags", tags);

@@ -47,9 +47,8 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    // TODO: ref 접근 및 Effect 내부 상태 갱신 코드를 정리한 뒤 이 임시 예외를 제거한다.
     rules: {
-      "react-hooks/refs": "off",
+      "react-hooks/refs": "error",
       "react-hooks/set-state-in-effect": "off",
     },
   },

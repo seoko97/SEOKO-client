@@ -7,7 +7,7 @@ import { EImageType } from "@/types/base";
 import { useProjectWriteContext } from "@/context/ProjectWriteContext";
 
 const ProjectHeader = () => {
-  const { dataRef, updateData } = useProjectWriteContext();
+  const { initialData, updateData } = useProjectWriteContext();
 
   return (
     <header className="flex w-full flex-col gap-4">
@@ -18,7 +18,7 @@ const ProjectHeader = () => {
       <ProjectDateInput name="start" label="프로젝트 시작 날짜" />
       <ProjectDateInput name="end" label="프로젝트 종료 날짜" />
       <Thumbnail
-        defaultValue={dataRef.current.thumbnail}
+        defaultValue={initialData.thumbnail}
         setThumbnail={(thumbnail) => updateData("thumbnail", thumbnail)}
         type={EImageType.PROJECT}
       />

@@ -1,31 +1,29 @@
 import { createPortal } from "react-dom";
-import { FC, useRef, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 interface Props {
   children: React.ReactNode;
 }
 
 const ModalPortal: FC<Props> = ({ children }) => {
-  const modalRef = useRef<HTMLElement | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const [modal, setModal] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    const modal = document.getElementById("modal");
+    const modalElement = document.getElementById("modal");
 
-    if (!modal) return;
+    if (!modalElement) return;
 
     const prevOverflow = document.body.style.overflow;
 
-    modalRef.current = modal;
     document.body.style.overflow = "hidden";
-    setMounted(true);
+    setModal(modalElement);
 
     return () => {
       document.body.style.overflow = prevOverflow;
     };
   }, []);
 
-  return mounted ? createPortal(children, modalRef.current as HTMLElement) : null;
+  return modal ? createPortal(children, modal) : null;
 };
 
 export default ModalPortal;

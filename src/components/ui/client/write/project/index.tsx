@@ -35,12 +35,12 @@ const getProjectInput = (project?: TProject): IProjectInput => {
 const Editor = dynamic(() => import("@components/ui/Markdown/editor"), { ssr: true });
 
 const ProjectEditor = () => {
-  const { dataRef, updateData } = useProjectWriteContext();
+  const { initialData, updateData } = useProjectWriteContext();
 
   return (
     <Editor
       type={EImageType.PROJECT}
-      content={dataRef.current.content}
+      content={initialData.content}
       onChangeContent={(content) => updateData("content", content)}
     />
   );

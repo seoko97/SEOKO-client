@@ -11,7 +11,7 @@ interface IProps extends Omit<ComponentProps<"input">, "id" | "name" | "type"> {
 }
 
 const ProjectDateInput = ({ name, label, onChange, ...inputProps }: IProps) => {
-  const { dataRef, updateData } = useProjectWriteContext();
+  const { initialData, updateData } = useProjectWriteContext();
 
   const onChangeValue: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value || null;
@@ -30,7 +30,7 @@ const ProjectDateInput = ({ name, label, onChange, ...inputProps }: IProps) => {
         name={name}
         type="date"
         placeholder="YYYY-MM-DD"
-        defaultValue={dataRef.current[name] ?? ""}
+        defaultValue={initialData[name] ?? ""}
         onChange={onChangeValue}
         className="rounded-md bg-secondary p-2 transition-[background-color]"
         {...inputProps}

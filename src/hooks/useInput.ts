@@ -15,7 +15,7 @@ const useInput = <T extends IProps>(input: T) => {
     inputRef.current[type] = target.value as T[keyof T];
   }, []);
 
-  return [inputRef.current, onChangeValue] as const;
+  return [inputRef, onChangeValue] as const;
 };
 
 export default useInput;

@@ -5,10 +5,10 @@ import SeriesList from "@components/modal/series/list";
 import { usePostWriteContext } from "@/context/PostWriteContext";
 
 const SeriesEditor = () => {
-  const { dataRef, updateData } = usePostWriteContext();
+  const { initialData, updateData } = usePostWriteContext();
 
   const [modalState, setModalState] = useState(false);
-  const [series, setSeries] = useState(dataRef.current.series);
+  const [series, setSeries] = useState(initialData.series);
 
   const onChangeSeries = (series?: string) => {
     setSeries(series);
