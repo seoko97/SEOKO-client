@@ -1,14 +1,14 @@
 import { cache } from "react";
 
 import { ISeries, IUpdateSeriesInput } from "@/types";
-import { authRequest } from "@/apis";
+import { authRequest, request } from "@/apis";
 
 const getSeriesAll = async () => {
-  return authRequest<ISeries[]>("/series", { method: "GET" });
+  return request<ISeries[]>("/series", { method: "GET", next: { revalidate: 300 } });
 };
 
 const getSeries = cache(async (nid: number) => {
-  return authRequest<ISeries>(`/series/${nid}`, { method: "GET" });
+  return request<ISeries>(`/series/${nid}`, { method: "GET", next: { revalidate: 300 } });
 });
 
 const updateSeries = async (nid: number, body: IUpdateSeriesInput) => {

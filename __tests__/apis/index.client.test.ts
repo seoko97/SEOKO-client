@@ -69,15 +69,16 @@ describe("apis/index", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it("access token을 Authorization 헤더에 포함한다", async () => {
+  it("access token을 Authorization 헤더에 포함하고 cache를 사용하지 않는다", async () => {
     document.cookie = "access-token=current-token";
     fetchMock.mockResolvedValueOnce(jsonResponse({ id: 1 }));
 
-    await authRequest("/users");
+    await authRequest("/users", { cache: "force-cache" });
 
     const { init } = getRequest(fetchMock);
 
     expect(new Headers(init.headers).get("Authorization")).toBe("Bearer current-token");
+    expect(init.cache).toBe("no-store");
   });
 
   it("만료된 access token은 refresh 후 한 번만 재시도한다", async () => {
@@ -98,6 +99,7 @@ describe("apis/index", () => {
     expect(getRequest(fetchMock, 1).url.href).toBe("http://localhost:3065/api/auth/refresh");
     expect(getRequest(fetchMock, 1).init).toMatchObject({
       method: "POST",
+      cache: "no-store",
       credentials: "include",
       body: "{}",
     });

@@ -1,6 +1,11 @@
 import { act, renderHook } from "@testing-library/react";
 
+import type { IToc } from "@/types/base";
 import { useActiveHeading } from "@/hooks/useActiveHeading";
+
+const createToc = (...ids: string[]): IToc[] => {
+  return ids.map((id, level) => ({ id, text: id, level }));
+};
 
 const createContentRef = (headings: Array<{ id: string; top: () => number }>) => {
   const content = document.createElement("article");
@@ -54,8 +59,8 @@ describe("useActiveHeading", () => {
       { id: "first", top: () => 80 },
       { id: "second", top: () => 100 },
     ]);
-    const headingVersion = "test";
-    const { result } = renderHook(() => useActiveHeading(headingVersion, contentRef));
+    const toc = createToc("first", "second");
+    const { result } = renderHook(() => useActiveHeading(toc, contentRef));
 
     act(flushAnimationFrame);
 
@@ -64,8 +69,8 @@ describe("useActiveHeading", () => {
 
   it("첫 heading 이전에서는 활성 heading을 비운다", () => {
     const contentRef = createContentRef([{ id: "first", top: () => 120 }]);
-    const headingVersion = "test";
-    const { result } = renderHook(() => useActiveHeading(headingVersion, contentRef));
+    const toc = createToc("first");
+    const { result } = renderHook(() => useActiveHeading(toc, contentRef));
 
     act(flushAnimationFrame);
 
@@ -78,8 +83,8 @@ describe("useActiveHeading", () => {
       { id: "first", top: () => positions.first },
       { id: "second", top: () => positions.second },
     ]);
-    const headingVersion = "test";
-    const { result } = renderHook(() => useActiveHeading(headingVersion, contentRef));
+    const toc = createToc("first", "second");
+    const { result } = renderHook(() => useActiveHeading(toc, contentRef));
 
     act(flushAnimationFrame);
 
@@ -96,14 +101,13 @@ describe("useActiveHeading", () => {
 
   it("effect cleanup 이후에도 다음 scroll에서 frame을 다시 등록한다", () => {
     const contentRef = createContentRef([{ id: "first", top: () => 80 }]);
-    const initialHeadingVersion = "initial";
-    const nextHeadingVersion = "next";
-    const { result, rerender } = renderHook(
-      ({ headingVersion }) => useActiveHeading(headingVersion, contentRef),
-      { initialProps: { headingVersion: initialHeadingVersion } },
-    );
+    const initialToc = createToc("first");
+    const nextToc = createToc("first", "second");
+    const { result, rerender } = renderHook(({ toc }) => useActiveHeading(toc, contentRef), {
+      initialProps: { toc: initialToc },
+    });
 
-    rerender({ headingVersion: nextHeadingVersion });
+    rerender({ toc: nextToc });
 
     act(flushAnimationFrame);
 
@@ -118,8 +122,8 @@ describe("useActiveHeading", () => {
 
   it("unmount 시 대기 중인 frame을 정리한다", () => {
     const contentRef = createContentRef([{ id: "first", top: () => 80 }]);
-    const headingVersion = "test";
-    const { unmount } = renderHook(() => useActiveHeading(headingVersion, contentRef));
+    const toc = createToc("first");
+    const { unmount } = renderHook(() => useActiveHeading(toc, contentRef));
 
     unmount();
 

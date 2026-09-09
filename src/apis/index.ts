@@ -60,7 +60,7 @@ const authRequest = async <T = unknown>(
   }
 
   try {
-    return await request<T>(path, { ...options, headers });
+    return await request<T>(path, { ...options, cache: "no-store", headers });
   } catch (error) {
     const isExpiredToken =
       error instanceof ApiError &&

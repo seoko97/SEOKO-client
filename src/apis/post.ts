@@ -18,15 +18,25 @@ const getPosts = async (params: IGetPostsInput = {}) => {
 
   const query = searchParams.toString();
 
-  return request<IPost[]>(`/posts${query ? `?${query}` : ""}`, { method: "GET" });
+  return request<IPost[]>(`/posts${query ? `?${query}` : ""}`, {
+    method: "GET",
+    next: { revalidate: 60 },
+  });
 };
 
 const getPost = cache(async (nid: number) => {
-  return request<IPost>(`/posts/${nid}`, { method: "GET", forwardClientIp: true });
+  return request<IPost>(`/posts/${nid}`, {
+    method: "GET",
+    cache: "no-store",
+    forwardClientIp: true,
+  });
 });
 
 const getSiblingPost = async (nid: number) => {
-  return request<IGetSiblingPost>(`/posts/${nid}/sibling`, { method: "GET" });
+  return request<IGetSiblingPost>(`/posts/${nid}/sibling`, {
+    method: "GET",
+    next: { revalidate: 300 },
+  });
 };
 
 const createPost = async (data: ICreatePostInput) => {
@@ -48,11 +58,11 @@ const deletePost = async (nid: number) => {
 };
 
 const likePost = async (nid: number) => {
-  return request<number>(`/posts/${nid}/like`, { method: "PATCH" });
+  return request<number>(`/posts/${nid}/like`, { method: "PATCH", cache: "no-store" });
 };
 
 const unlikePost = async (nid: number) => {
-  return request<number>(`/posts/${nid}/unlike`, { method: "PATCH" });
+  return request<number>(`/posts/${nid}/unlike`, { method: "PATCH", cache: "no-store" });
 };
 
 export {

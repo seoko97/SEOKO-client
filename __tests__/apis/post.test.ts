@@ -41,20 +41,41 @@ describe("apis/post", () => {
   it("게시글 목록 query에서 undefined를 제외하고 값을 문자열로 직렬화한다", async () => {
     await getPosts({ limit: 10, skip: 0, tag: "react", text: undefined });
 
-    expect(mockRequest).toHaveBeenCalledWith("/posts?limit=10&skip=0&tag=react", { method: "GET" });
+    expect(mockRequest).toHaveBeenCalledWith("/posts?limit=10&skip=0&tag=react", {
+      method: "GET",
+      next: { revalidate: 60 },
+    });
   });
 
   it("게시글 목록의 인자가 없으면 query 없이 요청한다", async () => {
     await getPosts();
 
-    expect(mockRequest).toHaveBeenCalledWith("/posts", { method: "GET" });
+    expect(mockRequest).toHaveBeenCalledWith("/posts", {
+      method: "GET",
+      next: { revalidate: 60 },
+    });
   });
 
   it.each([
-    ["게시글 상세 조회", () => getPost(1), "/posts/1", { method: "GET", forwardClientIp: true }],
-    ["이전·다음 게시글 조회", () => getSiblingPost(1), "/posts/1/sibling", { method: "GET" }],
-    ["게시글 좋아요", () => likePost(1), "/posts/1/like", { method: "PATCH" }],
-    ["게시글 좋아요 취소", () => unlikePost(1), "/posts/1/unlike", { method: "PATCH" }],
+    [
+      "게시글 상세 조회",
+      () => getPost(1),
+      "/posts/1",
+      { method: "GET", cache: "no-store", forwardClientIp: true },
+    ],
+    [
+      "이전·다음 게시글 조회",
+      () => getSiblingPost(1),
+      "/posts/1/sibling",
+      { method: "GET", next: { revalidate: 300 } },
+    ],
+    ["게시글 좋아요", () => likePost(1), "/posts/1/like", { method: "PATCH", cache: "no-store" }],
+    [
+      "게시글 좋아요 취소",
+      () => unlikePost(1),
+      "/posts/1/unlike",
+      { method: "PATCH", cache: "no-store" },
+    ],
   ])("%s의 요청 계약을 유지한다", async (_, execute, path, options) => {
     await execute();
 

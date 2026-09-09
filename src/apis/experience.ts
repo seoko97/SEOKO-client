@@ -1,8 +1,8 @@
 import { ICreateExperience, IExperience, IUpdateExperience } from "@/types/experience";
-import { authRequest } from "@/apis";
+import { authRequest, request } from "@/apis";
 
 const getExperiences = async () => {
-  return authRequest<IExperience[]>("/experiences", { method: "GET" });
+  return request<IExperience[]>("/experiences", { method: "GET", next: { revalidate: 3600 } });
 };
 
 const createExperience = async (input: ICreateExperience) => {

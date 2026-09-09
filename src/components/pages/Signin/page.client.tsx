@@ -1,27 +1,18 @@
 "use client";
 
-import React, { useCallback, useEffect } from "react";
-
-import { useRouter } from "next/navigation";
+import { type SubmitEventHandler, useCallback } from "react";
 
 import useInput from "@hooks/useInput";
-import { useGetUserQuery, useSigninMutation } from "@hooks/query/user";
+import { useSigninMutation } from "@hooks/query/user";
 import Input from "@components/ui/core/Input";
 import Button from "@components/ui/core/Button";
 
 const SigninForm = () => {
-  const router = useRouter();
-
   const [input, onChangeValue] = useInput({ userId: "", password: "" });
 
-  const { data: username } = useGetUserQuery();
   const { mutate } = useSigninMutation();
 
-  useEffect(() => {
-    if (username) router.push("/");
-  }, [router, username]);
-
-  const onSubmit: React.FormEventHandler = useCallback(
+  const onSubmit: SubmitEventHandler = useCallback(
     (e) => {
       e.preventDefault();
 

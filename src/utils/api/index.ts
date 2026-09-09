@@ -83,6 +83,7 @@ const refreshAccessToken = async () => {
 
   const res = await fetch(url, {
     method: "POST",
+    cache: "no-store",
     headers,
     body: JSON.stringify({}),
     credentials: IS_SERVER ? undefined : "include",

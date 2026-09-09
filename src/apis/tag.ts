@@ -1,14 +1,14 @@
 import { cache } from "react";
 
 import { ITag } from "@/types";
-import { authRequest } from "@/apis";
+import { request } from "@/apis";
 
 const getTag = cache(async (name: string) => {
-  return authRequest<ITag>(`/tags/${name}`, { method: "GET" });
+  return request<ITag>(`/tags/${name}`, { method: "GET", next: { revalidate: 3600 } });
 });
 
 const getTags = async () => {
-  return authRequest<ITag[]>("/tags", { method: "GET" });
+  return request<ITag[]>("/tags", { method: "GET", next: { revalidate: 3600 } });
 };
 
 export { getTag, getTags };

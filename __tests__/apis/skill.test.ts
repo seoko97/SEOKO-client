@@ -1,12 +1,14 @@
 import { ESkillType } from "@/types/skill";
 import { createSkill, deleteSkill, getSkills, updateSkill } from "@/apis/skill";
-import { authRequest } from "@/apis";
+import { authRequest, request } from "@/apis";
 
 jest.mock("@/apis", () => ({
   authRequest: jest.fn(),
+  request: jest.fn(),
 }));
 
 const mockAuthRequest = jest.mocked(authRequest);
+const mockRequest = jest.mocked(request);
 
 describe("apis/skill", () => {
   const createInput = {
@@ -20,10 +22,22 @@ describe("apis/skill", () => {
 
   beforeEach(() => {
     mockAuthRequest.mockReset();
+    mockRequest.mockReset();
+  });
+
+  it("기술 목록을 재검증 가능한 공개 요청으로 조회한다", async () => {
+    mockRequest.mockResolvedValueOnce(response);
+
+    await expect(getSkills()).resolves.toBe(response);
+
+    expect(mockRequest).toHaveBeenCalledTimes(1);
+    expect(mockRequest).toHaveBeenCalledWith("/skills", {
+      method: "GET",
+      next: { revalidate: 3600 },
+    });
   });
 
   it.each([
-    ["기술 목록 조회", () => getSkills(), "/skills", { method: "GET" }],
     [
       "기술 생성",
       () => createSkill(createInput),
@@ -37,7 +51,7 @@ describe("apis/skill", () => {
       { method: "PUT", body: JSON.stringify(updateInput) },
     ],
     ["기술 삭제", () => deleteSkill("skill-id"), "/skills/skill-id", { method: "DELETE" }],
-  ])("%s의 요청 계약과 응답값을 유지한다", async (_, execute, path, options) => {
+  ])("%s의 인증 요청 계약과 응답값을 유지한다", async (_, execute, path, options) => {
     mockAuthRequest.mockResolvedValueOnce(response);
 
     await expect(execute()).resolves.toBe(response);

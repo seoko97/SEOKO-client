@@ -14,6 +14,8 @@ const useActiveHeading = (
   const animationFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (toc.length === 0) return;
+
     const headingElements = Array.from(
       contentRef.current?.querySelectorAll<HTMLElement>(MARKDOWN_HEADING_SELECTOR) || [],
     );
