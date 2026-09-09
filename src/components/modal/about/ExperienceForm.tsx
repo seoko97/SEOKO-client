@@ -51,8 +51,6 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
     onClose();
   };
 
-  const { title, description, start, end } = formDataRef.current;
-
   return (
     <ModalLayout onClose={onClose}>
       <div className="z-[60] flex h-fit max-h-[600px] w-[600px] flex-col gap-4 rounded-md bg-tertiary px-5 py-7 text-primary shadow-md transition-[background-color,color] md:w-full">
@@ -63,7 +61,7 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
             name="title"
             placeholder="입력"
             onChange={onChangeInput}
-            defaultValue={title}
+            defaultValue={experience?.title ?? ""}
             className="w-min"
           />
         </div>
@@ -71,7 +69,7 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
           <h3 className="font-medium">상세</h3>
           <textarea
             className="max-h-[200px] min-h-[100px] w-full rounded-md bg-primary p-2 transition-[background-color]"
-            defaultValue={description}
+            defaultValue={experience?.description ?? ""}
             name="description"
             onChange={onChangeInput}
           />
@@ -82,7 +80,7 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
             name="start"
             type="date"
             placeholder="YYYY-MM-DD"
-            defaultValue={start}
+            defaultValue={experience?.start ?? ""}
             onChange={onChangeInput}
             className="rounded-md bg-secondary p-2 transition-[background-color]"
           />
@@ -93,7 +91,7 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
             name="end"
             type="date"
             placeholder="YYYY-MM-DD"
-            defaultValue={end ?? ""}
+            defaultValue={experience?.end ?? ""}
             onChange={onChangeInput}
             className="rounded-md bg-secondary p-2 transition-[background-color]"
           />
