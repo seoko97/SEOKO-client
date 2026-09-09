@@ -8,7 +8,7 @@ import Input from "@components/ui/core/Input";
 import Button from "@components/ui/core/Button";
 
 const SigninForm = () => {
-  const [input, onChangeValue] = useInput({ userId: "", password: "" });
+  const [dataRef, onChangeValue] = useInput({ userId: "", password: "" });
 
   const { mutate } = useSigninMutation();
 
@@ -16,14 +16,14 @@ const SigninForm = () => {
     (e) => {
       e.preventDefault();
 
-      const { userId, password } = input;
+      const { userId, password } = dataRef.current;
 
       if (!userId) return alert("아이디를 입력하세요");
       if (!password) return alert("비밀번호를 입력하세요");
 
       mutate({ userId, password });
     },
-    [input, mutate],
+    [mutate],
   );
 
   const formProps = {

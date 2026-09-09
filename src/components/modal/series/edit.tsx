@@ -42,7 +42,7 @@ const EditSeries = ({ series, onClose }: IProps) => {
 
     if (!confirmUpdate) return;
 
-    updateSeries({ ...input, thumbnail: image });
+    updateSeries({ ...input.current, thumbnail: image });
     onClose();
   };
 
