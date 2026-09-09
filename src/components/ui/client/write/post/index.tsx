@@ -30,12 +30,12 @@ const getPostInput = (post: IPost | undefined): IPostWriteInput => {
 const Editor = dynamic(() => import("@components/ui/Markdown/editor"), { ssr: true });
 
 const PostEditor = () => {
-  const { dataRef, updateData } = usePostWriteContext();
+  const { initialData, updateData } = usePostWriteContext();
 
   return (
     <Editor
       type={EImageType.POST}
-      content={dataRef.current.content}
+      content={initialData.content}
       onChangeContent={(content) => updateData("content", content)}
     />
   );

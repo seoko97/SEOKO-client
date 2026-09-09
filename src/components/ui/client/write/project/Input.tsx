@@ -11,7 +11,7 @@ interface IProps extends Omit<ComponentProps<"input">, "name"> {
 }
 
 const ProjectInput = ({ name, className, onChange, ...rest }: IProps) => {
-  const { dataRef, updateData } = useProjectWriteContext();
+  const { initialData, updateData } = useProjectWriteContext();
 
   const onChangeValue: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = name === "page" ? e.target.value || null : e.target.value;
@@ -23,7 +23,7 @@ const ProjectInput = ({ name, className, onChange, ...rest }: IProps) => {
   return (
     <Input
       {...rest}
-      defaultValue={dataRef.current[name] ?? ""}
+      defaultValue={initialData[name] ?? ""}
       name={name}
       className={`write-text-input ${className ?? ""}`}
       onChange={onChangeValue}

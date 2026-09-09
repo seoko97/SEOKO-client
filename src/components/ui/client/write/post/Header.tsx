@@ -6,7 +6,7 @@ import { EImageType } from "@/types/base";
 import { usePostWriteContext } from "@/context/PostWriteContext";
 
 const PostHeader = () => {
-  const { dataRef, updateData } = usePostWriteContext();
+  const { initialData, updateData } = usePostWriteContext();
 
   return (
     <header className="flex w-full flex-col gap-4">
@@ -14,7 +14,7 @@ const PostHeader = () => {
       <TagEditor />
       <SeriesEditor />
       <Thumbnail
-        defaultValue={dataRef.current.thumbnail}
+        defaultValue={initialData.thumbnail}
         setThumbnail={(thumbnail) => updateData("thumbnail", thumbnail)}
         type={EImageType.POST}
       />
