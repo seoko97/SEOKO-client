@@ -1,6 +1,6 @@
 "use client";
 
-import { type SubmitEventHandler, useCallback } from "react";
+import type { SubmitEventHandler } from "react";
 
 import useInput from "@hooks/useInput";
 import { useSigninMutation } from "@hooks/query/user";
@@ -12,19 +12,16 @@ const SigninForm = () => {
 
   const { mutate } = useSigninMutation();
 
-  const onSubmit: SubmitEventHandler = useCallback(
-    (e) => {
-      e.preventDefault();
+  const onSubmit: SubmitEventHandler = (e) => {
+    e.preventDefault();
 
-      const { userId, password } = dataRef.current;
+    const { userId, password } = dataRef.current;
 
-      if (!userId) return alert("아이디를 입력하세요");
-      if (!password) return alert("비밀번호를 입력하세요");
+    if (!userId) return alert("아이디를 입력하세요");
+    if (!password) return alert("비밀번호를 입력하세요");
 
-      mutate({ userId, password });
-    },
-    [mutate],
-  );
+    mutate({ userId, password });
+  };
 
   const formProps = {
     onSubmit,
