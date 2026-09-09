@@ -26,7 +26,7 @@ const eslintConfig = defineConfig([
     name: "project/react-compiler",
     files: SOURCE_FILES,
     rules: {
-      "react-hooks/exhaustive-deps": "off",
+      "react-hooks/exhaustive-deps": "error",
       "react-hooks/refs": "error",
       "react-hooks/set-state-in-effect": "off",
     },

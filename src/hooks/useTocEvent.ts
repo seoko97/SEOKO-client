@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { MARKDOWN_HEADING_SELECTOR } from "@utils/constant/toc";
 import { IToc } from "@/types/base";
 
 const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null>) => {
+  const didScrollRef = useRef<boolean>(false);
+
   const scroll = (id: string, behavior: ScrollBehavior = "smooth") => {
     const headingElements = Array.from(
       contentRef?.current?.querySelectorAll<HTMLElement>(MARKDOWN_HEADING_SELECTOR) || [],
@@ -29,6 +31,8 @@ const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null
   };
 
   useEffect(() => {
+    if (didScrollRef.current) return;
+
     const url = new URL(window.location.href);
     let decodedHash = "";
 
@@ -44,8 +48,21 @@ const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null
 
     if (!item) return;
 
-    scroll(item.id, "instant");
-  }, []);
+    const headings = Array.from(
+      contentRef.current?.querySelectorAll<HTMLElement>(MARKDOWN_HEADING_SELECTOR) ?? [],
+    );
+
+    const target = headings.find((heading) => heading.id === item.id);
+
+    if (!target) return;
+
+    window.scrollTo({
+      top: window.scrollY + target.getBoundingClientRect().top - 80,
+      behavior: "instant",
+      left: 0,
+    });
+    didScrollRef.current = true;
+  }, [toc, contentRef]);
 
   return scrollToTargetItem;
 };

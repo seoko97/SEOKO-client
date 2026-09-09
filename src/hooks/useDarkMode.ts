@@ -18,14 +18,6 @@ const useDarkMode: TResult = () => {
   };
 
   useEffect(() => {
-    const theme = document.body.dataset.theme === THEME.dark ? THEME.dark : THEME.light;
-
-    if (mode === theme) return;
-
-    setMode(theme);
-  }, []);
-
-  useEffect(() => {
     const body = document.body;
 
     if (!mode || body?.dataset.theme === mode) return;

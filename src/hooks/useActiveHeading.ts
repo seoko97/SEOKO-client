@@ -51,7 +51,7 @@ const useActiveHeading = (
       cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;
     };
-  }, [toc]);
+  }, [toc, contentRef]);
 
   return activeId;
 };
