@@ -29,6 +29,9 @@ const eslintConfig = defineConfig([
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/refs": "error",
       "react-hooks/set-state-in-effect": "error",
+      "react-hooks/preserve-manual-memoization": "error",
+      "react-hooks/use-memo": "error",
+      "react-hooks/memo-dependencies": "error",
     },
   },
   {
