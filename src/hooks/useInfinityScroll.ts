@@ -1,38 +1,35 @@
-import { useRef, useEffect, useCallback } from "react";
+import { useEffect } from "react";
 
 type IProps = (targetEl: React.RefObject<HTMLDivElement>, fetchCallback: () => void) => void;
 
+const OBSERVER_OPTIONS = {
+  rootMargin: "0px",
+  threshold: 0.3,
+} as const;
+
 const useInfinityScroll: IProps = (targetEl, fetchCallback) => {
-  const observerRef = useRef<IntersectionObserver>(null);
-
-  const getObserver = useCallback(() => {
-    if (!targetEl) {
-      return;
-    }
-
-    observerRef.current = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && targetEl.current?.lastElementChild) {
-          fetchCallback();
-          observerRef.current?.unobserve(targetEl.current.lastElementChild);
-        }
-      },
-      { rootMargin: "0px", threshold: 0.3 },
-    );
-  }, [fetchCallback, targetEl]);
-
   useEffect(() => {
-    if (!targetEl.current?.lastElementChild) {
+    const target = targetEl.current?.lastElementChild;
+
+    if (!target) {
       return;
     }
 
-    getObserver();
-    observerRef.current?.observe(targetEl.current.lastElementChild);
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) {
+        return;
+      }
+
+      fetchCallback();
+      observer.unobserve(entry.target);
+    }, OBSERVER_OPTIONS);
+
+    observer.observe(target);
 
     return () => {
-      observerRef.current?.disconnect();
+      observer.disconnect();
     };
-  }, [targetEl, getObserver, fetchCallback]);
+  }, [targetEl, fetchCallback]);
 };
 
 export default useInfinityScroll;
