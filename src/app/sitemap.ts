@@ -19,11 +19,15 @@ const getPostSitemap = async (): Promise<MetadataRoute.Sitemap> => {
       next: { revalidate: 86400 },
     });
 
-    if (!res.ok) return [];
+    if (!res.ok) {
+      return [];
+    }
 
     const data: unknown = await res.json();
 
-    if (!Array.isArray(data)) return [];
+    if (!Array.isArray(data)) {
+      return [];
+    }
 
     const posts = data as IPost[];
 

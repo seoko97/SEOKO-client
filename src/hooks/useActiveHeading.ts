@@ -14,20 +14,26 @@ const useActiveHeading = (
   const animationFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (toc.length === 0) return;
+    if (toc.length === 0) {
+      return;
+    }
 
     const headingElements = Array.from(
       contentRef.current?.querySelectorAll<HTMLElement>(MARKDOWN_HEADING_SELECTOR) || [],
     );
 
     const updateActiveHeading = () => {
-      if (animationFrameRef.current !== null) return;
+      if (animationFrameRef.current !== null) {
+        return;
+      }
 
       animationFrameRef.current = requestAnimationFrame(() => {
         let activeId = "";
 
         for (const heading of headingElements) {
-          if (heading.getBoundingClientRect().top > HEADER_OFFSET) break;
+          if (heading.getBoundingClientRect().top > HEADER_OFFSET) {
+            break;
+          }
 
           activeId = heading.id;
         }
@@ -46,7 +52,9 @@ const useActiveHeading = (
       window.removeEventListener("scroll", updateActiveHeading);
       window.removeEventListener("resize", updateActiveHeading);
 
-      if (animationFrameRef.current === null) return;
+      if (animationFrameRef.current === null) {
+        return;
+      }
 
       cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;

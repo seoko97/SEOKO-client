@@ -52,10 +52,14 @@ const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
     const file = input.files?.[0];
     const textarea = editorRef.current?.textarea;
 
-    if (!file) return;
+    if (!file) {
+      return;
+    }
 
     try {
-      if (!textarea) return;
+      if (!textarea) {
+        return;
+      }
 
       const encodedFile = new File([file], encodeURI(file.name), { type: file.type });
 

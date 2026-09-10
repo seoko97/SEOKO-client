@@ -14,7 +14,9 @@ const WritePost = async ({ params }: IProps) => {
 
   const user = await getUserOrNull();
 
-  if (!user) return redirect("/signin");
+  if (!user) {
+    return redirect("/signin");
+  }
 
   return (
     <Hydrate nid={nid}>

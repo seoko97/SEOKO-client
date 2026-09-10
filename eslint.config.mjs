@@ -82,6 +82,13 @@ const eslintConfig = defineConfig([
     },
   },
   eslintPluginPrettier,
+  {
+    name: "project/style",
+    files: SOURCE_FILES,
+    rules: {
+      curly: ["error", "all"],
+    },
+  },
 ]);
 
 export default eslintConfig;

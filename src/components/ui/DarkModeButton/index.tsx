@@ -10,7 +10,9 @@ import { SunIcon, MoonIcon } from "@components/icons";
 const DarkModeButton = () => {
   const [mode, onChangeTheme] = useDarkMode();
 
-  if (!mode) return null;
+  if (!mode) {
+    return null;
+  }
 
   const Icon = mode === THEME.light ? MoonIcon : SunIcon;
 

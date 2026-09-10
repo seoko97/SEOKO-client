@@ -140,13 +140,17 @@ const getResponseBody = <T>(res: Response, responseType: ResponseType) => {
 };
 
 const appendForwardedIp = async (headers: Headers) => {
-  if (!IS_SERVER) return;
+  if (!IS_SERVER) {
+    return;
+  }
 
   const requestHeaders = await import("next/headers").then((module) => module.headers());
 
   const forwardedIp = requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim();
 
-  if (!forwardedIp) return;
+  if (!forwardedIp) {
+    return;
+  }
 
   headers.set("x-forwarded-for", forwardedIp);
   headers.set("x-real-ip", forwardedIp);

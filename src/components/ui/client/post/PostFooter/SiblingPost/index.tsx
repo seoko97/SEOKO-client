@@ -10,7 +10,9 @@ interface IProps {
 const SiblingPost = ({ nid }: IProps) => {
   const { data } = useGetSiblingPostQuery(nid);
 
-  if (!data) return null;
+  if (!data) {
+    return null;
+  }
 
   const { prev, next } = data;
 

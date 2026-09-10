@@ -18,7 +18,9 @@ export const dateTimeParser: Props = (date) => {
     return `${year}년 ${month}월 ${day}일`;
   }
 
-  if (hours >= 1) return `${hours}시간 전`;
+  if (hours >= 1) {
+    return `${hours}시간 전`;
+  }
 
   return `${minutes}분 전`;
 };

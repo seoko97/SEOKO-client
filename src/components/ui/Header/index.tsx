@@ -12,8 +12,11 @@ const Header: React.FC = () => {
     const updateScroll = () => {
       const scrollHeight = window.scrollY || document.documentElement.scrollTop;
 
-      if (scrollHeight >= 32) setIsFixed(true);
-      else setIsFixed(false);
+      if (scrollHeight >= 32) {
+        setIsFixed(true);
+      } else {
+        setIsFixed(false);
+      }
     };
 
     window.addEventListener("scroll", updateScroll);

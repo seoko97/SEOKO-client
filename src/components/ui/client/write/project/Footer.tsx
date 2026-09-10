@@ -14,7 +14,9 @@ const ProjectFooter = ({ nid }: IProps) => {
   const addProject = () => {
     const confirmPost = confirm("저장하시겠습니까?");
 
-    if (!confirmPost) return;
+    if (!confirmPost) {
+      return;
+    }
 
     mutate(dataRef.current);
   };

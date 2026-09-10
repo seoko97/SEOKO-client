@@ -13,7 +13,9 @@ const ModalPortal: FC<Props> = ({ children }) => {
   const modal = useSyncExternalStore(emptySubscribe, getModalElement, getServerSnapshot);
 
   useEffect(() => {
-    if (!modal) return;
+    if (!modal) {
+      return;
+    }
 
     const prevOverflow = document.body.style.overflow;
 

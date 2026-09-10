@@ -41,7 +41,9 @@ const SkillForm = ({ onClose, skill }: IProps) => {
   const onSubmitForm = () => {
     const conf = confirm("저장하시겠습니까?");
 
-    if (!conf) return;
+    if (!conf) {
+      return;
+    }
 
     const input = { ...formDataRef.current, icon: image };
 
@@ -53,7 +55,9 @@ const SkillForm = ({ onClose, skill }: IProps) => {
   const deleteSkill = () => {
     const conf = confirm("삭제하시겠습니까?");
 
-    if (!conf || !skill) return;
+    if (!conf || !skill) {
+      return;
+    }
 
     remove();
 

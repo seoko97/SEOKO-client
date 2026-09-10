@@ -38,7 +38,9 @@ const typeMapping = {
 const Alert = ({ type = "info", children, className, ...rest }: IProps) => {
   const props = typeMapping[type];
 
-  if (!props) return;
+  if (!props) {
+    return;
+  }
 
   const { icon: Icon, style, iconStyle } = props;
 

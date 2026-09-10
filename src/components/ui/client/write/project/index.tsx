@@ -25,7 +25,9 @@ const PROJECT_INPUT: IProjectInput = {
 };
 
 const getProjectInput = (project?: TProject): IProjectInput => {
-  if (!project) return { ...PROJECT_INPUT };
+  if (!project) {
+    return { ...PROJECT_INPUT };
+  }
 
   const { title, description, content, thumbnail, github, page, start, end } = project;
 

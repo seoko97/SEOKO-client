@@ -18,7 +18,9 @@ interface IProps {
 const Hydrate = async ({ nid, children }: IProps) => {
   const queryClient = getQueryClient();
 
-  if (isNaN(nid)) return notFound();
+  if (isNaN(nid)) {
+    return notFound();
+  }
 
   const series = await getOrNotFound(() =>
     queryClient.query({

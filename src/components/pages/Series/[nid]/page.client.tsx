@@ -29,12 +29,16 @@ const SeriesClient = ({ nid }: IProps) => {
   const onDelete = () => {
     const isDelete = confirm("시리즈를 삭제하시겠습니까?");
 
-    if (!isDelete) return;
+    if (!isDelete) {
+      return;
+    }
 
     deleteSeries();
   };
 
-  if (!series) return null;
+  if (!series) {
+    return null;
+  }
 
   const { name, postCount, updatedAt } = series;
 

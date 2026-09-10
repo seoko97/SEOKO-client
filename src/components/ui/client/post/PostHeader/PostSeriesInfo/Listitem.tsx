@@ -14,7 +14,9 @@ const ListItem = ({ post, isSelected }: IProps) => {
   const text = isSelected ? "text-main" : "text-primary hover:text-effect1";
 
   const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    if (!isSelected) return;
+    if (!isSelected) {
+      return;
+    }
 
     e.preventDefault();
   };

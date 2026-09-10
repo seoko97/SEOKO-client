@@ -13,7 +13,9 @@ const Toc = ({ markdown, contentRef }: IProps) => {
   const activeId = useActiveHeading(toc, contentRef);
   const scrollToTargetItem = useTocEvent(toc, contentRef);
 
-  if (toc.length === 0) return null;
+  if (toc.length === 0) {
+    return null;
+  }
 
   return (
     <ul className="flex w-full flex-col gap-2 pl-8 text-sm">

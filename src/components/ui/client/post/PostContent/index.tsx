@@ -16,7 +16,9 @@ const PostContent = ({ nid }: IProps) => {
 
   const { data } = useGetPostQuery(nid);
 
-  if (!data) return null;
+  if (!data) {
+    return null;
+  }
 
   const markdown = compileMarkdown(data.content);
 

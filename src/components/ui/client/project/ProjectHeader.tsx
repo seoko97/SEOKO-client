@@ -18,7 +18,9 @@ const ProjectHeader = ({ project }: IProps) => {
   const { data: username } = useGetUserQuery();
   const { mutate: deleteProjectMutate } = useDeleteProjectMutation(project.nid);
 
-  if (!project) return null;
+  if (!project) {
+    return null;
+  }
 
   const { nid, title, description, start, end, github, thumbnail, page } = project;
 
@@ -29,7 +31,9 @@ const ProjectHeader = ({ project }: IProps) => {
   const deleteProject = () => {
     const conf = confirm("삭제하시겠습니까?");
 
-    if (!conf) return;
+    if (!conf) {
+      return;
+    }
 
     deleteProjectMutate();
   };

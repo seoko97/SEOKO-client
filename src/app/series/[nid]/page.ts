@@ -10,7 +10,9 @@ export const generateMetadata = async ({ params }: TProps): Promise<Metadata> =>
   const { nid: paramNid } = await params;
   const nid = Number(paramNid);
 
-  if (isNaN(nid)) return {};
+  if (isNaN(nid)) {
+    return {};
+  }
 
   const series = await getOrNotFound(() => getSeries(nid));
 

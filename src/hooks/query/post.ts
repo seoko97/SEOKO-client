@@ -31,7 +31,9 @@ const useGetPostQuery = (nid: number | null) => {
   return useQuery({
     queryKey: postQueryKeys.detail(nid),
     queryFn: () => {
-      if (nid === null) return;
+      if (nid === null) {
+        return;
+      }
 
       return getPost(nid);
     },
@@ -53,7 +55,9 @@ const useGetPostsQuery = (params: IGetPostsInput = {}, options: IOptions = {}) =
     getNextPageParam: (lastPage, _, lastPageParam) => {
       const limit = params.limit ?? 10;
 
-      if (lastPage.length < limit) return undefined;
+      if (lastPage.length < limit) {
+        return undefined;
+      }
 
       return lastPageParam + lastPage.length;
     },
@@ -63,7 +67,9 @@ const useGetPostsQuery = (params: IGetPostsInput = {}, options: IOptions = {}) =
   const posts = data?.pages?.flat() ?? [];
 
   const fetchMore = () => {
-    if (!hasNextPage || isFetching) return;
+    if (!hasNextPage || isFetching) {
+      return;
+    }
 
     fetchNextPage();
   };
@@ -147,7 +153,9 @@ const useLikePostMutation = (nid: number) => {
       const post = queryClient.getQueryData<IPost>(postQueryKeys.detail(nid));
 
       queryClient.setQueryData<IPost | undefined>(postQueryKeys.detail(nid), (prev) => {
-        if (!prev) return prev;
+        if (!prev) {
+          return prev;
+        }
 
         return { ...prev, isLiked: true, likeCount: prev.likeCount + 1 };
       });
@@ -155,7 +163,9 @@ const useLikePostMutation = (nid: number) => {
       return { post };
     },
     onError: (err, _, prev) => {
-      if (!prev) return;
+      if (!prev) {
+        return;
+      }
 
       queryClient.setQueryData<IPost | undefined>(postQueryKeys.detail(nid), prev.post);
     },
@@ -179,7 +189,9 @@ const useUnlikePostMutation = (nid: number) => {
       const post = queryClient.getQueryData<IPost>(postQueryKeys.detail(nid));
 
       queryClient.setQueryData<IPost | undefined>(postQueryKeys.detail(nid), (prev) => {
-        if (!prev) return prev;
+        if (!prev) {
+          return prev;
+        }
 
         return { ...prev, isLiked: false, likeCount: prev.likeCount - 1 };
       });
@@ -187,7 +199,9 @@ const useUnlikePostMutation = (nid: number) => {
       return { post };
     },
     onError: (_, __, prev) => {
-      if (!prev) return;
+      if (!prev) {
+        return;
+      }
 
       queryClient.setQueryData(postQueryKeys.detail(nid), prev.post);
     },

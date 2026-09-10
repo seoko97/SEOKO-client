@@ -11,11 +11,15 @@ const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null
       contentRef?.current?.querySelectorAll<HTMLElement>(MARKDOWN_HEADING_SELECTOR) || [],
     );
 
-    if (!headingElements.length) return;
+    if (!headingElements.length) {
+      return;
+    }
 
     const targetHeading = headingElements.find((heading) => heading.id === id);
 
-    if (!targetHeading) return;
+    if (!targetHeading) {
+      return;
+    }
 
     const scrollY = window.scrollY + targetHeading.getBoundingClientRect().top - 80;
 
@@ -25,13 +29,17 @@ const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null
   const scrollToTargetItem: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
     const id = e.currentTarget.dataset.id;
 
-    if (!id) return;
+    if (!id) {
+      return;
+    }
 
     scroll(id);
   };
 
   useEffect(() => {
-    if (didScrollRef.current) return;
+    if (didScrollRef.current) {
+      return;
+    }
 
     const url = new URL(window.location.href);
     let decodedHash = "";
@@ -42,11 +50,15 @@ const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null
       return;
     }
 
-    if (!decodedHash) return;
+    if (!decodedHash) {
+      return;
+    }
 
     const item = toc.find((item) => item.id === decodedHash);
 
-    if (!item) return;
+    if (!item) {
+      return;
+    }
 
     const headings = Array.from(
       contentRef.current?.querySelectorAll<HTMLElement>(MARKDOWN_HEADING_SELECTOR) ?? [],
@@ -54,7 +66,9 @@ const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null
 
     const target = headings.find((heading) => heading.id === item.id);
 
-    if (!target) return;
+    if (!target) {
+      return;
+    }
 
     window.scrollTo({
       top: window.scrollY + target.getBoundingClientRect().top - 80,

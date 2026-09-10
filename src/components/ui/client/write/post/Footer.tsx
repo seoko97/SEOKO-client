@@ -16,7 +16,9 @@ const PostFooter = ({ nid, post }: IProps) => {
   const addPost = () => {
     const confirmPost = confirm("저장하시겠습니까?");
 
-    if (!confirmPost) return;
+    if (!confirmPost) {
+      return;
+    }
 
     const { tags, ...postInput } = dataRef.current;
 

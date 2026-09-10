@@ -24,7 +24,9 @@ const useUploadImage = ({ type, defaultImg }: IProps) => {
   const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
-    if (!file) return;
+    if (!file) {
+      return;
+    }
 
     const formData = new FormData();
 
@@ -40,7 +42,9 @@ const useUploadImage = ({ type, defaultImg }: IProps) => {
   const { mutate } = useMutation({
     mutationFn: onChangeImage,
     onSuccess: (data) => {
-      if (!data) return;
+      if (!data) {
+        return;
+      }
 
       setImage(data);
     },

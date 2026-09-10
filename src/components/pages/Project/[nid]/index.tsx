@@ -11,7 +11,9 @@ const Project = async ({ params }: TProps) => {
   const { nid: paramNid } = await params;
   const nid = Number(paramNid);
 
-  if (isNaN(nid)) return notFound();
+  if (isNaN(nid)) {
+    return notFound();
+  }
 
   const project = await getOrNotFound(() => getProject(nid));
 

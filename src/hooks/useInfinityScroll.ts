@@ -6,7 +6,9 @@ const useInfinityScroll: IProps = (targetEl, fetchCallback) => {
   const observerRef = useRef<IntersectionObserver>(null);
 
   const getObserver = useCallback(() => {
-    if (!targetEl) return;
+    if (!targetEl) {
+      return;
+    }
 
     observerRef.current = new IntersectionObserver(
       ([entry]) => {

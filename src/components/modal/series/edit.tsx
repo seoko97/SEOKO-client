@@ -40,7 +40,9 @@ const EditSeries = ({ series, onClose }: IProps) => {
 
     const confirmUpdate = confirm("수정하시겠습니까?");
 
-    if (!confirmUpdate) return;
+    if (!confirmUpdate) {
+      return;
+    }
 
     updateSeries({ ...input.current, thumbnail: image });
     onClose();

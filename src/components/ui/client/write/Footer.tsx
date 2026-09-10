@@ -14,7 +14,9 @@ const WriteFooter = ({ save }: IProps) => {
   const replace = () => {
     const answer = confirm("저장하지 않고 나가시겠습니까?");
 
-    if (!answer) return;
+    if (!answer) {
+      return;
+    }
 
     router.back();
   };

@@ -27,14 +27,19 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
     const name = target.name as keyof typeof formDataRef.current;
     const value = target.value;
 
-    if (name === "end") formDataRef.current[name] = value || null;
-    else formDataRef.current[name] = value;
+    if (name === "end") {
+      formDataRef.current[name] = value || null;
+    } else {
+      formDataRef.current[name] = value;
+    }
   };
 
   const onSubmitForm = () => {
     const conf = confirm("저장하시겠습니까?");
 
-    if (!conf) return;
+    if (!conf) {
+      return;
+    }
 
     createOrUpdateExperience(formDataRef.current);
 
@@ -44,7 +49,9 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
   const onClickDeleteButton = () => {
     const conf = confirm("삭제하시겠습니까?");
 
-    if (!conf || !experience) return;
+    if (!conf || !experience) {
+      return;
+    }
 
     deleteExperience();
 
