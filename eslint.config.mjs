@@ -28,7 +28,7 @@ const eslintConfig = defineConfig([
     rules: {
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/refs": "error",
-      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/set-state-in-effect": "error",
     },
   },
   {
