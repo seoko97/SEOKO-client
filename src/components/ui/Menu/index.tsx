@@ -3,17 +3,20 @@ import { useRef, cloneElement } from "react";
 import type { ReactElement, ReactNode } from "react";
 
 import useDetectOutsideClick from "@hooks/useDetectOutsideClick";
-import useAnimation from "@hooks/useAnimation";
 
 interface IProps {
   button: ReactElement<React.ComponentProps<"button">>;
   menu: ReactNode;
 }
 
+const MENU_STYLE = {
+  visible: "visible translate-y-0 opacity-100",
+  invisible: "invisible pointer-events-none -translate-y-[5%] opacity-0",
+};
+
 const BaseMenu = ({ button, menu }: IProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [showMenu, handler] = useDetectOutsideClick(ref, false);
-  const [renderMenu, triggerAnimation, handleTransitionEnd] = useAnimation(showMenu);
 
   const containerProps = {
     ref,
@@ -22,14 +25,16 @@ const BaseMenu = ({ button, menu }: IProps) => {
 
   const menuButtonProps = {
     onClick: handler,
+    "aria-expanded": showMenu,
     className: `${showMenu ? "is-active" : ""} ${button.props.className}`,
   };
 
   const wrapperProps = {
     className: `${
-      showMenu || triggerAnimation ? "animate-show" : "animate-hide"
-    } absolute top-[60px] right-0 lg:right-4`,
-    onAnimationEnd: handleTransitionEnd,
+      showMenu ? MENU_STYLE.visible : MENU_STYLE.invisible
+    } absolute top-[60px] right-0 transition-[opacity,transform,visibility] duration-150 ease-in-out lg:right-4`,
+    inert: !showMenu,
+    "aria-hidden": !showMenu,
   };
 
   if (typeof button === "object") {
@@ -39,7 +44,7 @@ const BaseMenu = ({ button, menu }: IProps) => {
   return (
     <div {...containerProps}>
       {button}
-      {renderMenu && <div {...wrapperProps}>{menu}</div>}
+      <div {...wrapperProps}>{menu}</div>
     </div>
   );
 };
