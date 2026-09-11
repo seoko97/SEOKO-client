@@ -1,11 +1,13 @@
+import { memo, type ReactNode, type RefObject } from "react";
+
 import { extractToc } from "@utils/markdown";
 import { useTocEvent } from "@hooks/useTocEvent";
 import { useActiveHeading } from "@hooks/useActiveHeading";
 import TocItem from "@components/ui/client/post/PostContent/Toc/item";
 
 interface IProps {
-  markdown: React.ReactNode;
-  contentRef: React.RefObject<HTMLDivElement | null>;
+  markdown: ReactNode;
+  contentRef: RefObject<HTMLDivElement | null>;
 }
 
 const Toc = ({ markdown, contentRef }: IProps) => {
@@ -31,4 +33,4 @@ const Toc = ({ markdown, contentRef }: IProps) => {
   );
 };
 
-export default Toc;
+export default memo(Toc);
