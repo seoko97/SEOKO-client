@@ -40,7 +40,7 @@ const ProjectHeader = ({ project }: IProps) => {
 
   return (
     <header className="mt-8 flex w-[theme(screens.md.max)] flex-col items-center justify-center gap-3 break-all md:w-full">
-      <div className="relative aspect-default w-full overflow-hidden rounded-lg">
+      <div className="relative aspect-default w-full overflow-hidden rounded-lg bg-gray-400 transition-[box-shadow]">
         <Image
           fill
           src={thumbnail}

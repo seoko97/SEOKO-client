@@ -60,7 +60,7 @@ const PostHeader = ({ nid }: IProps) => {
 
   return (
     <div className="mb-2 mt-4 flex w-[theme(screens.md.max)] flex-col items-center justify-center gap-5 break-all md:w-full">
-      <div className="relative aspect-default w-full overflow-hidden rounded-lg">
+      <div className="relative aspect-default w-full overflow-hidden rounded-lg bg-gray-400 transition-[box-shadow]">
         <Image
           fill
           preload={true}
