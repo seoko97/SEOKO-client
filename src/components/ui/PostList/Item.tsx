@@ -6,14 +6,16 @@ import Link from "next/link";
 
 import TagList from "@components/ui/TagList";
 import Image from "@components/ui/core/Image";
-import PostSubInfo from "@components/ui/client/post/PostHeader/PostSubInfo";
+import DateTime from "@components/ui/core/DateTime";
+import { LikeIcon, ViewIcon } from "@components/icons";
 import { IPost } from "@/types";
 
 interface IProps {
   post: IPost;
+  referenceTime: number;
 }
 
-const PostItem = ({ post }: IProps) => {
+const PostItem = ({ post, referenceTime }: IProps) => {
   const router = useRouter();
   const { nid, thumbnail, title, tags, content, viewCount, likeCount, createdAt } = post;
   const parsedContent = removeMd(content).substring(0, 120);
@@ -45,7 +47,21 @@ const PostItem = ({ post }: IProps) => {
           </h1>
           <p className="mb-2 font-light transition-[color]">{parsedContent}...</p>
           {tags.length > 0 && <TagList tags={tags} onClick={onClickTag} />}
-          <PostSubInfo viewCount={viewCount} likeCount={likeCount} createdAt={createdAt} />
+          <div className="flex flex-wrap items-center justify-start gap-4 text-sm">
+            <DateTime
+              className="font-normal text-slate-500 dark:text-slate-400"
+              date={createdAt}
+              referenceTime={referenceTime}
+            />
+            <div className="flex items-center justify-center gap-1">
+              <ViewIcon className="h-[1.2em] w-[1.2em] stroke-slate-500 dark:stroke-slate-400" />
+              <span className="text-slate-500 dark:text-slate-400">{viewCount}</span>
+            </div>
+            <div className="flex items-center justify-center gap-1">
+              <LikeIcon className="h-[1.2em] w-[1.2em] stroke-slate-500 dark:stroke-slate-400" />
+              <span className="text-slate-500 dark:text-slate-400">{likeCount}</span>
+            </div>
+          </div>
         </div>
       </div>
     </Link>

@@ -93,24 +93,24 @@ describe("hooks/query/post", () => {
 
     const { result } = renderHook(() => useGetPostsQuery({ limit: 2 }), { wrapper });
 
-    await waitFor(() => expect(result.current[0]).toEqual([post, secondPost]));
+    await waitFor(() => expect(result.current.posts).toEqual([post, secondPost]));
 
     expect(mockGetPosts).toHaveBeenCalledWith({ limit: 2, skip: 0 });
 
     act(() => {
-      result.current[1]();
+      result.current.fetchMore();
     });
 
-    await waitFor(() => expect(result.current[0]).toEqual([post, secondPost, thirdPost]));
+    await waitFor(() => expect(result.current.posts).toEqual([post, secondPost, thirdPost]));
 
     expect(mockGetPosts).toHaveBeenCalledWith({ limit: 2, skip: 2 });
 
     act(() => {
-      result.current[1]();
+      result.current.fetchMore();
     });
 
     expect(mockGetPosts).toHaveBeenCalledTimes(2);
-    expect(result.current[0]).toEqual([post, secondPost, thirdPost]);
+    expect(result.current.posts).toEqual([post, secondPost, thirdPost]);
   });
 
   it("좋아요 요청 중에는 상세 캐시를 낙관적으로 갱신하고, 성공 후 관련 query를 무효화한다", async () => {
