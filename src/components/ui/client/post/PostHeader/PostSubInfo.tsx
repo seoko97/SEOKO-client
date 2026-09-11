@@ -1,5 +1,3 @@
-import React from "react";
-
 import DateTime from "@components/ui/core/DateTime";
 import { LikeIcon, ViewIcon } from "@components/icons";
 

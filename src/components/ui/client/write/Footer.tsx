@@ -1,11 +1,11 @@
-import React from "react";
+import type { MouseEventHandler } from "react";
 
 import { useRouter } from "next/navigation";
 
 import Button from "@components/ui/core/Button";
 
 interface IProps {
-  save: React.MouseEventHandler<HTMLButtonElement>;
+  save: MouseEventHandler<HTMLButtonElement>;
 }
 
 const WriteFooter = ({ save }: IProps) => {

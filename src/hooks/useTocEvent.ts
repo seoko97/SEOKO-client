@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react";
+import { type MouseEventHandler, type RefObject, useEffect, useRef } from "react";
 
 import { MARKDOWN_HEADING_SELECTOR } from "@utils/constant/toc";
 import { IToc } from "@/types/base";
 
-const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null>) => {
+const useTocEvent = (toc: IToc[], contentRef: RefObject<HTMLElement | null>) => {
   const didScrollRef = useRef<boolean>(false);
 
   const scroll = (id: string, behavior: ScrollBehavior = "smooth") => {
@@ -26,7 +26,7 @@ const useTocEvent = (toc: IToc[], contentRef: React.RefObject<HTMLElement | null
     window.scrollTo({ top: scrollY, behavior, left: 0 });
   };
 
-  const scrollToTargetItem: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
+  const scrollToTargetItem: MouseEventHandler<HTMLAnchorElement> = (e) => {
     const id = e.currentTarget.dataset.id;
 
     if (!id) {

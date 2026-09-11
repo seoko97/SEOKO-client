@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { type RefObject, useEffect } from "react";
 
-type IProps = (targetEl: React.RefObject<HTMLDivElement>, fetchCallback: () => void) => void;
+type IProps = (targetEl: RefObject<HTMLDivElement>, fetchCallback: () => void) => void;
 
 const OBSERVER_OPTIONS = {
   rootMargin: "0px",

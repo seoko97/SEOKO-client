@@ -1,5 +1,3 @@
-import React from "react";
-
 import Thumbnail from "@components/ui/client/write/Thumbnail";
 import ProjectInput from "@components/ui/client/write/project/Input";
 import ProjectDateInput from "@components/ui/client/write/project/Date";

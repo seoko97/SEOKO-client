@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import { THEME } from "@utils/constant/theme";
 import useDarkMode from "@hooks/useDarkMode";
 

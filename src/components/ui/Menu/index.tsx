@@ -1,11 +1,15 @@
-import { useRef, cloneElement } from "react";
-
-import type { ReactElement, ReactNode } from "react";
+import {
+  cloneElement,
+  type ComponentProps,
+  type ReactElement,
+  type ReactNode,
+  useRef,
+} from "react";
 
 import useDetectOutsideClick from "@hooks/useDetectOutsideClick";
 
 interface IProps {
-  button: ReactElement<React.ComponentProps<"button">>;
+  button: ReactElement<ComponentProps<"button">>;
   menu: ReactNode;
 }
 

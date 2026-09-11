@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 
 import { useSignOutMutation } from "@hooks/query/user";
 import UserMenu from "@components/ui/Menu/User/List";
@@ -9,7 +9,7 @@ interface IProps {
   username?: string | null;
 }
 
-const Menu: React.FC<IProps> = ({ username }) => {
+const Menu: FC<IProps> = ({ username }) => {
   const { mutate } = useSignOutMutation();
 
   const baseMenuProps = {

@@ -1,5 +1,3 @@
-import React from "react";
-
 import NextScript from "next/script";
 
 import { GA_TRACKING_ID, isProd } from "@utils/constant/env";

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 import { useMutation } from "@tanstack/react-query";
 
@@ -21,7 +21,7 @@ const useUploadImageMutation = (type: EImageType) => {
 const useUploadImage = ({ type, defaultImg }: IProps) => {
   const [image, setImage] = useState<string>(defaultImg || DEFAULT_IMAGE);
 
-  const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (!file) {

@@ -70,6 +70,17 @@ const eslintConfig = defineConfig([
           "newlines-between": "always-and-inside-groups",
         },
       ],
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: 'ImportDefaultSpecifier[source.value="react"]',
+          message: "React default import 대신 필요한 named import를 사용하세요.",
+        },
+        {
+          selector: 'ImportNamespaceSpecifier[source.value="react"]',
+          message: "React namespace import 대신 필요한 named import 또는 type import를 사용하세요.",
+        },
+      ],
     },
   },
   {

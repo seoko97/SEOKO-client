@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 
 import { HydrationBoundary, dehydrate, noop } from "@tanstack/react-query";
 
@@ -7,7 +7,7 @@ import getQueryClient from "@utils/query/getQueryClient";
 import { getUser } from "@/apis/user";
 
 interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const Hydrate = async ({ children }: IProps) => {

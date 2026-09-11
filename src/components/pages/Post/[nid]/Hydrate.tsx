@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 
 import { notFound } from "next/navigation";
 
@@ -11,7 +11,7 @@ import { getSeries } from "@/apis/series";
 import { getPost, getSiblingPost } from "@/apis/post";
 
 interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
   nid: number;
 }
 

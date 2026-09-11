@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useGetSiblingPostQuery } from "@hooks/query/post";
 import SiblingItem from "@components/ui/client/post/PostFooter/SiblingPost/Item";
 

@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 
 import PageMenu from "@components/ui/Menu/Page/List";
 import BaseMenu from "@components/ui/Menu";
@@ -8,7 +8,7 @@ interface IProps {
   username?: string | null;
 }
 
-const Menu: React.FC<IProps> = ({ username }) => {
+const Menu: FC<IProps> = ({ username }) => {
   const baseMenuProps = {
     button: (
       <button

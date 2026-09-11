@@ -1,8 +1,8 @@
 import { createPortal } from "react-dom";
-import { FC, useEffect, useSyncExternalStore } from "react";
+import { type FC, type ReactNode, useEffect, useSyncExternalStore } from "react";
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const emptySubscribe = () => () => {};

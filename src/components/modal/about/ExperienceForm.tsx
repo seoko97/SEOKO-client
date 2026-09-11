@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { type ChangeEvent, useRef } from "react";
 
 import { useExperienceMutation } from "@hooks/query/experience";
 import Input from "@components/ui/core/Input";
@@ -21,7 +21,7 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
 
   const { createOrUpdateExperience, deleteExperience } = useExperienceMutation(experience?._id);
 
-  const onChangeInput = (e: React.ChangeEvent) => {
+  const onChangeInput = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
 
     const name = target.name as keyof typeof formDataRef.current;
