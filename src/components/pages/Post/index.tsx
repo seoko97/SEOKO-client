@@ -12,7 +12,9 @@ const getStringParam = (value: string | string[] | undefined) =>
 const getNumberParam = (value: string | string[] | undefined) => {
   const stringValue = getStringParam(value);
 
-  if (!stringValue) return undefined;
+  if (!stringValue) {
+    return undefined;
+  }
 
   const numberValue = Number(stringValue);
 

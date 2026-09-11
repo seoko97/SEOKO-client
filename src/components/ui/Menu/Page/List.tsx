@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC } from "react";
 
 import MenuItem from "@components/ui/Menu/Item";
 
@@ -6,7 +6,7 @@ interface IProps {
   isSign: boolean;
 }
 
-const PageMenu: React.FC<IProps> = ({ isSign }) => {
+const PageMenu: FC<IProps> = ({ isSign }) => {
   return (
     <ul className="menu">
       <MenuItem href="/">HOME</MenuItem>

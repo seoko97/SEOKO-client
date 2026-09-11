@@ -10,6 +10,7 @@ import javascript from "react-syntax-highlighter/dist/esm/languages/prism/javasc
 import css from "react-syntax-highlighter/dist/esm/languages/prism/css";
 import bash from "react-syntax-highlighter/dist/esm/languages/prism/bash";
 import { PrismLight } from "react-syntax-highlighter";
+import type { HTMLAttributes, ReactNode } from "react";
 
 PrismLight.registerLanguage("javascript", javascript);
 PrismLight.registerLanguage("js", javascript);
@@ -26,9 +27,9 @@ PrismLight.registerLanguage("yml", yaml);
 
 import InlineCode from "./inlineCode";
 
-interface IProps extends React.HTMLAttributes<HTMLElement> {
-  children: React.ReactNode;
-  preProps?: React.HTMLAttributes<HTMLPreElement>;
+interface IProps extends HTMLAttributes<HTMLElement> {
+  children: ReactNode;
+  preProps?: HTMLAttributes<HTMLPreElement>;
 }
 
 const code = ({ children, className = "", preProps, ...props }: IProps) => {

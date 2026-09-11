@@ -1,12 +1,12 @@
-import React from "react";
+import type { FC, LiHTMLAttributes, PropsWithChildren } from "react";
 
 import Link from "next/link";
 
-interface IProps extends React.LiHTMLAttributes<HTMLLIElement> {
+interface IProps extends LiHTMLAttributes<HTMLLIElement> {
   href?: string;
 }
 
-type TComponent = React.FC<React.PropsWithChildren<IProps>>;
+type TComponent = FC<PropsWithChildren<IProps>>;
 
 const MenuItem: TComponent = ({ children, href, ...rest }) => {
   const liProps = {

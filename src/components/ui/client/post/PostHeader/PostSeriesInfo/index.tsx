@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import Link from "next/link";
 
@@ -21,9 +21,7 @@ const PostSeriesInfo = ({ selectedPostNid, series }: IProps) => {
     setShowList((prev) => !prev);
   };
 
-  const selectedIndex = useMemo(() => {
-    return posts.findIndex(({ nid }) => nid === selectedPostNid);
-  }, [selectedPostNid]);
+  const selectedIndex = posts.findIndex(({ nid }) => nid === selectedPostNid);
 
   return (
     <div className="relative w-full rounded-lg bg-secondary px-6 py-8 shadow-sm transition-[background-color]">

@@ -32,16 +32,22 @@ const useUpdateSkillMutation = (_id: string) => {
 
       const previousSkills = queryClient.getQueryData<TSkills>(skillQueryKeys.root);
 
-      if (!previousSkills) return;
+      if (!previousSkills) {
+        return;
+      }
 
       queryClient.setQueryData<TSkills>(skillQueryKeys.root, (prev) => {
-        if (!prev) return prev;
+        if (!prev) {
+          return prev;
+        }
 
         const newSkills = Object.keys(prev).reduce((acc, key) => {
           const skillCategory = prev[key as ESkillType];
 
           const newSkillCategory = skillCategory.map((skill) => {
-            if (skill._id !== _id) return skill;
+            if (skill._id !== _id) {
+              return skill;
+            }
 
             return { ...skill, ...data };
           });
@@ -55,7 +61,9 @@ const useUpdateSkillMutation = (_id: string) => {
       return previousSkills;
     },
     onError: (_, __, context) => {
-      if (!context) return;
+      if (!context) {
+        return;
+      }
 
       const previousSkills = context;
 
@@ -77,10 +85,14 @@ const useDeleteSkillMutation = (_id: string) => {
 
       const previousSkills = queryClient.getQueryData<TSkills>(skillQueryKeys.root);
 
-      if (!previousSkills) return;
+      if (!previousSkills) {
+        return;
+      }
 
       queryClient.setQueryData<TSkills>(skillQueryKeys.root, (prev) => {
-        if (!prev) return prev;
+        if (!prev) {
+          return prev;
+        }
 
         const newSkills = Object.keys(prev).reduce((acc, key) => {
           const skillCategory = prev[key as ESkillType];
@@ -96,7 +108,9 @@ const useDeleteSkillMutation = (_id: string) => {
       return previousSkills;
     },
     onError: (_, __, context) => {
-      if (!context) return;
+      if (!context) {
+        return;
+      }
 
       const previousSkills = context;
 
@@ -114,8 +128,11 @@ const useSkillMutation = (_id?: string) => {
   const { mutate: remove } = useDeleteSkillMutation(_id as string);
 
   const createOrUpdate = (data: ICreateSkill | TUpdateSkill) => {
-    if (_id) update(data as TUpdateSkill);
-    else create(data as ICreateSkill);
+    if (_id) {
+      update(data as TUpdateSkill);
+    } else {
+      create(data as ICreateSkill);
+    }
   };
 
   return { createOrUpdate, remove };

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useLikePostMutation, useUnlikePostMutation } from "@hooks/query/post";
 import { LikeIcon } from "@components/icons";
 

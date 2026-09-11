@@ -10,7 +10,9 @@ type TProps = Pick<PageProps<"/tag/[name]">, "params">;
 const Tag = async ({ params }: TProps) => {
   const { name } = await params;
 
-  if (!name) return notFound();
+  if (!name) {
+    return notFound();
+  }
 
   const tag = await getOrNotFound(() => getTag(name));
 

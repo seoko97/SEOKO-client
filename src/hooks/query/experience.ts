@@ -37,13 +37,19 @@ const useUpdateExperienceMutation = (_id: string) => {
 
       const previousSkills = queryClient.getQueryData<IExperience[]>(experienceQueryKeys.root);
 
-      if (!previousSkills) return;
+      if (!previousSkills) {
+        return;
+      }
 
       queryClient.setQueryData<IExperience[]>(experienceQueryKeys.root, (prev) => {
-        if (!prev) return prev;
+        if (!prev) {
+          return prev;
+        }
 
         const newSkills = prev.map((skill) => {
-          if (skill._id !== _id) return skill;
+          if (skill._id !== _id) {
+            return skill;
+          }
 
           return { ...skill, ...data };
         });
@@ -54,7 +60,9 @@ const useUpdateExperienceMutation = (_id: string) => {
       return previousSkills;
     },
     onError: (_, __, context) => {
-      if (!context) return;
+      if (!context) {
+        return;
+      }
 
       const previousSkills = context;
 
@@ -76,10 +84,14 @@ const useDeleteExperienceMutation = (_id: string) => {
 
       const previousSkills = queryClient.getQueryData<IExperience[]>(experienceQueryKeys.root);
 
-      if (!previousSkills) return;
+      if (!previousSkills) {
+        return;
+      }
 
       queryClient.setQueryData<IExperience[]>(experienceQueryKeys.root, (prev) => {
-        if (!prev) return prev;
+        if (!prev) {
+          return prev;
+        }
 
         const newSkills = prev.filter((skill) => skill._id !== _id);
 
@@ -89,7 +101,9 @@ const useDeleteExperienceMutation = (_id: string) => {
       return previousSkills;
     },
     onError: (_, __, context) => {
-      if (!context) return;
+      if (!context) {
+        return;
+      }
 
       const previousSkills = context;
 
@@ -107,8 +121,11 @@ const useExperienceMutation = (_id?: string) => {
   const { mutate: deleteExperience } = useDeleteExperienceMutation(_id as string);
 
   const createOrUpdateExperience = (data: ICreateExperience | IUpdateExperience) => {
-    if (_id) updateExperience(data as IUpdateExperience);
-    else createExperience(data as ICreateExperience);
+    if (_id) {
+      updateExperience(data as IUpdateExperience);
+    } else {
+      createExperience(data as ICreateExperience);
+    }
   };
 
   return { createOrUpdateExperience, deleteExperience };

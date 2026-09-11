@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { usePathname } from "next/navigation";
 
@@ -22,14 +22,18 @@ const Giscus = () => {
   useEffect(() => {
     const container = ref.current;
 
-    if (!container) return;
+    if (!container) {
+      return;
+    }
 
     setMounted(false);
     container.replaceChildren();
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return;
+        if (!entry.isIntersecting) {
+          return;
+        }
 
         observer.unobserve(entry.target);
 
@@ -65,7 +69,9 @@ const Giscus = () => {
   }, [pathname]);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
 
     const iframe = ref.current?.querySelector<HTMLIFrameElement>("iframe.giscus-frame");
 

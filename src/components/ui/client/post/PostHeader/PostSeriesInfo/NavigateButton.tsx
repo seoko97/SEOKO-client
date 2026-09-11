@@ -15,7 +15,9 @@ const NavigateButton = ({ type, posts, selectedIndex }: IProps) => {
   const currentIndex = selectedIndex + (type === "prev" ? -1 : 1);
 
   const onClick = () => {
-    if (currentIndex < 0 || currentIndex >= posts.length) return;
+    if (currentIndex < 0 || currentIndex >= posts.length) {
+      return;
+    }
 
     const { nid } = posts[currentIndex];
 

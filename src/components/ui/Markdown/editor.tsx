@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { type ChangeEvent, useRef, useState } from "react";
 
 import MDEditor, {
   MDEditorProps,
@@ -47,15 +47,19 @@ const MarkdownEditor = ({ type, content, onChangeContent }: IProps) => {
     },
   };
 
-  const imageHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const imageHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.currentTarget;
     const file = input.files?.[0];
     const textarea = editorRef.current?.textarea;
 
-    if (!file) return;
+    if (!file) {
+      return;
+    }
 
     try {
-      if (!textarea) return;
+      if (!textarea) {
+        return;
+      }
 
       const encodedFile = new File([file], encodeURI(file.name), { type: file.type });
 

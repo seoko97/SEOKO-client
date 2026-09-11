@@ -1,19 +1,25 @@
-import React from "react";
+import {
+  cloneElement,
+  isValidElement,
+  type HTMLAttributes,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 
-interface IProps extends React.HTMLAttributes<HTMLElement> {
-  children: React.ReactNode;
+interface IProps extends HTMLAttributes<HTMLElement> {
+  children: ReactNode;
 }
 
 interface ICodeProps {
-  preProps?: React.HTMLAttributes<HTMLPreElement>;
+  preProps?: HTMLAttributes<HTMLPreElement>;
 }
 
 const pre = ({ children, ...props }: IProps) => {
-  if (!React.isValidElement(children)) {
+  if (!isValidElement(children)) {
     return <pre {...props}>{children}</pre>;
   }
 
-  return React.cloneElement(children as React.ReactElement<ICodeProps>, { preProps: props });
+  return cloneElement(children as ReactElement<ICodeProps>, { preProps: props });
 };
 
 export default pre;

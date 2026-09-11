@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { type ChangeEvent, useRef } from "react";
 
 import { useExperienceMutation } from "@hooks/query/experience";
 import Input from "@components/ui/core/Input";
@@ -21,20 +21,25 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
 
   const { createOrUpdateExperience, deleteExperience } = useExperienceMutation(experience?._id);
 
-  const onChangeInput = (e: React.ChangeEvent) => {
+  const onChangeInput = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
 
     const name = target.name as keyof typeof formDataRef.current;
     const value = target.value;
 
-    if (name === "end") formDataRef.current[name] = value || null;
-    else formDataRef.current[name] = value;
+    if (name === "end") {
+      formDataRef.current[name] = value || null;
+    } else {
+      formDataRef.current[name] = value;
+    }
   };
 
   const onSubmitForm = () => {
     const conf = confirm("저장하시겠습니까?");
 
-    if (!conf) return;
+    if (!conf) {
+      return;
+    }
 
     createOrUpdateExperience(formDataRef.current);
 
@@ -44,7 +49,9 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
   const onClickDeleteButton = () => {
     const conf = confirm("삭제하시겠습니까?");
 
-    if (!conf || !experience) return;
+    if (!conf || !experience) {
+      return;
+    }
 
     deleteExperience();
 

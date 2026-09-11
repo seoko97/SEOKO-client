@@ -1,9 +1,6 @@
-import { RefObject, useState, useEffect } from "react";
-
-import { usePathname } from "next/navigation";
+import { type RefObject, useEffect, useState } from "react";
 
 const useDetectOutsideClick = (el: RefObject<Node | null>, initialState: boolean) => {
-  const pathname = usePathname();
   const [isActive, setIsActive] = useState(initialState);
 
   const onChangeActive = () => {
@@ -11,10 +8,14 @@ const useDetectOutsideClick = (el: RefObject<Node | null>, initialState: boolean
   };
 
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive) {
+      return;
+    }
 
-    const onClick = (e: MouseEvent) => {
-      if (!el.current || el.current.contains(e.target as Node)) return;
+    const onClick = (event: MouseEvent) => {
+      if (!el.current || el.current.contains(event.target as Node)) {
+        return;
+      }
 
       setIsActive(false);
     };
@@ -25,10 +26,6 @@ const useDetectOutsideClick = (el: RefObject<Node | null>, initialState: boolean
       document.removeEventListener("click", onClick);
     };
   }, [isActive, el]);
-
-  useEffect(() => {
-    setIsActive(false);
-  }, [pathname]);
 
   return [isActive, onChangeActive] as const;
 };

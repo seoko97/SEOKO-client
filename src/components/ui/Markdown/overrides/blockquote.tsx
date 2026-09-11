@@ -1,7 +1,7 @@
-import React from "react";
+import type { BlockquoteHTMLAttributes, ReactNode } from "react";
 
-interface IProps extends React.BlockquoteHTMLAttributes<HTMLQuoteElement> {
-  children: React.ReactNode;
+interface IProps extends BlockquoteHTMLAttributes<HTMLQuoteElement> {
+  children: ReactNode;
 }
 
 const blockquote = ({ children, className, ...props }: IProps) => {

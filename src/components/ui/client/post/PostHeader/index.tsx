@@ -24,7 +24,9 @@ const PostHeader = ({ nid }: IProps) => {
   const { data: series } = useGetSeriesQuery(post?.series?.nid ?? null);
   const { mutate: deletePostMutate } = useDeletePostMutation(nid);
 
-  if (!post) return null;
+  if (!post) {
+    return null;
+  }
 
   const { title, likeCount, viewCount, thumbnail, tags, createdAt } = post;
 
@@ -33,11 +35,15 @@ const PostHeader = ({ nid }: IProps) => {
   };
 
   const deletePost = () => {
-    if (!username) return;
+    if (!username) {
+      return;
+    }
 
     const conf = confirm("삭제하시겠습니까?");
 
-    if (!conf) return;
+    if (!conf) {
+      return;
+    }
 
     deletePostMutate();
   };
@@ -45,7 +51,9 @@ const PostHeader = ({ nid }: IProps) => {
   const onClickTag = (e: MouseEvent<HTMLDivElement>) => {
     const tagName = e.currentTarget.textContent?.trim();
 
-    if (!tagName) return;
+    if (!tagName) {
+      return;
+    }
 
     router.push(`/tag/${encodeURIComponent(tagName)}`);
   };

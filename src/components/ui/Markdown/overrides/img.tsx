@@ -19,7 +19,9 @@ const isConfiguredImageUrl = (src: string) => {
 const img = (props: ImageProps) => {
   const { alt, className, src, ...rest } = props;
 
-  if (!src) return;
+  if (!src) {
+    return;
+  }
 
   const hasConfigured = typeof src === "string" && isConfiguredImageUrl(src);
 

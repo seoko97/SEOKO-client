@@ -1,4 +1,4 @@
-import React from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 
 import {
   CheckCircleIcon,
@@ -7,8 +7,8 @@ import {
   TimesCircleIcon,
 } from "@components/icons";
 
-interface IProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
+interface IProps extends HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
   type: "info" | "success" | "warning" | "danger";
 }
 
@@ -38,7 +38,9 @@ const typeMapping = {
 const Alert = ({ type = "info", children, className, ...rest }: IProps) => {
   const props = typeMapping[type];
 
-  if (!props) return;
+  if (!props) {
+    return;
+  }
 
   const { icon: Icon, style, iconStyle } = props;
 

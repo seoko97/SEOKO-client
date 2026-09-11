@@ -1,24 +1,17 @@
-import { useEffect, useState } from "react";
-
-import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const useModal = () => {
-  const pathname = usePathname();
-  const [isOpen, setter] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const open = () => {
-    setter(true);
+    setIsOpen(true);
   };
 
   const close = () => {
-    setter(false);
+    setIsOpen(false);
   };
 
-  useEffect(() => {
-    setter(false);
-  }, [pathname]);
-
-  return [isOpen, open, close, setter] as const;
+  return [isOpen, open, close] as const;
 };
 
 export default useModal;

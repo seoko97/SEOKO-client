@@ -1,7 +1,7 @@
-import React from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 
-interface IProps extends React.HTMLAttributes<HTMLElement> {
-  children: React.ReactNode;
+interface IProps extends HTMLAttributes<HTMLElement> {
+  children: ReactNode;
 }
 
 const InlineCode = ({ children, className = "", ...rest }: IProps) => {

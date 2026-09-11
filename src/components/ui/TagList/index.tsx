@@ -1,4 +1,4 @@
-import React from "react";
+import type { MouseEvent } from "react";
 
 import Tag from "@components/ui/TagList/item";
 import { ITag } from "@/types";
@@ -6,7 +6,7 @@ import { ITag } from "@/types";
 interface IProps {
   className?: string;
   tags: ITag[];
-  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onClick: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 const TagList = ({ className = "", tags, onClick }: IProps) => {

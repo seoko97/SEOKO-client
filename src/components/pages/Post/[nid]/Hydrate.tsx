@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 
 import { notFound } from "next/navigation";
 
@@ -11,14 +11,16 @@ import { getSeries } from "@/apis/series";
 import { getPost, getSiblingPost } from "@/apis/post";
 
 interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
   nid: number;
 }
 
 const Hydrate = async ({ children, nid }: IProps) => {
   const queryClient = getQueryClient();
 
-  if (isNaN(nid)) return notFound();
+  if (isNaN(nid)) {
+    return notFound();
+  }
 
   const post = await getOrNotFound(() =>
     queryClient.query({

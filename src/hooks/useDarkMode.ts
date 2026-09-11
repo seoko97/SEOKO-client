@@ -10,7 +10,9 @@ const useDarkMode: TResult = () => {
   const [mode, setMode] = useThemeStorage();
 
   const onChangeTheme = () => {
-    if (!mode) return;
+    if (!mode) {
+      return;
+    }
 
     const theme = mode === THEME.light ? THEME.dark : THEME.light;
 
@@ -18,17 +20,11 @@ const useDarkMode: TResult = () => {
   };
 
   useEffect(() => {
-    const theme = document.body.dataset.theme === THEME.dark ? THEME.dark : THEME.light;
-
-    if (mode === theme) return;
-
-    setMode(theme);
-  }, []);
-
-  useEffect(() => {
     const body = document.body;
 
-    if (!mode || body?.dataset.theme === mode) return;
+    if (!mode || body?.dataset.theme === mode) {
+      return;
+    }
 
     body.dataset.theme = mode;
   }, [mode]);

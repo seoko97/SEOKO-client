@@ -23,7 +23,9 @@ const SkillEditor = () => {
     setSelectedSkill(data);
   };
 
-  if (!skills) return null;
+  if (!skills) {
+    return null;
+  }
 
   const { front, back, devops, language } = skills;
 

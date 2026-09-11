@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 
 import { THEME, THEME_STORAGE_KEY } from "@utils/constant/theme";
@@ -79,7 +80,7 @@ export const metadata: Metadata = {
   manifest: "/favicons/manifest.json",
 };
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const RootLayout = ({ children }: { children: ReactNode }) => {
   function setBodyDatasetByTheme(darkTheme: string, lightTheme: string, storageKey: string) {
     const prefersDarkFromMq = window.matchMedia("(prefers-color-scheme: dark)").matches;
 

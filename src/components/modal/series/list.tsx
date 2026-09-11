@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { type ChangeEvent, type SubmitEvent, useState } from "react";
 
 import { useGetSeriesQueries } from "@hooks/query/series";
 import Input from "@components/ui/core/Input";
@@ -17,7 +17,7 @@ const SeriesList = (props: IProps) => {
   const [selectedSeries, setSeries] = useState<string>(defaultSeries || "");
   const { data: series } = useGetSeriesQueries();
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = (e: SubmitEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -25,7 +25,7 @@ const SeriesList = (props: IProps) => {
     onClose();
   };
 
-  const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
 
     setSeries(target.value);

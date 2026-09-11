@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { type ChangeEvent, type MouseEvent, useRef } from "react";
 
 import { useSkillMutation } from "@hooks/query/skill";
 import { useUploadImage } from "@hooks/query/image";
@@ -31,7 +31,7 @@ const SkillForm = ({ onClose, skill }: IProps) => {
 
   const { createOrUpdate, remove } = useSkillMutation(skill?._id);
 
-  const onChangeInput = (e: React.ChangeEvent) => {
+  const onChangeInput = (e: ChangeEvent) => {
     const name = (e.target as HTMLInputElement).name as keyof typeof formDataRef.current;
     const value = (e.target as HTMLInputElement).value as ESkillType.FRONT_END;
 
@@ -41,7 +41,9 @@ const SkillForm = ({ onClose, skill }: IProps) => {
   const onSubmitForm = () => {
     const conf = confirm("저장하시겠습니까?");
 
-    if (!conf) return;
+    if (!conf) {
+      return;
+    }
 
     const input = { ...formDataRef.current, icon: image };
 
@@ -53,14 +55,16 @@ const SkillForm = ({ onClose, skill }: IProps) => {
   const deleteSkill = () => {
     const conf = confirm("삭제하시겠습니까?");
 
-    if (!conf || !skill) return;
+    if (!conf || !skill) {
+      return;
+    }
 
     remove();
 
     onClose();
   };
 
-  const imageHandler = (e: React.MouseEvent) => {
+  const imageHandler = (e: MouseEvent) => {
     e.preventDefault();
 
     imageRef.current?.click();

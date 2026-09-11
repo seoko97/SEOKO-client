@@ -16,7 +16,9 @@ const useGetProjectQuery = (nid: number | null) => {
   return useQuery({
     queryKey: projectQueryKeys.detail(nid),
     queryFn: () => {
-      if (nid === null) return;
+      if (nid === null) {
+        return;
+      }
 
       return getProject(nid);
     },

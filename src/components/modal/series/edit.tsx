@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { type FormEvent, type MouseEvent, useRef } from "react";
 
 import useInput from "@hooks/useInput";
 import { useUpdateSeriesMutation } from "@hooks/query/series";
@@ -29,18 +29,20 @@ const EditSeries = ({ series, onClose }: IProps) => {
     type: EImageType.SERIES,
   });
 
-  const thumbnailHandler = (e: React.MouseEvent) => {
+  const thumbnailHandler = (e: MouseEvent) => {
     e.preventDefault();
 
     thumbnailRef.current?.click();
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     const confirmUpdate = confirm("수정하시겠습니까?");
 
-    if (!confirmUpdate) return;
+    if (!confirmUpdate) {
+      return;
+    }
 
     updateSeries({ ...input.current, thumbnail: image });
     onClose();

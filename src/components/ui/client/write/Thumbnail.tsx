@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { type MouseEvent, useEffect, useRef } from "react";
 
 import { useUploadImage } from "@hooks/query/image";
 import Image from "@components/ui/core/Image";
@@ -19,7 +19,7 @@ const Thumbnail = ({ defaultValue, setThumbnail, type }: IProps) => {
     clearImage,
   } = useUploadImage({ defaultImg: defaultValue, type });
 
-  const thumbnailHandler = (e: React.MouseEvent) => {
+  const thumbnailHandler = (e: MouseEvent) => {
     e.preventDefault();
 
     thumbnailRef.current?.click();

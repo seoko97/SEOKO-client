@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
@@ -8,7 +8,7 @@ import getOrNotFound from "@utils/getOrNotFound";
 import { getPost } from "@/apis/post";
 
 interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
   nid: number | null;
 }
 

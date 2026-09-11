@@ -35,7 +35,9 @@ const extractToc = (markdown: ReactNode) => {
   content.forEach((el) => {
     const tagname = typeof el?.type === "string" ? el.type : undefined;
 
-    if (!tagname || !/^h[1-6]$/.test(tagname)) return;
+    if (!tagname || !/^h[1-6]$/.test(tagname)) {
+      return;
+    }
 
     const children = el?.props?.children;
 
@@ -43,7 +45,9 @@ const extractToc = (markdown: ReactNode) => {
     const id = el?.props?.id ?? (removeSpecialCharacters(text) || "heading");
     const level = Number(tagname.replace("h", "")) - 1;
 
-    if (level > 2) return;
+    if (level > 2) {
+      return;
+    }
 
     toc.push({ text, id, level });
   });

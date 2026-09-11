@@ -16,7 +16,9 @@ const TagEditor = () => {
   const onClickTag: MouseEventHandler<HTMLDivElement> = (e) => {
     const tagName = e.currentTarget.textContent;
 
-    if (!tagName) return;
+    if (!tagName) {
+      return;
+    }
 
     const newTags = [...tags];
 
@@ -27,12 +29,16 @@ const TagEditor = () => {
   };
 
   const tagHandler: KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.nativeEvent.isComposing) return;
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
 
     const tagName = e.currentTarget.value.trim();
 
     if (e.key === "Enter") {
-      if (tags.includes(tagName) || !tagName.length) return;
+      if (tags.includes(tagName) || !tagName.length) {
+        return;
+      }
 
       setTags([...tags, tagName]);
 
@@ -40,7 +46,9 @@ const TagEditor = () => {
     }
 
     if (e.key === "Backspace") {
-      if (tags.length === 0 || tagName.length > 0) return;
+      if (tags.length === 0 || tagName.length > 0) {
+        return;
+      }
 
       const newTags = [...tags];
 

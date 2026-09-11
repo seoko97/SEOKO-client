@@ -17,7 +17,9 @@ const HomeHeader = ({ text: textParam }: IProps) => {
       .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\\{\\}\\[\]\\\\/]/gim, "")
       .trim();
 
-    if (textParam === text) return;
+    if (textParam === text) {
+      return;
+    }
 
     const link = text ? `/?text=${text}` : "/";
 

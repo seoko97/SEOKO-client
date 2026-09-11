@@ -1,4 +1,4 @@
-import React from "react";
+import type { ReactNode } from "react";
 
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
@@ -7,7 +7,7 @@ import getQueryClient from "@utils/query/getQueryClient";
 import { getExperiences } from "@/apis/experience";
 
 interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const ExperienceHydrate = async ({ children }: IProps) => {

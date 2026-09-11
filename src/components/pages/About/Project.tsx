@@ -5,7 +5,9 @@ import { getProjects } from "@/apis/project";
 const Project = async () => {
   const projects = await getProjects();
 
-  if (!projects) return null;
+  if (!projects) {
+    return null;
+  }
 
   const sortedProjects = [...projects].sort((a, b) =>
     new Date(a.start) > new Date(b.start) ? -1 : 1,

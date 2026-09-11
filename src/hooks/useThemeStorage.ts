@@ -82,7 +82,9 @@ const useThemeStorage = () => {
   }, []);
 
   useEffect(() => {
-    if (state) return;
+    if (state) {
+      return;
+    }
 
     const theme = document.body.dataset.theme ?? THEME.light;
 

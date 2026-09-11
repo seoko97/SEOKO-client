@@ -16,16 +16,16 @@ const PostContent = ({ nid }: IProps) => {
 
   const { data } = useGetPostQuery(nid);
 
-  if (!data) return null;
+  if (!data) {
+    return null;
+  }
 
   const markdown = compileMarkdown(data.content);
-
-  const { isLiked } = data;
 
   return (
     <div className="relative my-6 flex w-full justify-center lg:flex-col-reverse lg:items-center">
       <div className="sticky top-24 flex h-fit w-full flex-1 justify-end lg:my-8 lg:justify-center">
-        <Like nid={nid} isLiked={isLiked} />
+        <Like nid={nid} isLiked={data.isLiked} />
       </div>
       <div ref={contentRef} className="markdown w-[theme(screens.md.max)] md:w-full">
         {markdown}

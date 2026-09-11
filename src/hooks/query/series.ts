@@ -17,7 +17,9 @@ const useGetSeriesQuery = (nid: number | null = null) => {
   return useQuery({
     queryKey: seriesQueryKeys.detail(nid),
     queryFn: () => {
-      if (nid === null) return;
+      if (nid === null) {
+        return;
+      }
 
       return getSeries(nid);
     },
@@ -35,23 +37,31 @@ const useUpdateSeriesMutation = (nid: number) => {
 
       const previousSeries = queryClient.getQueryData<ISeries>(seriesQueryKeys.detail(nid));
 
-      if (!previousSeries) return;
+      if (!previousSeries) {
+        return;
+      }
 
       const previousSeriesList = queryClient.getQueryData<ISeries[]>(seriesQueryKeys.root);
 
       const newSeries: ISeries = { ...previousSeries, name: data.name, thumbnail: data.thumbnail };
 
       queryClient.setQueryData<ISeries>(seriesQueryKeys.detail(nid), (prev) => {
-        if (!prev) return prev;
+        if (!prev) {
+          return prev;
+        }
 
         return newSeries;
       });
 
       queryClient.setQueryData<ISeries[]>(seriesQueryKeys.root, (prev) => {
-        if (!prev) return prev;
+        if (!prev) {
+          return prev;
+        }
 
         return prev.map((series) => {
-          if (series.nid !== nid) return series;
+          if (series.nid !== nid) {
+            return series;
+          }
 
           return newSeries;
         });
@@ -60,7 +70,9 @@ const useUpdateSeriesMutation = (nid: number) => {
       return { previousSeries, previousSeriesList };
     },
     onError: (_, __, context) => {
-      if (!context) return;
+      if (!context) {
+        return;
+      }
 
       const { previousSeries, previousSeriesList } = context;
 
@@ -87,7 +99,9 @@ const useDeleteSeriesMutation = (nid: number) => {
       const previousSeriesList = queryClient.getQueryData<ISeries[]>(seriesQueryKeys.root);
 
       queryClient.setQueryData<ISeries[]>(seriesQueryKeys.root, (prev) => {
-        if (!prev) return prev;
+        if (!prev) {
+          return prev;
+        }
 
         return prev.filter((series) => series.nid !== nid);
       });
@@ -97,7 +111,9 @@ const useDeleteSeriesMutation = (nid: number) => {
       return { previousSeries, previousSeriesList };
     },
     onError: (_, __, context) => {
-      if (!context) return;
+      if (!context) {
+        return;
+      }
 
       const { previousSeries, previousSeriesList } = context;
 

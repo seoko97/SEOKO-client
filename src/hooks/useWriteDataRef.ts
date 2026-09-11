@@ -1,4 +1,4 @@
-import { type RefObject, useCallback, useMemo, useRef } from "react";
+import { type RefObject, useRef, useState } from "react";
 
 interface IWriteDataRef<T extends object> {
   initialData: T;
@@ -7,14 +7,18 @@ interface IWriteDataRef<T extends object> {
 }
 
 const useWriteDataRef = <T extends object>(initialData: T): IWriteDataRef<T> => {
-  const dataRef = useRef<T>(initialData);
+  const [initialWriteData] = useState(() => initialData);
+  const dataRef = useRef<T>(initialWriteData);
 
-  const updateData = useCallback(<K extends keyof T>(key: K, value: T[K]) => {
+  const updateData = <K extends keyof T>(key: K, value: T[K]) => {
     dataRef.current[key] = value;
-  }, []);
+  };
 
-  return useMemo(() => ({ initialData, dataRef, updateData }), [updateData]);
+  return {
+    initialData: initialWriteData,
+    dataRef,
+    updateData,
+  };
 };
-
 export { useWriteDataRef };
 export type { IWriteDataRef };

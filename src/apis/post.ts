@@ -13,7 +13,9 @@ const getPosts = async (params: IGetPostsInput = {}) => {
   const searchParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined) searchParams.set(key, String(value));
+    if (value !== undefined) {
+      searchParams.set(key, String(value));
+    }
   });
 
   const query = searchParams.toString();
