@@ -1,4 +1,4 @@
-import { memo, type ReactNode, type RefObject } from "react";
+import { type ReactNode, type RefObject } from "react";
 
 import { extractToc } from "@utils/markdown";
 import { useTocEvent } from "@hooks/useTocEvent";
@@ -33,4 +33,4 @@ const Toc = ({ markdown, contentRef }: IProps) => {
   );
 };
 
-export default memo(Toc);
+export default Toc;
