@@ -1,11 +1,20 @@
 import Link from "next/link";
 
+import { seriesQueryKeys } from "@utils/query/queryKeys";
+import getQueryClient from "@utils/query/getQueryClient";
 import Image from "@components/ui/core/Image";
 import DateTime from "@components/ui/core/DateTime";
 import { getSeriesAll } from "@/apis/series";
 
-const Series = async () => {
-  const seriesList = await getSeriesAll();
+const SeriesList = async () => {
+  const queryClient = getQueryClient();
+
+  const seriesList = await queryClient.query({
+    queryKey: seriesQueryKeys.root,
+    queryFn: getSeriesAll,
+  });
+
+  const referenceTime = queryClient.getQueryState(seriesQueryKeys.root)?.dataUpdatedAt;
 
   return (
     <section className="frame mb-8 flex flex-col items-center">
@@ -45,7 +54,10 @@ const Series = async () => {
                   </span>
                   <span className="mx-1">·</span>
                   <span>
-                    마지막 업데이트 <DateTime date={series.updatedAt} />
+                    마지막 업데이트{" "}
+                    {referenceTime && (
+                      <DateTime date={series.updatedAt} referenceTime={referenceTime} />
+                    )}
                   </span>
                 </div>
               </div>
@@ -57,4 +69,4 @@ const Series = async () => {
   );
 };
 
-export default Series;
+export default SeriesList;

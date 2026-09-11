@@ -10,8 +10,9 @@ import { useDeletePostMutation, useGetPostQuery } from "@hooks/query/post";
 import TagList from "@components/ui/TagList";
 import Navigation from "@components/ui/Navigation";
 import Image from "@components/ui/core/Image";
-import PostSubInfo from "@components/ui/client/post/PostHeader/PostSubInfo";
+import DateTime from "@components/ui/core/DateTime";
 import PostSeriesInfo from "@components/ui/client/post/PostHeader/PostSeriesInfo";
+import { LikeIcon, ViewIcon } from "@components/icons";
 
 interface IProps {
   nid: number;
@@ -19,7 +20,7 @@ interface IProps {
 
 const PostHeader = ({ nid }: IProps) => {
   const router = useRouter();
-  const { data: post } = useGetPostQuery(nid);
+  const { data: post, dataUpdatedAt } = useGetPostQuery(nid);
   const { data: username } = useGetUserQuery();
   const { data: series } = useGetSeriesQuery(post?.series?.nid ?? null);
   const { mutate: deletePostMutate } = useDeletePostMutation(nid);
@@ -73,7 +74,21 @@ const PostHeader = ({ nid }: IProps) => {
       </div>
       <h1 className="text-center text-xl font-bold text-primary transition-[color]">{title}</h1>
       {tags.length > 0 && <TagList className="justify-center" tags={tags} onClick={onClickTag} />}
-      <PostSubInfo viewCount={viewCount} likeCount={likeCount} createdAt={createdAt} />
+      <div className="flex flex-wrap items-center justify-start gap-4 text-sm">
+        <DateTime
+          className="font-normal text-slate-500 dark:text-slate-400"
+          date={createdAt}
+          referenceTime={dataUpdatedAt}
+        />
+        <div className="flex items-center justify-center gap-1">
+          <ViewIcon className="h-[1.2em] w-[1.2em] stroke-slate-500 dark:stroke-slate-400" />
+          <span className="text-slate-500 dark:text-slate-400">{viewCount}</span>
+        </div>
+        <div className="flex items-center justify-center gap-1">
+          <LikeIcon className="h-[1.2em] w-[1.2em] stroke-slate-500 dark:stroke-slate-400" />
+          <span className="text-slate-500 dark:text-slate-400">{likeCount}</span>
+        </div>
+      </div>
       {series && <PostSeriesInfo selectedPostNid={nid} series={series} />}
       {username && <Navigation onDelete={deletePost} onEdit={editPost} />}
     </div>
