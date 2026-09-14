@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { skillQueryKeys } from "@utils/query/queryKeys";
+import { CACHE_TAG } from "@utils/constant/cacheTag";
+import { revalidateCacheTags } from "@/utils/revalidateCacheTags";
 import { ESkillType, ICreateSkill, TSkills, TUpdateSkill } from "@/types/skill";
 import { createSkill, deleteSkill, getSkills, updateSkill } from "@/apis/skill";
 
@@ -16,6 +18,9 @@ const useCreateSkillMutation = () => {
 
   return useMutation({
     mutationFn: (data: ICreateSkill) => createSkill(data),
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.skills]);
+    },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: skillQueryKeys.root });
     },
@@ -27,6 +32,9 @@ const useUpdateSkillMutation = (_id: string) => {
 
   return useMutation({
     mutationFn: (data: TUpdateSkill) => updateSkill(_id, data),
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.skills]);
+    },
     onMutate: async (data: TUpdateSkill) => {
       await queryClient.cancelQueries({ queryKey: skillQueryKeys.root });
 
@@ -80,6 +88,9 @@ const useDeleteSkillMutation = (_id: string) => {
 
   return useMutation({
     mutationFn: () => deleteSkill(_id),
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.skills]);
+    },
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: skillQueryKeys.root });
 

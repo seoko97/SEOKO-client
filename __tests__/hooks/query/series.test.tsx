@@ -18,6 +18,10 @@ jest.mock("@/apis/series", () => ({
   updateSeries: jest.fn(),
 }));
 
+jest.mock("@/utils/revalidateCacheTags", () => ({
+  revalidateCacheTags: jest.fn(),
+}));
+
 const mockUpdateSeries = jest.mocked(updateSeries);
 const mockDeleteSeries = jest.mocked(deleteSeries);
 const mockPush = jest.fn();

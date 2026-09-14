@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { siteMetadata } from "@utils/constant/metadata";
 import { API_URL } from "@utils/constant/env";
+import { CACHE_TAG } from "@utils/constant/cacheTag";
 import type { IPost } from "@/types";
 
 const createUrl = (path: string) => new URL(path, siteMetadata.siteUrl).toString();
@@ -16,7 +17,7 @@ const getPostSitemap = async (): Promise<MetadataRoute.Sitemap> => {
 
   try {
     const res = await fetch(url, {
-      next: { revalidate: 86400 },
+      next: { revalidate: 86400, tags: [CACHE_TAG.posts] },
     });
 
     if (!res.ok) {

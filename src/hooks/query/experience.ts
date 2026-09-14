@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { experienceQueryKeys } from "@utils/query/queryKeys";
+import { CACHE_TAG } from "@utils/constant/cacheTag";
+import { revalidateCacheTags } from "@/utils/revalidateCacheTags";
 import { ICreateExperience, IExperience, IUpdateExperience } from "@/types/experience";
 import {
   createExperience,
@@ -21,6 +23,9 @@ const useCreateExperienceMutation = () => {
 
   return useMutation({
     mutationFn: (data: ICreateExperience) => createExperience(data),
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.experiences]);
+    },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: experienceQueryKeys.root });
     },
@@ -32,6 +37,9 @@ const useUpdateExperienceMutation = (_id: string) => {
 
   return useMutation({
     mutationFn: (data: IUpdateExperience) => updateExperience(_id, data),
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.experiences]);
+    },
     onMutate: async (data: IUpdateExperience) => {
       await queryClient.cancelQueries({ queryKey: experienceQueryKeys.root });
 
@@ -79,6 +87,9 @@ const useDeleteExperienceMutation = (_id: string) => {
 
   return useMutation({
     mutationFn: () => deleteExperience(_id),
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.experiences]);
+    },
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: experienceQueryKeys.root });
 

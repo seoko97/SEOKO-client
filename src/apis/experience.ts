@@ -1,8 +1,12 @@
+import { CACHE_TAG } from "@utils/constant/cacheTag";
 import { ICreateExperience, IExperience, IUpdateExperience } from "@/types/experience";
 import { authRequest, request } from "@/apis";
 
 const getExperiences = async () => {
-  return request<IExperience[]>("/experiences", { method: "GET", next: { revalidate: 3600 } });
+  return request<IExperience[]>("/experiences", {
+    method: "GET",
+    next: { revalidate: 3600, tags: [CACHE_TAG.experiences] },
+  });
 };
 
 const createExperience = async (input: ICreateExperience) => {

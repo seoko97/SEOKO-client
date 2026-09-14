@@ -1,8 +1,12 @@
+import { CACHE_TAG } from "@utils/constant/cacheTag";
 import { ICreateSkill, TSkills, TUpdateSkill } from "@/types/skill";
 import { authRequest, request } from "@/apis";
 
 const getSkills = async () => {
-  return request<TSkills>("/skills", { method: "GET", next: { revalidate: 3600 } });
+  return request<TSkills>("/skills", {
+    method: "GET",
+    next: { revalidate: 3600, tags: [CACHE_TAG.skills] },
+  });
 };
 
 const createSkill = async (input: ICreateSkill) => {

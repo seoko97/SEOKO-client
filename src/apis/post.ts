@@ -1,5 +1,6 @@
 import { cache } from "react";
 
+import { CACHE_TAG } from "@utils/constant/cacheTag";
 import {
   ICreatePostInput,
   IGetPostsInput,
@@ -22,7 +23,7 @@ const getPosts = async (params: IGetPostsInput = {}) => {
 
   return request<IPost[]>(`/posts${query ? `?${query}` : ""}`, {
     method: "GET",
-    next: { revalidate: 60 },
+    next: { revalidate: 60, tags: [CACHE_TAG.posts] },
   });
 };
 
@@ -37,7 +38,7 @@ const getPost = cache(async (nid: number) => {
 const getSiblingPost = async (nid: number) => {
   return request<IGetSiblingPost>(`/posts/${nid}/sibling`, {
     method: "GET",
-    next: { revalidate: 300 },
+    next: { revalidate: 300, tags: [CACHE_TAG.posts] },
   });
 };
 

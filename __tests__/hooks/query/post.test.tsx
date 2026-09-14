@@ -39,6 +39,10 @@ jest.mock("@/apis/post", () => ({
   updatePost: jest.fn(),
 }));
 
+jest.mock("@/utils/revalidateCacheTags", () => ({
+  revalidateCacheTags: jest.fn(),
+}));
+
 const mockGetPost = jest.mocked(getPost);
 const mockGetPosts = jest.mocked(getPosts);
 const mockLikePost = jest.mocked(likePost);
