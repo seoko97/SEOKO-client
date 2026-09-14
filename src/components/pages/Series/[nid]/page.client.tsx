@@ -19,7 +19,7 @@ const SeriesClient = ({ nid }: IProps) => {
   const [sort, setSort] = useState<1 | -1>(-1);
 
   const { data: username } = useGetUserQuery();
-  const { data: series } = useGetSeriesQuery(nid);
+  const { data: series, dataUpdatedAt } = useGetSeriesQuery(nid);
   const { mutate: deleteSeries } = useDeleteSeriesMutation(nid);
 
   const onClickSortButton = () => {
@@ -51,7 +51,7 @@ const SeriesClient = ({ nid }: IProps) => {
           <span className="text-primary transition-[color]">{postCount}개의 포스트</span>
           <span className="mx-1">·</span>
           <span>
-            마지막 업데이트 <DateTime date={updatedAt} />
+            마지막 업데이트 <DateTime date={updatedAt} referenceTime={dataUpdatedAt} />
           </span>
         </div>
       </div>

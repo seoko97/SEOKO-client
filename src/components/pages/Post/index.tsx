@@ -13,7 +13,7 @@ const getNumberParam = (value: string | string[] | undefined) => {
   const stringValue = getStringParam(value);
 
   if (!stringValue) {
-    return undefined;
+    return;
   }
 
   const numberValue = Number(stringValue);

@@ -48,7 +48,7 @@ interface IOptions {
 const useGetPostsQuery = (params: IGetPostsInput = {}, options: IOptions = {}) => {
   const { keepPrevData = false } = options;
 
-  const { data, hasNextPage, isFetching, fetchNextPage } = useInfiniteQuery({
+  const queryData = useInfiniteQuery({
     queryKey: postQueryKeys.listByParams(params),
     queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
     initialPageParam: 0,
@@ -56,13 +56,15 @@ const useGetPostsQuery = (params: IGetPostsInput = {}, options: IOptions = {}) =
       const limit = params.limit ?? 10;
 
       if (lastPage.length < limit) {
-        return undefined;
+        return;
       }
 
       return lastPageParam + lastPage.length;
     },
     placeholderData: keepPrevData ? keepPreviousData : undefined,
   });
+
+  const { data, hasNextPage, isFetching, fetchNextPage, ...rest } = queryData;
 
   const posts = data?.pages?.flat() ?? [];
 
@@ -74,7 +76,7 @@ const useGetPostsQuery = (params: IGetPostsInput = {}, options: IOptions = {}) =
     fetchNextPage();
   };
 
-  return [posts, fetchMore] as const;
+  return { posts, fetchMore, ...rest } as const;
 };
 
 const useGetSiblingPostQuery = (nid: number) => {

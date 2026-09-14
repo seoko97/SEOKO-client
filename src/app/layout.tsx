@@ -109,8 +109,8 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
           <Providers>
             <UserHydrate>
               <Header />
+              {children}
             </UserHydrate>
-            {children}
             <Footer />
           </Providers>
         </div>

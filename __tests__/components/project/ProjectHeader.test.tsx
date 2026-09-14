@@ -43,7 +43,7 @@ const project: TProject = {
 
 describe("ProjectHeader", () => {
   beforeEach(() => {
-    mockUseGetUserQuery.mockReturnValue({ data: null } as ReturnType<typeof useGetUserQuery>);
+    mockUseGetUserQuery.mockReturnValue({ data: undefined } as ReturnType<typeof useGetUserQuery>);
     mockUseDeleteProjectMutation.mockReturnValue({ mutate: jest.fn() } as unknown as ReturnType<
       typeof useDeleteProjectMutation
     >);

@@ -10,8 +10,7 @@ const useGetUserQuery = () => {
   return useQuery({
     queryKey: userQueryKeys.me,
     queryFn: getUser,
-    select: (data) => data?.username ?? null,
-    initialData: null,
+    select: (data) => data?.username,
   });
 };
 

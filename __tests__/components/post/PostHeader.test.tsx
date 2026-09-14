@@ -83,7 +83,7 @@ describe("PostHeader", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     confirmSpy.mockReturnValue(true);
-    mockUseGetUserQuery.mockReturnValue({ data: null } as ReturnType<typeof useGetUserQuery>);
+    mockUseGetUserQuery.mockReturnValue({ data: undefined } as ReturnType<typeof useGetUserQuery>);
     mockUseGetSeriesQuery.mockReturnValue({ data: undefined } as ReturnType<
       typeof useGetSeriesQuery
     >);

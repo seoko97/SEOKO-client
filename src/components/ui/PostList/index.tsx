@@ -17,9 +17,9 @@ const PostList = (props: IProps) => {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const [posts, fetchMorePosts] = useGetPostsQuery(params, { keepPrevData });
+  const { posts, dataUpdatedAt, fetchMore } = useGetPostsQuery(params, { keepPrevData });
 
-  useInfinityScroll(ref as RefObject<HTMLDivElement>, fetchMorePosts);
+  useInfinityScroll(ref as RefObject<HTMLDivElement>, fetchMore);
 
   if (posts?.length === 0) {
     return (
@@ -36,7 +36,7 @@ const PostList = (props: IProps) => {
         className="relative mb-8 flex w-full flex-col items-center justify-center gap-4"
       >
         {posts.map((post) => (
-          <PostItem key={post.nid} post={post} />
+          <PostItem key={post.nid} post={post} referenceTime={dataUpdatedAt} />
         ))}
       </div>
     </>
