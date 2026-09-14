@@ -92,6 +92,9 @@ const useDeleteSeriesMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: () => deleteSeries(nid),
+    onSuccess: () => {
+      router.push("/series");
+    },
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: seriesQueryKeys.root });
 
@@ -121,8 +124,6 @@ const useDeleteSeriesMutation = (nid: number) => {
       queryClient.setQueryData<ISeries[]>(seriesQueryKeys.root, previousSeriesList);
     },
     onSettled: () => {
-      router.push("/series");
-
       queryClient.invalidateQueries({ queryKey: seriesQueryKeys.detail(nid) });
       queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
     },
