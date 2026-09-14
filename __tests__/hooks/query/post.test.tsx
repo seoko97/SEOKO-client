@@ -95,11 +95,11 @@ describe("hooks/query/post", () => {
     const thirdPost: IPost = { ...post, _id: "post-id-3", nid: 3 };
     mockGetPosts.mockResolvedValueOnce([post, secondPost]).mockResolvedValueOnce([thirdPost]);
 
-    const { result } = renderHook(() => useGetPostsQuery({ limit: 2 }), { wrapper });
+    const { result } = renderHook(() => useGetPostsQuery({ limit: 2, skip: 4 }), { wrapper });
 
     await waitFor(() => expect(result.current.posts).toEqual([post, secondPost]));
 
-    expect(mockGetPosts).toHaveBeenCalledWith({ limit: 2, skip: 0 });
+    expect(mockGetPosts).toHaveBeenCalledWith({ limit: 2, skip: 4 });
 
     act(() => {
       result.current.fetchMore();
@@ -107,7 +107,7 @@ describe("hooks/query/post", () => {
 
     await waitFor(() => expect(result.current.posts).toEqual([post, secondPost, thirdPost]));
 
-    expect(mockGetPosts).toHaveBeenCalledWith({ limit: 2, skip: 2 });
+    expect(mockGetPosts).toHaveBeenCalledWith({ limit: 2, skip: 6 });
 
     act(() => {
       result.current.fetchMore();

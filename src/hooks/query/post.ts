@@ -53,7 +53,7 @@ const useGetPostsQuery = (params: IGetPostsInput = {}, options: IOptions = {}) =
   const queryData = useInfiniteQuery({
     queryKey: postQueryKeys.listByParams(params),
     queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
-    initialPageParam: 0,
+    initialPageParam: params.skip ?? 0,
     getNextPageParam: (lastPage, _, lastPageParam) => {
       const limit = params.limit ?? 10;
 
