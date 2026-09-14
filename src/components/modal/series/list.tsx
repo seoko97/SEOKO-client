@@ -46,7 +46,7 @@ const SeriesList = (props: IProps) => {
               onClick={() => setSeries(item.name)}
               className={`border-primary/50 flex-1 cursor-pointer border-t px-1 py-2 first:border-none hover:text-effect1 ${
                 defaultSeries === item.name && "text-green-500"
-              }}`}
+              }`}
             >
               {item.name}
             </li>

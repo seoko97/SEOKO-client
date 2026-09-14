@@ -1,3 +1,4 @@
+import { CACHE_TAG } from "@/utils/constant/cacheTag";
 import {
   createProject,
   deleteProject,
@@ -38,13 +39,13 @@ describe("apis/project", () => {
       "프로젝트 상세 조회",
       () => getProject(1),
       "/projects/1",
-      { method: "GET", next: { revalidate: 300 } },
+      { method: "GET", next: { revalidate: 300, tags: [CACHE_TAG.projects] } },
     ],
     [
       "프로젝트 목록 조회",
       () => getProjects(),
       "/projects",
-      { method: "GET", next: { revalidate: 300 } },
+      { method: "GET", next: { revalidate: 300, tags: [CACHE_TAG.projects] } },
     ],
   ])("%s의 공개 요청 계약과 응답값을 유지한다", async (_, execute, path, options) => {
     mockRequest.mockResolvedValueOnce(response);

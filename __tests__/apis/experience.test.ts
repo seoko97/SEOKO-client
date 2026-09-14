@@ -1,3 +1,4 @@
+import { CACHE_TAG } from "@/utils/constant/cacheTag";
 import {
   createExperience,
   deleteExperience,
@@ -37,7 +38,7 @@ describe("apis/experience", () => {
     expect(mockRequest).toHaveBeenCalledTimes(1);
     expect(mockRequest).toHaveBeenCalledWith("/experiences", {
       method: "GET",
-      next: { revalidate: 3600 },
+      next: { revalidate: 3600, tags: [CACHE_TAG.experiences] },
     });
   });
 

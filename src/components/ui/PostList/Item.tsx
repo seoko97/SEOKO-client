@@ -24,9 +24,13 @@ const PostItem = ({ post, referenceTime }: IProps) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const target = e.target as HTMLDivElement;
+    const tagName = e.currentTarget.textContent?.trim();
 
-    router.push(`/tag/${target.innerText}`);
+    if (!tagName) {
+      return;
+    }
+
+    router.push(`/tag/${encodeURIComponent(tagName)}`);
   };
 
   return (

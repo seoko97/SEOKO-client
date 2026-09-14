@@ -24,6 +24,10 @@ jest.mock("@/apis/project", () => ({
   updateProject: jest.fn(),
 }));
 
+jest.mock("@/utils/revalidateCacheTags", () => ({
+  revalidateCacheTags: jest.fn(),
+}));
+
 const mockCreateProject = jest.mocked(createProject);
 const mockUpdateProject = jest.mocked(updateProject);
 const mockDeleteProject = jest.mocked(deleteProject);

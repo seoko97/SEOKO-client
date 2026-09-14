@@ -3,6 +3,8 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { seriesQueryKeys } from "@utils/query/queryKeys";
+import { CACHE_TAG } from "@utils/constant/cacheTag";
+import { revalidateCacheTags } from "@/utils/revalidateCacheTags";
 import { ISeries, IUpdateSeriesInput } from "@/types";
 import { deleteSeries, getSeries, getSeriesAll, updateSeries } from "@/apis/series";
 
@@ -32,6 +34,9 @@ const useUpdateSeriesMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: (data: IUpdateSeriesInput) => updateSeries(nid, data),
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.series, CACHE_TAG.posts]);
+    },
     onMutate: async (data: IUpdateSeriesInput) => {
       await queryClient.cancelQueries({ queryKey: seriesQueryKeys.root });
 
@@ -92,6 +97,10 @@ const useDeleteSeriesMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: () => deleteSeries(nid),
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.series, CACHE_TAG.posts]);
+      router.push("/series");
+    },
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: seriesQueryKeys.root });
 
@@ -121,8 +130,6 @@ const useDeleteSeriesMutation = (nid: number) => {
       queryClient.setQueryData<ISeries[]>(seriesQueryKeys.root, previousSeriesList);
     },
     onSettled: () => {
-      router.push("/series");
-
       queryClient.invalidateQueries({ queryKey: seriesQueryKeys.detail(nid) });
       queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
     },

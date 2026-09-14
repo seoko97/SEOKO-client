@@ -12,6 +12,10 @@ jest.mock("@/apis/experience", () => ({
   updateExperience: jest.fn(),
 }));
 
+jest.mock("@/utils/revalidateCacheTags", () => ({
+  revalidateCacheTags: jest.fn(),
+}));
+
 const mockUpdateExperience = jest.mocked(updateExperience);
 const mockDeleteExperience = jest.mocked(deleteExperience);
 

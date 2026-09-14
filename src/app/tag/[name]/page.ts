@@ -14,7 +14,7 @@ export const generateMetadata = async ({ params }: TProps): Promise<Metadata> =>
   const { name } = tag;
 
   const metadataTitle = `TAG [${name}]`;
-  const url = `${siteMetadata.siteUrl}/tag/${name}`;
+  const url = `${siteMetadata.siteUrl}/tag/${encodeURIComponent(name)}`;
   const description = `TAG [${name}]에 대한 포스팅 목록`;
 
   const thumbnail = "/SEOKO.png";

@@ -12,6 +12,10 @@ jest.mock("@/apis/skill", () => ({
   updateSkill: jest.fn(),
 }));
 
+jest.mock("@/utils/revalidateCacheTags", () => ({
+  revalidateCacheTags: jest.fn(),
+}));
+
 const mockUpdateSkill = jest.mocked(updateSkill);
 const mockDeleteSkill = jest.mocked(deleteSkill);
 

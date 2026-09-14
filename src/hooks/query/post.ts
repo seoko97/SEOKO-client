@@ -9,6 +9,8 @@ import {
 } from "@tanstack/react-query";
 
 import { postQueryKeys, seriesQueryKeys, tagQueryKeys } from "@utils/query/queryKeys";
+import { CACHE_TAG } from "@utils/constant/cacheTag";
+import { revalidateCacheTags } from "@/utils/revalidateCacheTags";
 import {
   ICreatePostInput,
   IGetPostsInput,
@@ -51,7 +53,7 @@ const useGetPostsQuery = (params: IGetPostsInput = {}, options: IOptions = {}) =
   const queryData = useInfiniteQuery({
     queryKey: postQueryKeys.listByParams(params),
     queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
-    initialPageParam: 0,
+    initialPageParam: params.skip ?? 0,
     getNextPageParam: (lastPage, _, lastPageParam) => {
       const limit = params.limit ?? 10;
 
@@ -92,7 +94,8 @@ const useCreatePostMutation = () => {
 
   return useMutation({
     mutationFn: createPost,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.posts, CACHE_TAG.series, CACHE_TAG.tags]);
       queryClient.invalidateQueries({ queryKey: postQueryKeys.root });
       queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
       queryClient.invalidateQueries({ queryKey: tagQueryKeys.root });
@@ -107,7 +110,8 @@ const useUpdatePostMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: (data: IUpdatePostInput) => updatePost(nid, data),
-    onSuccess: () => {
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.posts, CACHE_TAG.series, CACHE_TAG.tags]);
       queryClient.invalidateQueries({ queryKey: postQueryKeys.detail(nid) });
       queryClient.invalidateQueries({ queryKey: postQueryKeys.list });
       queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
@@ -123,15 +127,19 @@ const useDeletePostMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: () => deletePost(nid),
-    onSuccess: () => {
-      const siblingPosts =
-        queryClient.getQueryData<IGetSiblingPost>(postQueryKeys.sibling(nid)) ?? {};
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.posts, CACHE_TAG.series, CACHE_TAG.tags]);
+      const siblingPosts = queryClient.getQueryData<IGetSiblingPost>(postQueryKeys.sibling(nid));
 
-      Object.values<IPost>(siblingPosts).map((post) => {
-        const { nid } = post;
+      if (siblingPosts) {
+        Object.values(siblingPosts).forEach((post) => {
+          if (!post) {
+            return;
+          }
 
-        queryClient.removeQueries({ queryKey: postQueryKeys.sibling(nid) });
-      });
+          queryClient.removeQueries({ queryKey: postQueryKeys.sibling(post.nid) });
+        });
+      }
 
       queryClient.removeQueries({ queryKey: postQueryKeys.detail(nid) });
       queryClient.removeQueries({ queryKey: postQueryKeys.sibling(nid) });
@@ -171,7 +179,8 @@ const useLikePostMutation = (nid: number) => {
 
       queryClient.setQueryData<IPost | undefined>(postQueryKeys.detail(nid), prev.post);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.posts]);
       queryClient.invalidateQueries({ queryKey: postQueryKeys.list });
     },
     onSettled: () => {
@@ -207,7 +216,8 @@ const useUnlikePostMutation = (nid: number) => {
 
       queryClient.setQueryData(postQueryKeys.detail(nid), prev.post);
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.posts]);
       queryClient.invalidateQueries({ queryKey: postQueryKeys.list });
     },
     onSettled: () => {
