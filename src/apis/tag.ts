@@ -5,7 +5,7 @@ import { ITag } from "@/types";
 import { request } from "@/apis";
 
 const getTag = cache(async (name: string) => {
-  return request<ITag>(`/tags/${name}`, {
+  return request<ITag>(`/tags/${encodeURIComponent(name)}`, {
     method: "GET",
     next: { revalidate: 3600, tags: [CACHE_TAG.tags] },
   });

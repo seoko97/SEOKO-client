@@ -1,3 +1,4 @@
+import { CACHE_TAG } from "@/utils/constant/cacheTag";
 import { getTag, getTags } from "@/apis/tag";
 import { request } from "@/apis";
 
@@ -17,11 +18,16 @@ describe("apis/tag", () => {
   it.each([
     [
       "태그 상세 조회",
-      () => getTag("nextjs"),
-      "/tags/nextjs",
-      { method: "GET", next: { revalidate: 3600 } },
+      () => getTag("next/js #1"),
+      "/tags/next%2Fjs%20%231",
+      { method: "GET", next: { revalidate: 3600, tags: [CACHE_TAG.tags] } },
     ],
-    ["태그 목록 조회", () => getTags(), "/tags", { method: "GET", next: { revalidate: 3600 } }],
+    [
+      "태그 목록 조회",
+      () => getTags(),
+      "/tags",
+      { method: "GET", next: { revalidate: 3600, tags: [CACHE_TAG.tags] } },
+    ],
   ])("%s의 요청 계약과 응답값을 유지한다", async (_, execute, path, options) => {
     mockRequest.mockResolvedValueOnce(response);
 
