@@ -14,6 +14,10 @@ jest.mock("@/hooks/query/post", () => ({
   useGetPostQuery: jest.fn(),
 }));
 
+jest.mock("@/utils/revalidateCacheTags", () => ({
+  revalidateCacheTags: jest.fn(),
+}));
+
 jest.mock("@/hooks/query/image", () => ({
   useUploadImage: ({ defaultImg }: { defaultImg?: string }) => ({
     image: defaultImg,
