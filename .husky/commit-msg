@@ -1,0 +1,7 @@
+commit_message=$(head -n 1 "$1")
+
+if ! printf '%s\n' "$commit_message" | grep -Eq '^(feat|fix|docs|test|refactor|chore) : .+$'; then
+  echo "커밋 메시지는 '<type> : <제목>' 형식이어야 합니다."
+  echo "허용 타입: feat, fix, docs, test, refactor, chore"
+  exit 1
+fi
