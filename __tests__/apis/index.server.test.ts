@@ -55,7 +55,7 @@ describe("apis/index server", () => {
     const { url, init } = getRequest(fetchMock);
     const headers = new Headers(init.headers);
 
-    expect(url.href).toBe("http://localhost:3065/api/users");
+    expect(url.href).toBe(`${process.env.NEXT_PUBLIC_API_URL}/users`);
     expect(headers.get("Authorization")).toBe("Bearer server-access-token");
     expect(headers.get("x-forwarded-for")).toBe("203.0.113.10");
     expect(headers.get("x-real-ip")).toBe("203.0.113.10");
@@ -79,7 +79,9 @@ describe("apis/index server", () => {
     await expect(authRequest<{ id: number }>("/users")).resolves.toEqual({ id: 1 });
 
     expect(fetchMock).toHaveBeenCalledTimes(3);
-    expect(getRequest(fetchMock, 1).url.href).toBe("http://localhost:3065/api/auth/refresh");
+    expect(getRequest(fetchMock, 1).url.href).toBe(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
+    );
     expect(getRequest(fetchMock, 1).init.cache).toBe("no-store");
     expect(new Headers(getRequest(fetchMock, 1).init.headers).get("Cookie")).toBe(
       "refresh-token=server-refresh-token",

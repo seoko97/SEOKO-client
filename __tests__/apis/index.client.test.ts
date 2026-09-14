@@ -33,7 +33,7 @@ describe("apis/index", () => {
 
     const { url, init } = getRequest(fetchMock);
 
-    expect(url.href).toBe("http://localhost:3065/api/posts");
+    expect(url.href).toBe(`${process.env.NEXT_PUBLIC_API_URL}/posts`);
     expect(init).toMatchObject({ method: "POST", body: '{"title":"test"}' });
     expect(new Headers(init.headers).get("Content-Type")).toBe("application/json");
   });
@@ -96,7 +96,9 @@ describe("apis/index", () => {
     await expect(authRequest<{ id: number }>("/users")).resolves.toEqual({ id: 1 });
 
     expect(fetchMock).toHaveBeenCalledTimes(3);
-    expect(getRequest(fetchMock, 1).url.href).toBe("http://localhost:3065/api/auth/refresh");
+    expect(getRequest(fetchMock, 1).url.href).toBe(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
+    );
     expect(getRequest(fetchMock, 1).init).toMatchObject({
       method: "POST",
       cache: "no-store",
