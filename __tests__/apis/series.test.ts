@@ -1,3 +1,4 @@
+import { CACHE_TAG } from "@/utils/constant/cacheTag";
 import { deleteSeries, getSeries, getSeriesAll, updateSeries } from "@/apis/series";
 import { authRequest, request } from "@/apis";
 
@@ -23,13 +24,13 @@ describe("apis/series", () => {
       "시리즈 목록 조회",
       () => getSeriesAll(),
       "/series",
-      { method: "GET", next: { revalidate: 300 } },
+      { method: "GET", next: { revalidate: 300, tags: [CACHE_TAG.series] } },
     ],
     [
       "시리즈 상세 조회",
       () => getSeries(1),
       "/series/1",
-      { method: "GET", next: { revalidate: 300 } },
+      { method: "GET", next: { revalidate: 300, tags: [CACHE_TAG.series] } },
     ],
   ])("%s의 공개 요청 계약과 응답값을 유지한다", async (_, execute, path, options) => {
     mockRequest.mockResolvedValueOnce(response);

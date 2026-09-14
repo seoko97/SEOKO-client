@@ -1,3 +1,4 @@
+import { CACHE_TAG } from "@/utils/constant/cacheTag";
 import { ESkillType } from "@/types/skill";
 import { createSkill, deleteSkill, getSkills, updateSkill } from "@/apis/skill";
 import { authRequest, request } from "@/apis";
@@ -33,7 +34,7 @@ describe("apis/skill", () => {
     expect(mockRequest).toHaveBeenCalledTimes(1);
     expect(mockRequest).toHaveBeenCalledWith("/skills", {
       method: "GET",
-      next: { revalidate: 3600 },
+      next: { revalidate: 3600, tags: [CACHE_TAG.skills] },
     });
   });
 

@@ -1,3 +1,4 @@
+import { CACHE_TAG } from "@/utils/constant/cacheTag";
 import {
   createPost,
   deletePost,
@@ -43,7 +44,7 @@ describe("apis/post", () => {
 
     expect(mockRequest).toHaveBeenCalledWith("/posts?limit=10&skip=0&tag=react", {
       method: "GET",
-      next: { revalidate: 60 },
+      next: { revalidate: 60, tags: [CACHE_TAG.posts] },
     });
   });
 
@@ -52,7 +53,7 @@ describe("apis/post", () => {
 
     expect(mockRequest).toHaveBeenCalledWith("/posts", {
       method: "GET",
-      next: { revalidate: 60 },
+      next: { revalidate: 60, tags: [CACHE_TAG.posts] },
     });
   });
 
@@ -67,7 +68,7 @@ describe("apis/post", () => {
       "이전·다음 게시글 조회",
       () => getSiblingPost(1),
       "/posts/1/sibling",
-      { method: "GET", next: { revalidate: 300 } },
+      { method: "GET", next: { revalidate: 300, tags: [CACHE_TAG.posts] } },
     ],
     ["게시글 좋아요", () => likePost(1), "/posts/1/like", { method: "PATCH", cache: "no-store" }],
     [
