@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import localFont from "next/font/local";
 import type { Metadata, Viewport } from "next";
 
 import { THEME, THEME_STORAGE_KEY } from "@utils/constant/theme";
@@ -80,6 +81,12 @@ export const metadata: Metadata = {
   manifest: "/favicons/manifest.json",
 };
 
+const pretendard = localFont({
+  src: "../styles/fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+});
+
 const RootLayout = ({ children }: { children: ReactNode }) => {
   function setBodyDatasetByTheme(darkTheme: string, lightTheme: string, storageKey: string) {
     const prefersDarkFromMq = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -102,9 +109,9 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <html lang="ko">
-      <body suppressHydrationWarning={true}>
-        <script dangerouslySetInnerHTML={{ __html: fnToRunOnClient }} />
+      <body suppressHydrationWarning={true} className={pretendard.className}>
         <Analytics />
+        <script dangerouslySetInnerHTML={{ __html: fnToRunOnClient }} />
         <div className="relative min-h-screen w-full bg-primary pb-36 transition-[background-color]">
           <Providers>
             <UserHydrate>
