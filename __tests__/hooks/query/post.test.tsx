@@ -1,7 +1,7 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 
 import { postQueryKeys, seriesQueryKeys, tagQueryKeys } from "@/utils/query/queryKeys";
-import { ICreatePostInput, IPost, IUpdatePostInput } from "@/types";
+import { ICreatePostInput, IGetSiblingPost, IPost, IUpdatePostInput } from "@/types";
 import {
   useCreatePostMutation,
   useDeletePostMutation,
@@ -228,11 +228,17 @@ describe("hooks/query/post", () => {
     expect(mockPush).toHaveBeenCalledWith(`/post/${nid}`);
   });
 
-  it("게시글 삭제 후 상세·형제 캐시를 제거하고 연관 query를 무효화한다", async () => {
+  it("게시글 삭제 후 null 인접 글을 건너뛰고 상세·형제 캐시를 제거한다", async () => {
     const { queryClient, wrapper } = createQueryTestWrapper();
     const removeQueries = jest.spyOn(queryClient, "removeQueries");
     const invalidateQueries = jest.spyOn(queryClient, "invalidateQueries");
     mockDeletePost.mockResolvedValueOnce(nid);
+    const nextPost: IPost = { ...post, _id: "next-post-id", nid: 2 };
+
+    queryClient.setQueryData<IGetSiblingPost>(postQueryKeys.sibling(nid), {
+      prev: null,
+      next: nextPost,
+    });
 
     const { result } = renderHook(() => useDeletePostMutation(nid), { wrapper });
 
@@ -242,6 +248,7 @@ describe("hooks/query/post", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
     expect(mockDeletePost).toHaveBeenCalledWith(nid);
+    expect(removeQueries).toHaveBeenCalledWith({ queryKey: postQueryKeys.sibling(nextPost.nid) });
     expect(removeQueries).toHaveBeenCalledWith({ queryKey: postQueryKeys.detail(nid) });
     expect(removeQueries).toHaveBeenCalledWith({ queryKey: postQueryKeys.sibling(nid) });
     expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: postQueryKeys.list });

@@ -124,14 +124,17 @@ const useDeletePostMutation = (nid: number) => {
   return useMutation({
     mutationFn: () => deletePost(nid),
     onSuccess: () => {
-      const siblingPosts =
-        queryClient.getQueryData<IGetSiblingPost>(postQueryKeys.sibling(nid)) ?? {};
+      const siblingPosts = queryClient.getQueryData<IGetSiblingPost>(postQueryKeys.sibling(nid));
 
-      Object.values<IPost>(siblingPosts).map((post) => {
-        const { nid } = post;
+      if (siblingPosts) {
+        Object.values(siblingPosts).forEach((post) => {
+          if (!post) {
+            return;
+          }
 
-        queryClient.removeQueries({ queryKey: postQueryKeys.sibling(nid) });
-      });
+          queryClient.removeQueries({ queryKey: postQueryKeys.sibling(post.nid) });
+        });
+      }
 
       queryClient.removeQueries({ queryKey: postQueryKeys.detail(nid) });
       queryClient.removeQueries({ queryKey: postQueryKeys.sibling(nid) });
