@@ -1,11 +1,11 @@
-import React from "react";
-
 import NextScript from "next/script";
 
 import { GA_TRACKING_ID, isProd } from "@utils/constant/env";
 
 const Analytics = () => {
-  if (!isProd) return null;
+  if (!isProd) {
+    return null;
+  }
 
   return (
     <>

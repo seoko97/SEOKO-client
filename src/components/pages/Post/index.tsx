@@ -1,16 +1,40 @@
-import React from "react";
-
 import { USER_DETAIL, USER_LINKS } from "@utils/constant/user";
 import Avatar from "@components/ui/core/Avatar";
 import HomeClient from "@components/ui/client/home";
 import Hydrate from "@components/pages/Post/Hydrate";
 import { IGetPostsInput } from "@/types";
 
-interface IProps {
-  searchParams: IGetPostsInput;
-}
+type TProps = Pick<PageProps<"/">, "searchParams">;
 
-const Post = async ({ searchParams }: IProps) => {
+const getStringParam = (value: string | string[] | undefined) =>
+  typeof value === "string" ? value : undefined;
+
+const getNumberParam = (value: string | string[] | undefined) => {
+  const stringValue = getStringParam(value);
+
+  if (!stringValue) {
+    return;
+  }
+
+  const numberValue = Number(stringValue);
+
+  return Number.isNaN(numberValue) ? undefined : numberValue;
+};
+
+const normalizeSearchParams = (
+  searchParams: Awaited<PageProps<"/">["searchParams"]>,
+): IGetPostsInput => ({
+  series: getStringParam(searchParams.series),
+  skip: getNumberParam(searchParams.skip),
+  limit: getNumberParam(searchParams.limit),
+  tag: getStringParam(searchParams.tag),
+  text: getStringParam(searchParams.text),
+  sort: getNumberParam(searchParams.sort),
+});
+
+const Post = async ({ searchParams }: TProps) => {
+  const params = normalizeSearchParams(await searchParams);
+
   return (
     <main className="frame flex flex-col items-center justify-center">
       <section className="3-16 flex w-[theme(screens.md.max)] items-center justify-center gap-7 px-0 py-16 text-primary md:w-full md:flex-col md:gap-4 md:px-0 md:pb-12 md:pt-8">
@@ -27,8 +51,8 @@ const Post = async ({ searchParams }: IProps) => {
           </div>
         </div>
       </section>
-      <Hydrate params={searchParams}>
-        <HomeClient params={searchParams} />
+      <Hydrate params={params}>
+        <HomeClient params={params} />
       </Hydrate>
     </main>
   );

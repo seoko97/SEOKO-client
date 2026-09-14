@@ -5,12 +5,16 @@ interface IProjectsByDate {
 }
 
 const getProjectsByDate = (projects: TProject[] | undefined): IProjectsByDate => {
-  if (!projects) return {};
+  if (!projects) {
+    return {};
+  }
 
   return projects.reduce<IProjectsByDate>((acc, project) => {
     const startYear = new Date(project.start).getFullYear();
 
-    if (!acc[startYear]) acc[startYear] = [];
+    if (!acc[startYear]) {
+      acc[startYear] = [];
+    }
 
     acc[startYear].push(project);
 

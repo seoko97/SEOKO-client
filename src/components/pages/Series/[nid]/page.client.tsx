@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 
 import { useGetUserQuery } from "@hooks/query/user";
 import { useDeleteSeriesMutation, useGetSeriesQuery } from "@hooks/query/series";
-import { useGetPostsQuery } from "@hooks/query/post";
 import PostList from "@components/ui/PostList";
 import Navigation from "@components/ui/Navigation";
 import DateTime from "@components/ui/core/DateTime";
@@ -16,16 +15,12 @@ interface IProps {
 }
 
 const SeriesClient = ({ nid }: IProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-
   const [openModal, setOpenModal] = useState(false);
   const [sort, setSort] = useState<1 | -1>(-1);
 
   const { data: username } = useGetUserQuery();
-  const { data: series } = useGetSeriesQuery(nid);
+  const { data: series, dataUpdatedAt } = useGetSeriesQuery(nid);
   const { mutate: deleteSeries } = useDeleteSeriesMutation(nid);
-
-  const [posts, fetchMorePosts] = useGetPostsQuery({ series: series?._id, sort });
 
   const onClickSortButton = () => {
     setSort((prev) => (prev === 1 ? -1 : 1));
@@ -34,16 +29,16 @@ const SeriesClient = ({ nid }: IProps) => {
   const onDelete = () => {
     const isDelete = confirm("시리즈를 삭제하시겠습니까?");
 
-    if (!isDelete) return;
+    if (!isDelete) {
+      return;
+    }
 
     deleteSeries();
   };
 
-  const onEdit = () => {
-    setOpenModal(true);
-  };
-
-  if (!series) return null;
+  if (!series) {
+    return null;
+  }
 
   const { name, postCount, updatedAt } = series;
 
@@ -56,13 +51,13 @@ const SeriesClient = ({ nid }: IProps) => {
           <span className="text-primary transition-[color]">{postCount}개의 포스트</span>
           <span className="mx-1">·</span>
           <span>
-            마지막 업데이트 <DateTime date={updatedAt} />
+            마지막 업데이트 <DateTime date={updatedAt} referenceTime={dataUpdatedAt} />
           </span>
         </div>
       </div>
       <div className="flex w-full flex-col gap-5">
         <div className="flex flex-col items-end justify-center gap-4">
-          {username && <Navigation onEdit={onEdit} onDelete={onDelete} />}
+          {username && <Navigation onEdit={() => setOpenModal(true)} onDelete={onDelete} />}
           <button
             className="inline-flex items-center gap-2 rounded-md bg-slate-200 p-2 shadow-sm transition-[background-color] dark:bg-slate-700"
             onClick={onClickSortButton}
@@ -78,12 +73,7 @@ const SeriesClient = ({ nid }: IProps) => {
             </span>
           </button>
         </div>
-        {posts.length > 0 && <PostList ref={ref} posts={posts} func={fetchMorePosts} />}
-        {posts?.length === 0 && (
-          <div className="py-10 text-center text-2xl font-bold text-gray-400 sm:text-xl">
-            포스트를 찾을 수 없습니다 🙄
-          </div>
-        )}
+        <PostList params={{ series: series._id, sort }} keepPrevData />
       </div>
       {openModal && <EditSeries onClose={() => setOpenModal(false)} series={series} />}
     </>

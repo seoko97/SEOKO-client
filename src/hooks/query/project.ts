@@ -2,6 +2,9 @@ import { useRouter } from "next/navigation";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
+import { projectQueryKeys } from "@utils/query/queryKeys";
+import { CACHE_TAG } from "@utils/constant/cacheTag";
+import { revalidateCacheTags } from "@/utils/revalidateCacheTags";
 import { IProjectInput } from "@/types";
 import {
   createProject,
@@ -13,9 +16,11 @@ import {
 
 const useGetProjectQuery = (nid: number | null) => {
   return useQuery({
-    queryKey: ["project", nid],
+    queryKey: projectQueryKeys.detail(nid),
     queryFn: () => {
-      if (nid === null) return;
+      if (nid === null) {
+        return;
+      }
 
       return getProject(nid);
     },
@@ -25,7 +30,7 @@ const useGetProjectQuery = (nid: number | null) => {
 
 const useGetProjectsQuery = () => {
   return useQuery({
-    queryKey: ["projects"],
+    queryKey: projectQueryKeys.root,
     queryFn: getProjects,
   });
 };
@@ -36,8 +41,9 @@ const useCreateProjectMutation = () => {
 
   return useMutation({
     mutationFn: createProject,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["projects"]);
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.projects]);
+      queryClient.invalidateQueries({ queryKey: projectQueryKeys.root });
       router.replace("/project");
     },
   });
@@ -49,9 +55,10 @@ const useUpdateProjectMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: (data: IProjectInput) => updateProject(nid, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["project", nid]);
-      queryClient.invalidateQueries(["projects"]);
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.projects]);
+      queryClient.invalidateQueries({ queryKey: projectQueryKeys.detail(nid) });
+      queryClient.invalidateQueries({ queryKey: projectQueryKeys.root });
       router.replace(`/project/${nid}`);
     },
   });
@@ -63,10 +70,11 @@ const useDeleteProjectMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: () => deleteProject(nid),
-    onSuccess: () => {
-      queryClient.removeQueries(["project", nid]);
-      queryClient.invalidateQueries(["projects"]);
-      router.push("/projects");
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.projects]);
+      queryClient.removeQueries({ queryKey: projectQueryKeys.detail(nid) });
+      queryClient.invalidateQueries({ queryKey: projectQueryKeys.root });
+      router.push("/project");
     },
   });
 };

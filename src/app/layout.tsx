@@ -1,28 +1,37 @@
-import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import localFont from "next/font/local";
+import type { Metadata, Viewport } from "next";
 
+import { THEME, THEME_STORAGE_KEY } from "@utils/constant/theme";
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { GOOGLE_SITE_VERIFICATION } from "@utils/constant/env";
 import Header from "@components/ui/Header";
 import Footer from "@components/ui/Footer";
 import Providers from "@components/query/Providers";
 
-import Hydrate from "@components/query/hydrate/UserHydrate";
+import UserHydrate from "@components/query/hydrate/UserHydrate";
 import Analytics from "@components/Analytics";
 
 import "@styles/globals.css";
 
-export const dynamic = "force-dynamic";
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "cyan" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+};
 
 export const metadata: Metadata = {
-  viewport: "width=device-width, initial-scale=1",
-  metadataBase: siteMetadata.siteUrl as unknown as URL,
+  metadataBase: new URL(siteMetadata.siteUrl),
   title: {
     absolute: siteMetadata.title,
     template: siteMetadata.titleTemplate,
   },
   description: siteMetadata.description,
   applicationName: siteMetadata.applicationName,
-  themeColor: "#ffffff",
+  keywords: siteMetadata.keywords,
   alternates: {
     canonical: siteMetadata.siteUrl,
     types: {
@@ -30,6 +39,7 @@ export const metadata: Metadata = {
     },
   },
   creator: siteMetadata.author,
+  verification: GOOGLE_SITE_VERIFICATION ? { google: GOOGLE_SITE_VERIFICATION } : undefined,
   robots: {
     index: true,
     follow: true,
@@ -71,39 +81,44 @@ export const metadata: Metadata = {
   manifest: "/favicons/manifest.json",
 };
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  function setBodyDatasetByTheme() {
+const pretendard = localFont({
+  src: "../styles/fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+});
+
+const RootLayout = ({ children }: { children: ReactNode }) => {
+  function setBodyDatasetByTheme(darkTheme: string, lightTheme: string, storageKey: string) {
     const prefersDarkFromMq = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    const theme = localStorage.getItem("theme");
+    const theme = localStorage.getItem(storageKey);
 
-    const persistedPreference = theme === "dark" || theme === "light" ? theme : null;
+    const persistedPreference = theme === darkTheme || theme === lightTheme ? theme : null;
 
-    const colorMode = persistedPreference || (prefersDarkFromMq ? "dark" : "light");
+    const colorMode = persistedPreference || (prefersDarkFromMq ? darkTheme : lightTheme);
 
-    localStorage.setItem("theme", colorMode);
+    localStorage.setItem(storageKey, colorMode);
     document.body.dataset.theme = colorMode;
   }
 
   const stringifyFn = String(setBodyDatasetByTheme);
 
-  const fnToRunOnClient = `(${stringifyFn})()`;
+  const fnToRunOnClient = `(${stringifyFn})(${JSON.stringify(THEME.dark)}, ${JSON.stringify(
+    THEME.light,
+  )}, ${JSON.stringify(THEME_STORAGE_KEY)})`;
 
   return (
     <html lang="ko">
-      <head>
-        <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
-      </head>
-      <body suppressHydrationWarning={true}>
-        <script dangerouslySetInnerHTML={{ __html: fnToRunOnClient }} />
+      <body suppressHydrationWarning={true} className={pretendard.className}>
         <Analytics />
+        <script dangerouslySetInnerHTML={{ __html: fnToRunOnClient }} />
         <div className="relative min-h-screen w-full bg-primary pb-36 transition-[background-color]">
           <Providers>
-            <Hydrate>
+            <UserHydrate>
               <Header />
               {children}
-              <Footer />
-            </Hydrate>
+            </UserHydrate>
+            <Footer />
           </Providers>
         </div>
         <div id="modal" />

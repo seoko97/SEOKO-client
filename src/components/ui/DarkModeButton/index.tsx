@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-
+import { THEME } from "@utils/constant/theme";
 import useDarkMode from "@hooks/useDarkMode";
 
 import { SunIcon, MoonIcon } from "@components/icons";
@@ -9,9 +8,11 @@ import { SunIcon, MoonIcon } from "@components/icons";
 const DarkModeButton = () => {
   const [mode, onChangeTheme] = useDarkMode();
 
-  if (!mode) return null;
+  if (!mode) {
+    return null;
+  }
 
-  const Icon = mode === "light" ? MoonIcon : SunIcon;
+  const Icon = mode === THEME.light ? MoonIcon : SunIcon;
 
   return (
     <button

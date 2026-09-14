@@ -1,18 +1,21 @@
 import { cache } from "react";
 
+import { CACHE_TAG } from "@utils/constant/cacheTag";
 import { ITag } from "@/types";
-import api from "@/apis";
+import { request } from "@/apis";
 
 const getTag = cache(async (name: string) => {
-  const { data } = await api.get<ITag>(`/tags/${name}`);
-
-  return data;
+  return request<ITag>(`/tags/${encodeURIComponent(name)}`, {
+    method: "GET",
+    next: { revalidate: 3600, tags: [CACHE_TAG.tags] },
+  });
 });
 
 const getTags = async () => {
-  const { data } = await api.get<ITag[]>("/tags");
-
-  return data;
+  return request<ITag[]>("/tags", {
+    method: "GET",
+    next: { revalidate: 3600, tags: [CACHE_TAG.tags] },
+  });
 };
 
 export { getTag, getTags };

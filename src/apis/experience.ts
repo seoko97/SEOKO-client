@@ -1,28 +1,30 @@
+import { CACHE_TAG } from "@utils/constant/cacheTag";
 import { ICreateExperience, IExperience, IUpdateExperience } from "@/types/experience";
-import api from "@/apis";
+import { authRequest, request } from "@/apis";
 
 const getExperiences = async () => {
-  const { data } = await api.get<IExperience[]>("/experiences");
-
-  return data;
+  return request<IExperience[]>("/experiences", {
+    method: "GET",
+    next: { revalidate: 3600, tags: [CACHE_TAG.experiences] },
+  });
 };
 
 const createExperience = async (input: ICreateExperience) => {
-  const { data } = await api.post("/experiences", input);
-
-  return data;
+  return authRequest("/experiences", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
 };
 
 const updateExperience = async (_id: string, input: IUpdateExperience) => {
-  const { data } = await api.put(`/experiences/${_id}`, input);
-
-  return data;
+  return authRequest(`/experiences/${_id}`, {
+    method: "PUT",
+    body: JSON.stringify(input),
+  });
 };
 
 const deleteExperience = async (_id: string) => {
-  const { data } = await api.delete(`/experiences/${_id}`);
-
-  return data;
+  return authRequest(`/experiences/${_id}`, { method: "DELETE" });
 };
 
 export { getExperiences, createExperience, updateExperience, deleteExperience };

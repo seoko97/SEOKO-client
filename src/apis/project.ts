@@ -1,36 +1,39 @@
 import { cache } from "react";
 
+import { CACHE_TAG } from "@utils/constant/cacheTag";
 import { IProjectInput, TProject } from "@/types";
-import api from "@/apis";
+import { authRequest, request } from "@/apis";
 
 const getProject = cache(async (nid: number) => {
-  const { data } = await api.get<TProject>(`/projects/${nid}`);
-
-  return data;
+  return request<TProject>(`/projects/${nid}`, {
+    method: "GET",
+    next: { revalidate: 300, tags: [CACHE_TAG.projects] },
+  });
 });
 
 const getProjects = async () => {
-  const { data } = await api.get<TProject[]>(`/projects`);
-
-  return data;
+  return request<TProject[]>("/projects", {
+    method: "GET",
+    next: { revalidate: 300, tags: [CACHE_TAG.projects] },
+  });
 };
 
 const createProject = async (input: IProjectInput) => {
-  const { data } = await api.post<TProject>(`/projects`, input);
-
-  return data;
+  return authRequest<TProject>("/projects", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
 };
 
 const updateProject = async (nid: number, input: IProjectInput) => {
-  const { data } = await api.put<TProject>(`/projects/${nid}`, input);
-
-  return data;
+  return authRequest<TProject>(`/projects/${nid}`, {
+    method: "PUT",
+    body: JSON.stringify(input),
+  });
 };
 
 const deleteProject = async (nid: number) => {
-  const { data } = await api.delete<TProject>(`/projects/${nid}`);
-
-  return data;
+  return authRequest<TProject>(`/projects/${nid}`, { method: "DELETE" });
 };
 
 export { getProject, getProjects, createProject, updateProject, deleteProject };

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { type FormEvent, type MouseEvent, useRef } from "react";
 
 import useInput from "@hooks/useInput";
 import { useUpdateSeriesMutation } from "@hooks/query/series";
@@ -29,20 +29,22 @@ const EditSeries = ({ series, onClose }: IProps) => {
     type: EImageType.SERIES,
   });
 
-  const thumbnailHandler = (e: React.MouseEvent) => {
+  const thumbnailHandler = (e: MouseEvent) => {
     e.preventDefault();
 
     thumbnailRef.current?.click();
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     const confirmUpdate = confirm("수정하시겠습니까?");
 
-    if (!confirmUpdate) return;
+    if (!confirmUpdate) {
+      return;
+    }
 
-    updateSeries({ ...input, thumbnail: image });
+    updateSeries({ ...input.current, thumbnail: image });
     onClose();
   };
 
@@ -64,8 +66,16 @@ const EditSeries = ({ series, onClose }: IProps) => {
         </div>
         <h3 className="text-xl font-semibold text-primary">썸네일</h3>
         <div className="flex items-center gap-4">
-          <div className="w-[200px] cursor-pointer md:w-full">
-            {image && <Image src={image} alt="thumbnail" onClick={clearImage} />}
+          <div className="relative aspect-default w-[200px] cursor-pointer md:w-full">
+            {image && (
+              <Image
+                fill
+                src={image}
+                alt="thumbnail"
+                sizes="(max-width: 768px) calc(100vw - 40px), 200px"
+                onClick={clearImage}
+              />
+            )}
           </div>
           <span onClick={thumbnailHandler}>
             <ImageIcon className="h-16 w-16 cursor-pointer fill-[theme(textColor.primary)] hover:opacity-50" />

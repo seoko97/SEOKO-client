@@ -2,15 +2,15 @@ import { useRouter } from "next/navigation";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
+import { userQueryKeys } from "@utils/query/queryKeys";
 import { IUser } from "@/types";
 import { getUser, signOut, signin } from "@/apis/user";
 
 const useGetUserQuery = () => {
   return useQuery({
-    queryKey: ["user"],
+    queryKey: userQueryKeys.me,
     queryFn: getUser,
-    select: (data) => data.username,
-    initialData: { username: "" },
+    select: (data) => data?.username,
   });
 };
 
@@ -21,19 +21,22 @@ const useSigninMutation = () => {
   return useMutation({
     mutationFn: signin,
     onSuccess: (data) => {
-      queryClient.setQueryData(["user"], data);
+      queryClient.setQueryData(userQueryKeys.me, data);
       router.push("/");
     },
   });
 };
 
 const useSignOutMutation = () => {
+  const router = useRouter();
+
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: signOut,
     onSuccess: () => {
-      queryClient.setQueryData<IUser | null>(["user"], { username: "" });
+      queryClient.setQueryData<IUser | null>(userQueryKeys.me, null);
+      router.replace("/");
     },
   });
 };

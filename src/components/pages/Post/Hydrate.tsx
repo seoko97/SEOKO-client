@@ -1,26 +1,28 @@
-import React from "react";
+import type { ReactNode } from "react";
 
-import { Hydrate as RqHydrate, dehydrate } from "@tanstack/react-query";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
+import { postQueryKeys } from "@utils/query/queryKeys";
 import getQueryClient from "@utils/query/getQueryClient";
 import { IGetPostsInput } from "@/types";
 import { getPosts } from "@/apis/post";
 
 interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
   params: IGetPostsInput;
 }
 
 const Hydrate = async ({ children, params = {} }: IProps) => {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: ["posts", params],
+  await queryClient.infiniteQuery({
+    queryKey: postQueryKeys.listByParams(params),
     queryFn: () => getPosts(params),
+    initialPageParam: 0,
   });
   const dehydratedState = dehydrate(queryClient);
 
-  return <RqHydrate state={dehydratedState}>{children}</RqHydrate>;
+  return <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>;
 };
 
 export default Hydrate;

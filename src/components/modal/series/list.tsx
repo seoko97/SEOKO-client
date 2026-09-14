@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { type ChangeEvent, type SubmitEvent, useState } from "react";
 
 import { useGetSeriesQueries } from "@hooks/query/series";
 import Input from "@components/ui/core/Input";
@@ -17,7 +17,7 @@ const SeriesList = (props: IProps) => {
   const [selectedSeries, setSeries] = useState<string>(defaultSeries || "");
   const { data: series } = useGetSeriesQueries();
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = (e: SubmitEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -25,7 +25,7 @@ const SeriesList = (props: IProps) => {
     onClose();
   };
 
-  const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
 
     setSeries(target.value);
@@ -42,11 +42,11 @@ const SeriesList = (props: IProps) => {
           {series?.length === 0 && <h3>시리즈가 없습니다.</h3>}
           {series?.map((item) => (
             <li
-              key={item._id + String(Math.random())}
+              key={item._id}
               onClick={() => setSeries(item.name)}
               className={`border-primary/50 flex-1 cursor-pointer border-t px-1 py-2 first:border-none hover:text-effect1 ${
                 defaultSeries === item.name && "text-green-500"
-              }}`}
+              }`}
             >
               {item.name}
             </li>

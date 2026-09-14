@@ -1,13 +1,13 @@
-import React from "react";
+import type { FC } from "react";
 
-import MenuItem from "@components/ui/core/MenuItem";
+import MenuItem from "@components/ui/Menu/Item";
 
 interface IProps {
   username?: string | null;
   signOut: () => void;
 }
 
-const UserMenu: React.FC<IProps> = ({ username, signOut }) => {
+const UserMenu: FC<IProps> = ({ username, signOut }) => {
   return (
     <div className="menu">
       <MenuItem>{username} 님</MenuItem>

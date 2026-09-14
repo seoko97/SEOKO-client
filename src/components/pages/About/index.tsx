@@ -1,29 +1,28 @@
-import React from "react";
-
 import { ABOUT_INFOS, USER_DETAIL, USER_LINKS } from "@utils/constant/user";
 import Image from "@components/ui/core/Image";
 
-import Skill from "@components/ui/client/about/Skill";
-import Project from "@components/ui/client/about/Project";
-import Experience from "@components/ui/client/about/Experience";
-import Hydrate from "@components/pages/About/Hydrate";
+import Skill from "@components/pages/About/Skill";
+import Project from "@components/pages/About/Project";
+import Experience from "@components/pages/About/Experience";
 
 const About = () => {
   return (
     <section className="frame mx-auto my-8 flex flex-col items-center justify-start gap-20">
       <div className="flex w-full flex-col gap-3 px-10 py-3 text-primary transition-[color] md:px-0">
-        <div className="flex grow items-center justify-center">
+        <div className="flex grow items-center justify-center sm:flex-col-reverse sm:items-start md:gap-6">
           <h1 className="grow text-5xl font-light md:text-3xl">
             안녕하세요 <br /> 개발자 <strong className="font-bold">{USER_DETAIL.username}</strong>
             입니다.
           </h1>
           <Image
-            priority={true}
+            preload={true}
             src="/main.jpg"
             alt="main"
             width={200}
             height={200}
-            className="aspect-square rounded-md md:hidden"
+            quality={100}
+            sizes="200px"
+            className="aspect-square rounded-md sm:w-full"
           />
         </div>
         <p className="font-light">{USER_DETAIL.description}</p>
@@ -49,11 +48,9 @@ const About = () => {
           </div>
         ))}
       </div>
-      <Hydrate>
-        <Skill />
-        <Experience />
-        <Project />
-      </Hydrate>
+      <Skill />
+      <Experience />
+      <Project />
     </section>
   );
 };

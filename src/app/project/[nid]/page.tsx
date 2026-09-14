@@ -1,22 +1,20 @@
 import { Metadata } from "next";
 
+import getOrNotFound from "@utils/getOrNotFound";
 import { defaultOpenGraph, siteMetadata } from "@utils/constant/metadata";
 import { getProject } from "@/apis/project";
 
-interface IProps {
-  params: {
-    nid: number;
-  };
-}
+type TProps = Pick<PageProps<"/project/[nid]">, "params">;
 
-export const generateMetadata = async ({ params }: IProps): Promise<Metadata> => {
-  const nid = Number(params.nid);
+export const generateMetadata = async ({ params }: TProps): Promise<Metadata> => {
+  const { nid: paramNid } = await params;
+  const nid = Number(paramNid);
 
-  if (isNaN(nid)) return {};
+  if (isNaN(nid)) {
+    return {};
+  }
 
-  const project = await getProject(nid);
-
-  if (!project) return {};
+  const project = await getOrNotFound(() => getProject(nid));
 
   const { title, description, thumbnail } = project;
 

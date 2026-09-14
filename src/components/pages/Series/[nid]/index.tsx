@@ -1,16 +1,11 @@
-import React from "react";
-
 import SeriesClient from "@components/pages/Series/[nid]/page.client";
 import Hydrate from "@components/pages/Series/[nid]/Hydrate";
 
-interface IProps {
-  params: {
-    nid: number;
-  };
-}
+type TProps = Pick<PageProps<"/series/[nid]">, "params">;
 
-const Series = ({ params }: IProps) => {
-  const nid = Number(params.nid);
+const Series = async ({ params }: TProps) => {
+  const { nid: paramNid } = await params;
+  const nid = Number(paramNid);
 
   return (
     <section className="frame mb-8 flex flex-col items-center gap-4">

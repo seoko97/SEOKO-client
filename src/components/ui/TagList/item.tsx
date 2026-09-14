@@ -1,7 +1,7 @@
-import React from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 
-interface IProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
+interface IProps extends HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
 }
 
 const Tag = ({ children, ...rest }: IProps) => {

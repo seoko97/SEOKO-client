@@ -1,17 +1,23 @@
-import React from "react";
+import { redirect } from "next/navigation";
 
 import ProjectClient from "@components/ui/client/write/project";
 
 import Hydrate from "@components/pages/WriteProject/Hydrate";
+import { getUserOrNull } from "@/apis/user";
 
 interface IProps {
-  params?: {
-    nid: number;
-  };
+  params?: PageProps<"/write/project/[nid]">["params"];
 }
 
-const WriteProject = ({ params }: IProps) => {
-  const nid = params?.nid === undefined ? null : Number(params.nid);
+const WriteProject = async ({ params }: IProps) => {
+  const paramNid = (await params)?.nid;
+  const nid = paramNid ? Number(paramNid) : null;
+
+  const user = await getUserOrNull();
+
+  if (!user) {
+    return redirect("/signin");
+  }
 
   return (
     <Hydrate nid={nid}>

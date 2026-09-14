@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import type { MouseEventHandler } from "react";
 
 import NextLink from "next/link";
 
@@ -7,7 +7,7 @@ import { IToc } from "@/types/base";
 interface IProps {
   item: IToc;
   isActive: boolean;
-  onClick: React.MouseEventHandler;
+  onClick: MouseEventHandler;
 }
 
 const TocItem = ({ item, isActive, onClick }: IProps) => {
@@ -33,4 +33,4 @@ const TocItem = ({ item, isActive, onClick }: IProps) => {
   );
 };
 
-export default memo(TocItem, (prev, next) => prev.isActive === next.isActive);
+export default TocItem;

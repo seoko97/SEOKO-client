@@ -1,30 +1,32 @@
 import { cache } from "react";
 
+import { CACHE_TAG } from "@utils/constant/cacheTag";
 import { ISeries, IUpdateSeriesInput } from "@/types";
-import api from "@/apis";
+import { authRequest, request } from "@/apis";
 
 const getSeriesAll = async () => {
-  const { data } = await api.get<ISeries[]>("/series");
-
-  return data;
+  return request<ISeries[]>("/series", {
+    method: "GET",
+    next: { revalidate: 300, tags: [CACHE_TAG.series] },
+  });
 };
 
 const getSeries = cache(async (nid: number) => {
-  const { data } = await api.get<ISeries>(`/series/${nid}`);
-
-  return data;
+  return request<ISeries>(`/series/${nid}`, {
+    method: "GET",
+    next: { revalidate: 300, tags: [CACHE_TAG.series] },
+  });
 });
 
 const updateSeries = async (nid: number, body: IUpdateSeriesInput) => {
-  const { data } = await api.put<ISeries>(`/series/${nid}`, body);
-
-  return data;
+  return authRequest<ISeries>(`/series/${nid}`, {
+    method: "PUT",
+    body: JSON.stringify(body),
+  });
 };
 
 const deleteSeries = async (nid: number) => {
-  const { data } = await api.delete<ISeries>(`/series/${nid}`);
-
-  return data;
+  return authRequest<ISeries>(`/series/${nid}`, { method: "DELETE" });
 };
 
 export { getSeriesAll, getSeries, updateSeries, deleteSeries };

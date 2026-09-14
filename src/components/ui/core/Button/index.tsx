@@ -1,11 +1,11 @@
-import React from "react";
+import type { ButtonHTMLAttributes, FC } from "react";
 
 interface IButtonProps {
   buttonSize?: "default" | "large" | "small";
   buttonType?: "default" | "primary" | "danger";
 }
 
-type TProps = IButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
+type TProps = IButtonProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const BUTTON_SIZE = {
   default: "font-medium px-4 py-2",
@@ -19,7 +19,7 @@ const BUTTON_TYPE = {
   danger: "bg-secondary text-red-400 font-bold border-[1px] border-red-400 border-solid",
 };
 
-const Button: React.FC<TProps> = ({
+const Button: FC<TProps> = ({
   children,
   buttonSize = "default",
   buttonType = "default",

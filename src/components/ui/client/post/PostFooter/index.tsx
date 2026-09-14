@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import SiblingPost from "@components/ui/client/post/PostFooter/SiblingPost";
 import Giscus from "@components/ui/client/post/PostFooter/Giscus";
 

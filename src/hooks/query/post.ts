@@ -1,10 +1,23 @@
-import { useCallback } from "react";
-
 import { useRouter } from "next/navigation";
 
-import { useMutation, useQuery, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 
-import { ICreatePostInput, IGetPostsInput, IPost, IUpdatePostInput } from "@/types";
+import { postQueryKeys, seriesQueryKeys, tagQueryKeys } from "@utils/query/queryKeys";
+import { CACHE_TAG } from "@utils/constant/cacheTag";
+import { revalidateCacheTags } from "@/utils/revalidateCacheTags";
+import {
+  ICreatePostInput,
+  IGetPostsInput,
+  IGetSiblingPost,
+  IPost,
+  IUpdatePostInput,
+} from "@/types";
 import {
   createPost,
   deletePost,
@@ -18,9 +31,11 @@ import {
 
 const useGetPostQuery = (nid: number | null) => {
   return useQuery({
-    queryKey: ["post", nid],
+    queryKey: postQueryKeys.detail(nid),
     queryFn: () => {
-      if (nid === null) return;
+      if (nid === null) {
+        return;
+      }
 
       return getPost(nid);
     },
@@ -28,29 +43,49 @@ const useGetPostQuery = (nid: number | null) => {
   });
 };
 
-const useGetPostsQuery = (params: IGetPostsInput = {}) => {
-  const { data, fetchNextPage } = useInfiniteQuery({
-    queryKey: ["posts", params],
+interface IOptions {
+  keepPrevData?: boolean;
+}
+
+const useGetPostsQuery = (params: IGetPostsInput = {}, options: IOptions = {}) => {
+  const { keepPrevData = false } = options;
+
+  const queryData = useInfiniteQuery({
+    queryKey: postQueryKeys.listByParams(params),
     queryFn: ({ pageParam: skip }) => getPosts({ ...params, skip }),
-    getNextPageParam: (_, allPage) => allPage.flat().length,
-    keepPreviousData: true,
+    initialPageParam: params.skip ?? 0,
+    getNextPageParam: (lastPage, _, lastPageParam) => {
+      const limit = params.limit ?? 10;
+
+      if (lastPage.length < limit) {
+        return;
+      }
+
+      return lastPageParam + lastPage.length;
+    },
+    placeholderData: keepPrevData ? keepPreviousData : undefined,
   });
+
+  const { data, hasNextPage, isFetching, fetchNextPage, ...rest } = queryData;
 
   const posts = data?.pages?.flat() ?? [];
 
-  const fetchMore = useCallback(() => {
-    const limit = params.limit ?? 10;
-
-    if (posts.length % limit !== 0) return;
+  const fetchMore = () => {
+    if (!hasNextPage || isFetching) {
+      return;
+    }
 
     fetchNextPage();
-  }, [params.limit, posts.length, fetchNextPage]);
+  };
 
-  return [posts, fetchMore] as const;
+  return { posts, fetchMore, ...rest } as const;
 };
 
 const useGetSiblingPostQuery = (nid: number) => {
-  return useQuery({ queryKey: ["post", nid, "sibling"], queryFn: () => getSiblingPost(nid) });
+  return useQuery({
+    queryKey: postQueryKeys.sibling(nid),
+    queryFn: () => getSiblingPost(nid),
+  });
 };
 
 const useCreatePostMutation = () => {
@@ -59,8 +94,11 @@ const useCreatePostMutation = () => {
 
   return useMutation({
     mutationFn: createPost,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["posts"]);
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.posts, CACHE_TAG.series, CACHE_TAG.tags]);
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.root });
+      queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
+      queryClient.invalidateQueries({ queryKey: tagQueryKeys.root });
       router.push("/");
     },
   });
@@ -72,9 +110,12 @@ const useUpdatePostMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: (data: IUpdatePostInput) => updatePost(nid, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["post", nid]);
-      queryClient.invalidateQueries(["posts"]);
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.posts, CACHE_TAG.series, CACHE_TAG.tags]);
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.detail(nid) });
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.list });
+      queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
+      queryClient.invalidateQueries({ queryKey: tagQueryKeys.root });
       router.push(`/post/${nid}`);
     },
   });
@@ -86,10 +127,27 @@ const useDeletePostMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: () => deletePost(nid),
-    onSuccess: () => {
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.posts, CACHE_TAG.series, CACHE_TAG.tags]);
+      const siblingPosts = queryClient.getQueryData<IGetSiblingPost>(postQueryKeys.sibling(nid));
+
+      if (siblingPosts) {
+        Object.values(siblingPosts).forEach((post) => {
+          if (!post) {
+            return;
+          }
+
+          queryClient.removeQueries({ queryKey: postQueryKeys.sibling(post.nid) });
+        });
+      }
+
+      queryClient.removeQueries({ queryKey: postQueryKeys.detail(nid) });
+      queryClient.removeQueries({ queryKey: postQueryKeys.sibling(nid) });
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.list });
+      queryClient.invalidateQueries({ queryKey: seriesQueryKeys.root });
+      queryClient.invalidateQueries({ queryKey: tagQueryKeys.root });
+
       router.push("/");
-      queryClient.removeQueries(["post", nid]);
-      queryClient.invalidateQueries(["posts"]);
     },
   });
 };
@@ -99,40 +157,34 @@ const useLikePostMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: () => likePost(nid),
-    onMutate: () => {
-      queryClient.cancelQueries(["post", nid]);
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: postQueryKeys.detail(nid) });
 
-      const post = queryClient.getQueryData<IPost>(["post", nid]);
-      const posts = queryClient.getQueryData<IPost[]>(["posts"]);
+      const post = queryClient.getQueryData<IPost>(postQueryKeys.detail(nid));
 
-      queryClient.setQueryData<IPost | undefined>(["post", nid], (prev) => {
-        if (!prev) return prev;
+      queryClient.setQueryData<IPost | undefined>(postQueryKeys.detail(nid), (prev) => {
+        if (!prev) {
+          return prev;
+        }
 
         return { ...prev, isLiked: true, likeCount: prev.likeCount + 1 };
       });
 
-      queryClient.setQueryData<IPost[] | undefined>(["posts"], (prev) => {
-        if (!prev) return prev;
-
-        return prev.map((post) => {
-          if (post.nid !== nid) return post;
-
-          return { ...post, isLiked: true, likeCount: post.likeCount + 1 };
-        });
-      });
-
-      return { post, posts };
+      return { post };
     },
     onError: (err, _, prev) => {
-      if (!prev) return;
+      if (!prev) {
+        return;
+      }
 
-      const { post, posts } = prev;
-
-      queryClient.setQueryData<IPost | undefined>(["post", nid], post);
-      queryClient.setQueryData<IPost[] | undefined>(["posts"], posts);
+      queryClient.setQueryData<IPost | undefined>(postQueryKeys.detail(nid), prev.post);
+    },
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.posts]);
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.list });
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["post", nid]);
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.detail(nid) });
     },
   });
 };
@@ -142,40 +194,34 @@ const useUnlikePostMutation = (nid: number) => {
 
   return useMutation({
     mutationFn: () => unlikePost(nid),
-    onMutate: () => {
-      queryClient.cancelQueries(["post", nid]);
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: postQueryKeys.detail(nid) });
 
-      const post = queryClient.getQueryData<IPost>(["post", nid]);
-      const posts = queryClient.getQueryData<IPost[]>(["posts"]);
+      const post = queryClient.getQueryData<IPost>(postQueryKeys.detail(nid));
 
-      queryClient.setQueryData<IPost | undefined>(["post", nid], (prev) => {
-        if (!prev) return prev;
+      queryClient.setQueryData<IPost | undefined>(postQueryKeys.detail(nid), (prev) => {
+        if (!prev) {
+          return prev;
+        }
 
         return { ...prev, isLiked: false, likeCount: prev.likeCount - 1 };
       });
 
-      queryClient.setQueryData<IPost[] | undefined>(["posts"], (prev) => {
-        if (!prev) return prev;
-
-        return prev.map((post) => {
-          if (post.nid !== nid) return post;
-
-          return { ...post, isLiked: false, likeCount: post.likeCount - 1 };
-        });
-      });
-
-      return { post, posts };
+      return { post };
     },
-    onError: (err, _, prev) => {
-      if (!prev) return;
+    onError: (_, __, prev) => {
+      if (!prev) {
+        return;
+      }
 
-      const { post, posts } = prev;
-
-      queryClient.setQueryData<IPost | undefined>(["post", nid], post);
-      queryClient.setQueryData<IPost[] | undefined>(["posts"], posts);
+      queryClient.setQueryData(postQueryKeys.detail(nid), prev.post);
+    },
+    onSuccess: async () => {
+      await revalidateCacheTags([CACHE_TAG.posts]);
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.list });
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["post", nid]);
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.detail(nid) });
     },
   });
 };
@@ -184,7 +230,7 @@ const usePostMutation = (nid: number | null = null) => {
   const { mutate: create } = useCreatePostMutation();
   const { mutate: update } = useUpdatePostMutation(nid ?? 0);
 
-  const onMutation = async <T extends ICreatePostInput>(input: T) => {
+  const onMutation = <T extends ICreatePostInput | IUpdatePostInput>(input: T) => {
     if (nid === null) {
       create(input);
     } else {

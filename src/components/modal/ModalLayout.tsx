@@ -1,9 +1,9 @@
-import React from "react";
+import type { ReactNode } from "react";
 
 import ModalPortal from "@components/modal/ModalPortal";
 
 interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
   onClose: () => void;
 }
 

@@ -1,26 +1,40 @@
-import React, { useLayoutEffect, useState } from "react";
-
-import { dateTimeParser } from "@utils/dateTimeParser";
-
 interface IProps {
   date: string;
+  referenceTime: number;
   className?: string;
 }
 
-const DateTime = ({ date, className }: IProps) => {
-  const [formattedDate, setFormattedDate] = useState<string | null>(null);
+const DATE_FORMATTER = new Intl.DateTimeFormat("ko-KR", {
+  timeZone: "Asia/Seoul",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
 
-  useLayoutEffect(() => {
-    const formatted = dateTimeParser(date);
+const dateTimeParser = (date: string, referenceTime: number) => {
+  const inputDate = new Date(date);
 
-    setFormattedDate(formatted);
-  }, []);
+  const timeDifference = Math.max(0, referenceTime - inputDate.getTime());
+  const seconds = Math.floor(timeDifference / 1000);
+  const minutes = Math.ceil(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
 
-  if (!formattedDate) {
-    return <span className="h-4 w-16 rounded-md bg-slate-300 dark:bg-slate-600" />;
+  if (days >= 1) {
+    return DATE_FORMATTER.format(inputDate);
   }
 
-  return <span className={className}>{formattedDate}</span>;
+  if (hours >= 1) {
+    return `${hours}시간 전`;
+  }
+
+  return `${minutes}분 전`;
+};
+
+const DateTime = ({ date, referenceTime, className }: IProps) => {
+  const formatted = dateTimeParser(date, referenceTime);
+
+  return <span className={className}>{formatted}</span>;
 };
 
 export default DateTime;

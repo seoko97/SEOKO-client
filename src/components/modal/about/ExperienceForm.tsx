@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { type ChangeEvent, useRef } from "react";
 
 import { useExperienceMutation } from "@hooks/query/experience";
 import Input from "@components/ui/core/Input";
@@ -21,20 +21,25 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
 
   const { createOrUpdateExperience, deleteExperience } = useExperienceMutation(experience?._id);
 
-  const onChangeInput = (e: React.ChangeEvent) => {
+  const onChangeInput = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
 
     const name = target.name as keyof typeof formDataRef.current;
     const value = target.value;
 
-    if (name === "end") formDataRef.current[name] = value || null;
-    else formDataRef.current[name] = value;
+    if (name === "end") {
+      formDataRef.current[name] = value || null;
+    } else {
+      formDataRef.current[name] = value;
+    }
   };
 
   const onSubmitForm = () => {
     const conf = confirm("저장하시겠습니까?");
 
-    if (!conf) return;
+    if (!conf) {
+      return;
+    }
 
     createOrUpdateExperience(formDataRef.current);
 
@@ -44,14 +49,14 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
   const onClickDeleteButton = () => {
     const conf = confirm("삭제하시겠습니까?");
 
-    if (!conf || !experience) return;
+    if (!conf || !experience) {
+      return;
+    }
 
     deleteExperience();
 
     onClose();
   };
-
-  const { title, description, start, end } = formDataRef.current;
 
   return (
     <ModalLayout onClose={onClose}>
@@ -63,7 +68,7 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
             name="title"
             placeholder="입력"
             onChange={onChangeInput}
-            defaultValue={title}
+            defaultValue={experience?.title ?? ""}
             className="w-min"
           />
         </div>
@@ -71,7 +76,7 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
           <h3 className="font-medium">상세</h3>
           <textarea
             className="max-h-[200px] min-h-[100px] w-full rounded-md bg-primary p-2 transition-[background-color]"
-            defaultValue={description}
+            defaultValue={experience?.description ?? ""}
             name="description"
             onChange={onChangeInput}
           />
@@ -82,7 +87,7 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
             name="start"
             type="date"
             placeholder="YYYY-MM-DD"
-            defaultValue={start}
+            defaultValue={experience?.start ?? ""}
             onChange={onChangeInput}
             className="rounded-md bg-secondary p-2 transition-[background-color]"
           />
@@ -93,7 +98,7 @@ const ExperienceForm = ({ onClose, experience }: IProps) => {
             name="end"
             type="date"
             placeholder="YYYY-MM-DD"
-            defaultValue={end ?? ""}
+            defaultValue={experience?.end ?? ""}
             onChange={onChangeInput}
             className="rounded-md bg-secondary p-2 transition-[background-color]"
           />

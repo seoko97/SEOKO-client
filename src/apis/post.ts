@@ -1,5 +1,6 @@
 import { cache } from "react";
 
+import { CACHE_TAG } from "@utils/constant/cacheTag";
 import {
   ICreatePostInput,
   IGetPostsInput,
@@ -7,54 +8,64 @@ import {
   IPost,
   IUpdatePostInput,
 } from "@/types";
-import api from "@/apis";
+import { authRequest, request } from "@/apis";
 
 const getPosts = async (params: IGetPostsInput = {}) => {
-  const res = await api.get<IPost[]>("/posts", { params });
+  const searchParams = new URLSearchParams();
 
-  return res.data;
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) {
+      searchParams.set(key, String(value));
+    }
+  });
+
+  const query = searchParams.toString();
+
+  return request<IPost[]>(`/posts${query ? `?${query}` : ""}`, {
+    method: "GET",
+    next: { revalidate: 60, tags: [CACHE_TAG.posts] },
+  });
 };
 
 const getPost = cache(async (nid: number) => {
-  const res = await api.get<IPost>(`/posts/${nid}`);
-
-  return res.data;
+  return request<IPost>(`/posts/${nid}`, {
+    method: "GET",
+    cache: "no-store",
+    forwardClientIp: true,
+  });
 });
 
 const getSiblingPost = async (nid: number) => {
-  const res = await api.get<IGetSiblingPost>(`/posts/${nid}/sibling`);
-
-  return res.data;
+  return request<IGetSiblingPost>(`/posts/${nid}/sibling`, {
+    method: "GET",
+    next: { revalidate: 300, tags: [CACHE_TAG.posts] },
+  });
 };
 
 const createPost = async (data: ICreatePostInput) => {
-  const res = await api.post<IPost>("/posts", data);
-
-  return res.data;
+  return authRequest<IPost>("/posts", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
 };
 
 const updatePost = async (nid: number, data: IUpdatePostInput) => {
-  const res = await api.put<IPost>(`/posts/${nid}`, data);
-
-  return res.data;
+  return authRequest<IPost>(`/posts/${nid}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
 };
 
 const deletePost = async (nid: number) => {
-  const res = await api.delete<number>(`/posts/${nid}`);
-
-  return res.data;
+  return authRequest<number>(`/posts/${nid}`, { method: "DELETE" });
 };
 
 const likePost = async (nid: number) => {
-  const res = await api.patch<number>(`/posts/${nid}/like`);
-
-  return res.data;
+  return request<number>(`/posts/${nid}/like`, { method: "PATCH", cache: "no-store" });
 };
 
 const unlikePost = async (nid: number) => {
-  const res = await api.patch<number>(`/posts/${nid}/unlike`);
-
-  return res.data;
+  return request<number>(`/posts/${nid}/unlike`, { method: "PATCH", cache: "no-store" });
 };
 
 export {

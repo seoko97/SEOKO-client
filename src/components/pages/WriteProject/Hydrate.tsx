@@ -1,15 +1,14 @@
-import React from "react";
+import type { ReactNode } from "react";
 
-import { notFound, redirect } from "next/navigation";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
-import { Hydrate as RqHydrate, dehydrate } from "@tanstack/react-query";
-
+import { projectQueryKeys } from "@utils/query/queryKeys";
 import getQueryClient from "@utils/query/getQueryClient";
-import { getUser } from "@/apis/user";
+import getOrNotFound from "@utils/getOrNotFound";
 import { getProject } from "@/apis/project";
 
 interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
   nid: number | null;
 }
 
@@ -17,27 +16,17 @@ const Hydrate = async ({ children, nid }: IProps) => {
   const queryClient = getQueryClient();
 
   if (nid !== null) {
-    try {
-      await queryClient.fetchQuery({
-        queryKey: ["project", nid],
+    await getOrNotFound(() =>
+      queryClient.query({
+        queryKey: projectQueryKeys.detail(nid),
         queryFn: () => getProject(nid),
-      });
-    } catch (error) {
-      return notFound();
-    }
-  }
-  try {
-    await queryClient.fetchQuery({
-      queryKey: ["user"],
-      queryFn: getUser,
-    });
-  } catch (error) {
-    return redirect("/signin");
+      }),
+    );
   }
 
   const dehydratedState = dehydrate(queryClient);
 
-  return <RqHydrate state={dehydratedState}>{children}</RqHydrate>;
+  return <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>;
 };
 
 export default Hydrate;

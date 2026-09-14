@@ -1,7 +1,7 @@
-const debounce = <T extends (...args: any[]) => void>(func: T, delay: number) => {
+const debounce = <Args extends unknown[]>(func: (...args: Args) => void, delay: number) => {
   let timer: NodeJS.Timeout;
 
-  return (...args: any[]) => {
+  return (...args: Args) => {
     clearTimeout(timer);
 
     timer = setTimeout(() => {

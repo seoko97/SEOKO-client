@@ -1,39 +1,31 @@
 "use client";
 
-import React, { useCallback, useEffect } from "react";
-
-import { useRouter } from "next/navigation";
+import type { SubmitEventHandler } from "react";
 
 import useInput from "@hooks/useInput";
-import { useGetUserQuery, useSigninMutation } from "@hooks/query/user";
+import { useSigninMutation } from "@hooks/query/user";
 import Input from "@components/ui/core/Input";
 import Button from "@components/ui/core/Button";
 
 const SigninForm = () => {
-  const router = useRouter();
+  const [dataRef, onChangeValue] = useInput({ userId: "", password: "" });
 
-  const [input, onChangeValue] = useInput({ userId: "", password: "" });
-
-  const { data: username } = useGetUserQuery();
   const { mutate } = useSigninMutation();
 
-  useEffect(() => {
-    if (username) router.push("/");
-  }, [router, username]);
+  const onSubmit: SubmitEventHandler = (e) => {
+    e.preventDefault();
 
-  const onSubmit: React.FormEventHandler = useCallback(
-    (e) => {
-      e.preventDefault();
+    const { userId, password } = dataRef.current;
 
-      const { userId, password } = input;
+    if (!userId) {
+      return alert("아이디를 입력하세요");
+    }
+    if (!password) {
+      return alert("비밀번호를 입력하세요");
+    }
 
-      if (!userId) return alert("아이디를 입력하세요");
-      if (!password) return alert("비밀번호를 입력하세요");
-
-      mutate({ userId, password });
-    },
-    [input, mutate],
-  );
+    mutate({ userId, password });
+  };
 
   const formProps = {
     onSubmit,

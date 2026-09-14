@@ -17,6 +17,10 @@ interface BasePostInput extends Pick<IPost, "title" | "content" | "thumbnail"> {
   series?: string;
 }
 
+interface IPostWriteInput extends Omit<BasePostInput, "_id"> {
+  tags: string[];
+}
+
 interface ICreatePostInput extends BasePostInput {
   tags?: string[];
 }
@@ -43,6 +47,7 @@ interface IGetSiblingPost {
 export type {
   IPost,
   BasePostInput,
+  IPostWriteInput,
   ICreatePostInput,
   IUpdatePostInput,
   IGetPostsInput,

@@ -1,19 +1,22 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 
 import Nav from "@components/ui/Header/Nav";
 import Logo from "@components/ui/core/Logo";
 
-const Header: React.FC = () => {
+const Header: FC = () => {
   const [isFixed, setIsFixed] = useState(false);
 
   useEffect(() => {
     const updateScroll = () => {
       const scrollHeight = window.scrollY || document.documentElement.scrollTop;
 
-      if (scrollHeight >= 32) setIsFixed(true);
-      else setIsFixed(false);
+      if (scrollHeight >= 32) {
+        setIsFixed(true);
+      } else {
+        setIsFixed(false);
+      }
     };
 
     window.addEventListener("scroll", updateScroll);

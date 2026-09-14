@@ -1,28 +1,32 @@
 import { createPortal } from "react-dom";
-import { FC, useRef, useEffect, useState } from "react";
+import { type FC, type ReactNode, useEffect, useSyncExternalStore } from "react";
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
+const emptySubscribe = () => () => {};
+const getModalElement = () => document.getElementById("modal");
+const getServerSnapshot = () => null;
+
 const ModalPortal: FC<Props> = ({ children }) => {
-  const modalRef = useRef<HTMLElement | null>(null);
-  const bodyRef = useRef<HTMLElement | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const modal = useSyncExternalStore(emptySubscribe, getModalElement, getServerSnapshot);
 
   useEffect(() => {
-    setMounted(true);
-    modalRef.current = document.getElementById("modal");
-    bodyRef.current = document.body;
+    if (!modal) {
+      return;
+    }
 
-    bodyRef.current.style.overflow = "hidden";
+    const prevOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
     return () => {
-      setMounted(false);
-      (bodyRef.current as HTMLElement).style.overflow = "auto";
+      document.body.style.overflow = prevOverflow;
     };
-  }, []);
+  }, [modal]);
 
-  return mounted ? createPortal(children, modalRef.current as HTMLElement) : null;
+  return modal ? createPortal(children, modal) : null;
 };
 
 export default ModalPortal;

@@ -1,94 +1,84 @@
-import axios, { AxiosHeaders, AxiosRequestConfig } from "axios";
-
 import { AUTH_ERROR } from "@utils/constant/user";
+import { RequestOptions } from "@utils/api/types";
+import {
+  appendForwardedIp,
+  createRequestHeaders,
+  getErrorMessage,
+  getResponseBody,
+  getToken,
+  getUrl,
+  refreshAccessToken,
+} from "@utils/api";
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL;
-const isServer = typeof window === "undefined";
+class ApiError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number,
+  ) {
+    super(message);
+  }
+}
 
-const api = axios.create({
-  baseURL,
-  headers: { "Content-Type": "application/json" },
-});
+const request = async <T = unknown>(
+  path: string,
+  { responseType = "json", forwardClientIp = false, ...options }: RequestOptions = {},
+) => {
+  const url = getUrl(path);
+  const headers = createRequestHeaders(options.headers);
 
-const getRegExpByTokenName = (tokeName: string) => {
-  return new RegExp(`(?:^|.*;\\s*)${tokeName}\\s*\\=\\s*([^;]*).*$`);
+  if (forwardClientIp) {
+    await appendForwardedIp(headers);
+  }
+
+  if (options.body instanceof FormData) {
+    headers.delete("Content-Type");
+  }
+
+  const res = await fetch(url, { ...options, headers });
+
+  if (!res.ok) {
+    const message = await getErrorMessage(res);
+
+    throw new ApiError(message, res.status);
+  }
+
+  return getResponseBody<T>(res, responseType);
 };
 
-const getToken = async (tokeName: string) => {
-  if (isServer) {
-    return (await import("next/headers")).cookies().get(tokeName)?.value ?? "";
-  } else {
-    const matches = document.cookie.match(getRegExpByTokenName(tokeName));
+const authRequest = async <T = unknown>(
+  path: string,
+  options: RequestOptions = {},
+  retry = true,
+  accessToken?: string,
+) => {
+  const token = accessToken ?? (await getToken("access-token"));
 
-    return matches?.[1] ?? "";
+  const headers = new Headers(options.headers);
+
+  if (token) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
+
+  try {
+    return await request<T>(path, { ...options, cache: "no-store", headers });
+  } catch (error) {
+    const isExpiredToken =
+      error instanceof ApiError &&
+      error.status === 401 &&
+      error.message === AUTH_ERROR.EXPIRED_TOKEN;
+
+    if (!retry || !isExpiredToken) {
+      throw error;
+    }
+
+    const refreshedToken = await refreshAccessToken();
+
+    if (!refreshedToken) {
+      throw error;
+    }
+
+    return authRequest<T>(path, options, false, refreshedToken);
   }
 };
 
-const setForwardedForByServer = async (config: AxiosRequestConfig) => {
-  if (!isServer || !config.headers) return;
-
-  const ips = (await import("next/headers")).headers().get("x-forwarded-for")?.split(", ") ?? [];
-
-  if (ips.length === 0) return;
-
-  config.headers["x-forwarded-for"] = ips[0];
-  config.headers["x-real-ip"] = ips[0];
-};
-
-api.interceptors.request.use(async (config) => {
-  const token = await getToken("access-token");
-
-  if (token) config.headers.setAuthorization(`Bearer ${token}`);
-
-  await setForwardedForByServer(config);
-
-  return config;
-});
-
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
-    const status = error?.response?.status;
-    const message = error?.response?.data?.message;
-
-    if (status === 401 && message === AUTH_ERROR.EXPIRED_TOKEN && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      const config: AxiosRequestConfig = {
-        baseURL,
-        withCredentials: !isServer,
-        headers: { "Content-Type": "application/json" },
-      };
-
-      if (isServer) {
-        const token = await getToken("refresh-token");
-
-        (config.headers as AxiosHeaders).cookie = `refresh-token=${token}`;
-      }
-
-      const res = await axios.post("/auth/refresh", {}, config);
-
-      if (res.status === 201) {
-        let token = "";
-
-        if (isServer) {
-          const setCookies = res.headers["set-cookie"] ?? [];
-
-          token = setCookies?.[0].match(getRegExpByTokenName("access-token"))?.[1] ?? "";
-        } else {
-          token = await getToken("access-token");
-        }
-
-        if (token) originalRequest.headers.setAuthorization(`Bearer ${token}`);
-
-        return axios(originalRequest);
-      }
-    }
-
-    return Promise.reject(new Error(message ?? error));
-  },
-);
-
-export default api;
+export { request, authRequest, ApiError };

@@ -1,46 +1,82 @@
-import { useEffect } from "react";
+import { type MouseEventHandler, type RefObject, useEffect, useRef } from "react";
 
 import { MARKDOWN_HEADING_SELECTOR } from "@utils/constant/toc";
 import { IToc } from "@/types/base";
 
-const useTocEvent = (toc: IToc[]) => {
-  const scroll = (id: string, behavior: ScrollBehavior = "smooth") => {
-    const headingElements = Array.from(document.querySelectorAll(MARKDOWN_HEADING_SELECTOR));
+const useTocEvent = (toc: IToc[], contentRef: RefObject<HTMLElement | null>) => {
+  const didScrollRef = useRef<boolean>(false);
 
-    if (!headingElements.length) return;
+  const scroll = (id: string, behavior: ScrollBehavior = "smooth") => {
+    const headingElements = Array.from(
+      contentRef?.current?.querySelectorAll<HTMLElement>(MARKDOWN_HEADING_SELECTOR) || [],
+    );
+
+    if (!headingElements.length) {
+      return;
+    }
 
     const targetHeading = headingElements.find((heading) => heading.id === id);
 
-    if (!targetHeading) return;
+    if (!targetHeading) {
+      return;
+    }
 
     const scrollY = window.scrollY + targetHeading.getBoundingClientRect().top - 80;
 
     window.scrollTo({ top: scrollY, behavior, left: 0 });
   };
 
-  const scrollToTargetItem: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    const target = e.target as HTMLElement;
+  const scrollToTargetItem: MouseEventHandler<HTMLAnchorElement> = (e) => {
+    const id = e.currentTarget.dataset.id;
 
-    if (!target) return;
-
-    const id = target.dataset.id;
-
-    if (!id) return;
+    if (!id) {
+      return;
+    }
 
     scroll(id);
   };
 
   useEffect(() => {
-    const decodedHash = decodeURI(window.location.hash.slice(1));
+    if (didScrollRef.current) {
+      return;
+    }
 
-    if (!decodedHash) return;
+    const url = new URL(window.location.href);
+    let decodedHash = "";
+
+    try {
+      decodedHash = decodeURI(url.hash.slice(1));
+    } catch {
+      return;
+    }
+
+    if (!decodedHash) {
+      return;
+    }
 
     const item = toc.find((item) => item.id === decodedHash);
 
-    if (!item) return;
+    if (!item) {
+      return;
+    }
 
-    scroll(item.id, "instant");
-  }, []);
+    const headings = Array.from(
+      contentRef.current?.querySelectorAll<HTMLElement>(MARKDOWN_HEADING_SELECTOR) ?? [],
+    );
+
+    const target = headings.find((heading) => heading.id === item.id);
+
+    if (!target) {
+      return;
+    }
+
+    window.scrollTo({
+      top: window.scrollY + target.getBoundingClientRect().top - 80,
+      behavior: "instant",
+      left: 0,
+    });
+    didScrollRef.current = true;
+  }, [toc, contentRef]);
 
   return scrollToTargetItem;
 };

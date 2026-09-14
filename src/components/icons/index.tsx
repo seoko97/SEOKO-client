@@ -1,4 +1,4 @@
-import React from "react";
+import type { FC, SVGProps } from "react";
 
 import IconFrameComponent from "@components/icons/IconFrameComponent";
 
@@ -208,5 +208,5 @@ export const {
     ...result,
     [key]: IconFrameComponent(IconComponent),
   }),
-  {} as { [key in keyof typeof ICONS]: React.FC<React.SVGProps<SVGSVGElement>> },
+  {} as { [key in keyof typeof ICONS]: FC<SVGProps<SVGSVGElement>> },
 );

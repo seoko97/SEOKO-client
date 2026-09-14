@@ -1,26 +1,23 @@
-import React, { memo, useState } from "react";
+import { type ReactNode, type RefObject } from "react";
 
-import { usePathname } from "next/navigation";
-
-import { getToc } from "@utils/getToc";
+import { extractToc } from "@utils/markdown";
 import { useTocEvent } from "@hooks/useTocEvent";
-import { useIntersectionObserver } from "@hooks/useIntersectionObserver";
+import { useActiveHeading } from "@hooks/useActiveHeading";
 import TocItem from "@components/ui/client/post/PostContent/Toc/item";
 
 interface IProps {
-  markdown: React.ReactNode;
+  markdown: ReactNode;
+  contentRef: RefObject<HTMLDivElement | null>;
 }
 
-const Toc = ({ markdown }: IProps) => {
-  const toc = getToc(markdown);
-  const pathname = usePathname();
+const Toc = ({ markdown, contentRef }: IProps) => {
+  const toc = extractToc(markdown);
+  const activeId = useActiveHeading(toc, contentRef);
+  const scrollToTargetItem = useTocEvent(toc, contentRef);
 
-  const [activeId, setActiveId] = useState("");
-  const scrollToTargetItem = useTocEvent(toc);
-
-  useIntersectionObserver(setActiveId, pathname);
-
-  if (toc.length === 0) return null;
+  if (toc.length === 0) {
+    return null;
+  }
 
   return (
     <ul className="flex w-full flex-col gap-2 pl-8 text-sm">
@@ -36,4 +33,4 @@ const Toc = ({ markdown }: IProps) => {
   );
 };
 
-export default memo(Toc);
+export default Toc;

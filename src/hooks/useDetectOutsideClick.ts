@@ -1,20 +1,21 @@
-import { MutableRefObject, useState, useEffect } from "react";
+import { type RefObject, useEffect, useState } from "react";
 
-import { usePathname } from "next/navigation";
-
-const useDetectOutsideClick = (el: MutableRefObject<Node | null>, initialState: boolean) => {
-  const pathname = usePathname();
+const useDetectOutsideClick = (el: RefObject<Node | null>, initialState: boolean) => {
   const [isActive, setIsActive] = useState(initialState);
 
   const onChangeActive = () => {
-    setIsActive(!isActive);
+    setIsActive((prev) => !prev);
   };
 
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive) {
+      return;
+    }
 
-    const onClick = (e: MouseEvent) => {
-      if (!el.current || el.current.contains(e.target as Node)) return;
+    const onClick = (event: MouseEvent) => {
+      if (!el.current || el.current.contains(event.target as Node)) {
+        return;
+      }
 
       setIsActive(false);
     };
@@ -25,10 +26,6 @@ const useDetectOutsideClick = (el: MutableRefObject<Node | null>, initialState: 
       document.removeEventListener("click", onClick);
     };
   }, [isActive, el]);
-
-  useEffect(() => {
-    setIsActive(false);
-  }, [pathname]);
 
   return [isActive, onChangeActive] as const;
 };
