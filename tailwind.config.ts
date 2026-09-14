@@ -1,5 +1,4 @@
 import plugin from "tailwindcss/plugin";
-import { fontFamily } from "tailwindcss/defaultTheme";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -14,9 +13,6 @@ const config: Config = {
       md: { max: "768px" },
       lg: { max: "1024px" },
       xl: { max: "1440px" },
-    },
-    fontFamily: {
-      sans: ["Pretendard", ...fontFamily.sans],
     },
     textShadow: {
       sm: "0 1px 2px var(--tw-shadow-color)",
